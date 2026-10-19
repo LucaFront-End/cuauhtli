@@ -174,10 +174,8 @@ const PLATE = 'NLV-842-C';
 export default function CctvIsometricScene() {
   const wrapRef = useRef(null);
   const t = useSceneClock(wrapRef, { still: 8.4 });
-  const initial = debugParam('isoState') || '';
-  const [night, setNight] = useState(initial.includes('night'));
-  const [thermal, setThermal] = useState(initial.includes('thermal'));
-  const [intrStart, setIntrStart] = useState(initial.includes('intrusion') ? (parseFloat(debugParam('isoT')) || 0) - 5 : null);
+  const night = false;
+  const thermal = false;
   const yawRef = useRef({ t: -1, yaw: 0.6 });
 
   const lt = t % CYCLE;
@@ -209,51 +207,21 @@ export default function CctvIsometricScene() {
   const ped = PED_PATH.atU(pedK);
   const pedOpacity = Math.min(seg(pedK, 0, 0.04), 1 - seg(pedK, 0.94, 1));
 
-  /* ---------- intruder ---------- */
-  const it = intrStart == null ? -1 : t - intrStart;
-  const intrActive = it >= 0 && it < 14;
-  let intr = null;
-  let intrPose = 'walk';
-  let intrMoving = true;
-  let intrPhase = 0;
-  if (intrActive) {
-    if (it < 6) {
-      const d = (it / 6) * INTRUDER_PATH.length;
-      intr = INTRUDER_PATH.at(d);
-      intrPhase = d * 4.4;
-    } else if (it < 8.6) {
-      intr = { ...INTRUDER_PATH.at(INTRUDER_PATH.length), angle: -Math.PI / 2 + Math.sin(it * 2) * 0.8 };
-      intrMoving = false;
-      intrPose = 'stand';
-    } else {
-      const d = INTRUDER_PATH.length * (1 - clamp((it - 8.6) / 3.6));
-      const p = INTRUDER_PATH.at(d);
-      intr = { ...p, angle: p.angle + Math.PI };
-      intrPose = 'run';
-      intrPhase = d * 3.4;
-    }
-  }
-  const intrInZone = intrActive && it < 12 && (it >= (ZONE_ENTER_D / INTRUDER_PATH.length) * 6);
-  const alarm = intrInZone;
-  const intrOpacity = intrActive ? Math.min(seg(it, 0, 0.5), 1 - seg(it, 11.6, 12.3)) : 0;
-
-  /* ---------- PTZ tracking ---------- */
+  /* ---------- tracking target ---------- */
   let target;
-  if (alarm && intr) target = intr;
-  else if (lt < 11) target = car;
+  if (lt < 11) target = car;
   else if (lt < 16.2) {
     const k = easeInOut(seg(lt, 11, 11.8));
     target = { x: lerp(car.x, drv.x, k), y: lerp(car.y, drv.y, k) };
   } else {
-    const a = 0.75 + Math.sin((lt - 16.2) * 0.9) * 0.55;
-    target = { x: PTZ.x + Math.cos(a) * 6, y: PTZ.y + Math.sin(a) * 6 };
+    target = ped;
   }
   const goalYaw = Math.atan2(target.y - PTZ.y, target.x - PTZ.x);
   if (yawRef.current.t !== t) {
     const dt = clamp(t - yawRef.current.t, 0, 0.1);
     let diff = goalYaw - yawRef.current.yaw;
     diff = Math.atan2(Math.sin(diff), Math.cos(diff));
-    yawRef.current.yaw += diff * clamp(dt * (alarm ? 9 : 5.5), 0, 1);
+    yawRef.current.yaw += diff * clamp(dt * 5.5, 0, 1);
     yawRef.current.t = t;
   }
   const yaw = yawRef.current.yaw;
@@ -271,7 +239,7 @@ export default function CctvIsometricScene() {
     near.push([PTZ.x + Math.cos(a) * r0, PTZ.y + Math.sin(a) * r0, 0]);
   }
   const lens = [PTZ.x + Math.cos(yaw) * 0.38, PTZ.y + Math.sin(yaw) * 0.38, PTZ.h + 0.05];
-  const coneColor = alarm ? '#EF4444' : thermal ? '#F59E0B' : night ? '#F87171' : '#38BDF8';
+  const coneColor = '#38BDF8';
   const [lsx, lsy] = iso.p(...lens);
 
   /* ---------- sortable dynamic scene ---------- */
@@ -348,12 +316,6 @@ export default function CctvIsometricScene() {
       el: <Person key="ped" iso={iso} x={ped.x} y={ped.y} heading={ped.angle} moving phase={pedK * PED_PATH.length * 4.3} shirt="#C2410C" pants="#334155" skin="#B9805E" opacity={pedOpacity} />,
     });
   }
-  if (intr && intrOpacity > 0) {
-    items.push({
-      k: intr.x + intr.y,
-      el: <Person key="intr" iso={iso} x={intr.x} y={intr.y} heading={intr.angle} moving={intrMoving} pose={intrPose} phase={intrPhase} shirt="#111827" pants="#0B0F17" hair="#0B0F17" cap="#111827" opacity={intrOpacity} />,
-    });
-  }
   items.sort((a, b) => a.k - b.k);
 
   /* ---------- overlays ---------- */
@@ -361,7 +323,6 @@ export default function CctvIsometricScene() {
   const showCarBox = carOpacity > 0.6 && lt < 10.8;
   const drvRect = personRect(iso, drv.x, drv.y);
   const pedRect = personRect(iso, ped.x, ped.y);
-  const intrRect = intr ? personRect(iso, intr.x, intr.y) : null;
   const plateText = PLATE.slice(0, Math.round(lprRead * PLATE.length));
 
   const events = [
@@ -370,10 +331,7 @@ export default function CctvIsometricScene() {
     { at: 11.4, txt: 'PERSONA · ID-0472 EMPLEADO', c: '#38BDF8' },
     { at: 15.2, txt: 'PUERTA LOBBY · APERTURA', c: '#CBD5E1' },
   ].filter((e) => lt >= e.at);
-  if (alarm) events.push({ at: 99, txt: 'INTRUSIÓN · ANDÉN DE CARGA → C4', c: '#F87171' });
   const log = events.slice(-3).reverse();
-
-  const strobe = alarm && Math.floor(t * 6) % 2 === 0;
 
   return (
     <div className="iso-scene-wrap" ref={wrapRef}>
@@ -392,10 +350,6 @@ export default function CctvIsometricScene() {
         <g filter={thermal ? 'url(#iso-thermal-env)' : undefined}>
           <Ground />
 
-          {/* dynamic ground decals */}
-          {alarm && (
-            <polygon points={flat(iso, 12.2, 0, GX, 5.5)} fill="#EF4444" opacity={0.18 + 0.14 * Math.sin(t * 9)} />
-          )}
           <g clipPath="url(#cctv-ground-clip)">
             <polygon points={iso.pts([...far, ...near.reverse()])} fill={coneColor} opacity="0.22" />
           </g>
@@ -424,13 +378,13 @@ export default function CctvIsometricScene() {
 
           {items.map((i) => i.el)}
 
-          {/* strobe on building corner */}
+          {/* status beacon on building corner */}
           {(() => {
             const [sx, sy] = iso.p(B.x1 - 0.2, FACADE_Y - 0.2, B.h);
             return (
               <g>
-                <rect x={sx - 3} y={sy - 6} width="6" height="6" rx="1.5" fill={strobe ? '#FF3B3B' : '#7F1D1D'} />
-                {strobe && <circle cx={sx} cy={sy - 3} r="16" fill="url(#iso-red-pool)" />}
+                <rect x={sx - 3} y={sy - 6} width="6" height="6" rx="1.5" fill="#2B5672" />
+                <circle cx={sx} cy={sy - 3} r="1.6" fill="#38BDF8" filter="url(#iso-glow)" />
               </g>
             );
           })()}
@@ -466,7 +420,7 @@ export default function CctvIsometricScene() {
               const [hx, hy] = iso.p(car.x + Math.cos(car.angle) * 0.7, car.y + Math.sin(car.angle) * 0.7, 0.5);
               return <ellipse cx={hx} cy={hy} rx="20" ry="12" fill="url(#iso-heat)" opacity={carOpacity * (lt < 14 ? 1 : 0.6)} />;
             })()}
-            {[driverOn && drvOpacity > 0 ? drvRect : null, pedOpacity > 0 ? pedRect : null, intr && intrOpacity > 0 ? intrRect : null]
+            {[driverOn && drvOpacity > 0 ? drvRect : null, pedOpacity > 0 ? pedRect : null]
               .filter(Boolean)
               .map((r, i) => (
                 <ellipse key={i} cx={r.x + r.w / 2} cy={r.y + r.h * 0.45} rx={r.w * 0.55} ry={r.h * 0.55} fill="url(#iso-heat)" />
@@ -490,27 +444,22 @@ export default function CctvIsometricScene() {
         {pedOpacity > 0.3 && !thermal && (
           <DetectBox x={pedRect.x} y={pedRect.y} w={pedRect.w} h={pedRect.h} color="#A5B4FC" label="PERSONA · 94%" opacity={pedOpacity * 0.85} dashed />
         )}
-        {intr && intrOpacity > 0.3 && (
-          <DetectBox x={intrRect.x} y={intrRect.y} w={intrRect.w} h={intrRect.h} color={alarm ? '#F87171' : '#FBBF24'} label={alarm ? 'INTRUSO · ZONA RESTRINGIDA' : 'PERSONA · MERODEO'} sub={alarm ? 'ALERTA C4 ENVIADA' : undefined} opacity={intrOpacity} />
-        )}
-        {alarm && intr && <GroundRing iso={iso} x={intr.x} y={intr.y} t={t} period={1.1} maxR={2.2} color="#EF4444" />}
-
         {/* zone label */}
         <g transform={`translate(${iso.p(13.1, 4.3)[0] - 4},${iso.p(13.1, 4.3)[1] + 4})`}>
-          <rect width="58" height="10" rx="2.5" fill={alarm ? '#A6192E' : 'rgba(29,30,27,0.75)'} />
+          <rect width="58" height="10" rx="2.5" fill="rgba(29,30,27,0.75)" />
           <text x="4" y="7" fontSize="5.6" fontWeight="700" fill="#FFFFFF" fontFamily={MONO}>ZONA RESTRINGIDA</text>
         </g>
       </svg>
 
       {/* HUD */}
-      <div className={`iso-hud-overlay ${alarm ? 'is-alert' : ''}`}>
+      <div className="iso-hud-overlay">
         <div className="iso-hud-status-row">
-          <span className="iso-hud-dot iso-hud-dot--rec" style={{ backgroundColor: alarm ? '#EF4444' : '#22C55E' }} />
-          <strong>{alarm ? 'ALERTA · INTRUSIÓN' : 'CAM-03 · PTZ 4K'}</strong>
+          <span className="iso-hud-dot iso-hud-dot--rec" style={{ backgroundColor: '#22C55E' }} />
+          <strong>CAM-03 · PTZ 4K · SEGUIMIENTO IA</strong>
           <span className="iso-hud-clock">REC {cctvClock(t)}</span>
         </div>
         <div className="iso-hud-meta">
-          <span>{thermal ? 'TÉRMICA 640×512' : night ? 'IR 120 m · ColorVu' : 'WDR 140 dB'}</span>
+          <span>IA ACUSENSE · 4K 60FPS</span>
           <span>ZOOM {(1 + tDist * 0.9).toFixed(1)}×</span>
           <span>PAN {Math.round(((yaw * 180) / Math.PI + 360) % 360)}°</span>
         </div>
@@ -519,18 +468,6 @@ export default function CctvIsometricScene() {
             <li key={e.txt}><i style={{ background: e.c }} />{e.txt}</li>
           ))}
         </ul>
-      </div>
-
-      <div className="iso-controls-bar">
-        <button type="button" onClick={() => setNight((v) => !v)} className={`iso-btn ${night ? 'is-on' : ''}`} aria-pressed={night}>
-          <Moon size={13} /><span>Visión nocturna</span>
-        </button>
-        <button type="button" onClick={() => setThermal((v) => !v)} className={`iso-btn ${thermal ? 'is-on is-amber' : ''}`} aria-pressed={thermal}>
-          <Thermometer size={13} /><span>Térmica</span>
-        </button>
-        <button type="button" onClick={() => setIntrStart(intrActive ? null : t)} className={`iso-btn iso-btn--primary ${intrActive ? 'is-on' : ''}`}>
-          <Zap size={13} /><span>{intrActive ? 'Detener alerta' : 'Simular intrusión'}</span>
-        </button>
       </div>
     </div>
   );

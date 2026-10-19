@@ -148,101 +148,33 @@ const C4_POS = { x: 444, y: 32 };
 export default function AlarmIsometricScene() {
   const wrapRef = useRef(null);
   const t = useSceneClock(wrapRef, { still: 9.2 });
-  const initial = debugParam('isoState') || '';
-  const [armed, setArmed] = useState(!initial.includes('disarmed'));
-  const [off, setOff] = useState(0);
-  const [panicAt, setPanicAt] = useState(null);
 
-  const lt = (((t - off) % CYCLE) + CYCLE) % CYCLE;
-
-  /* ---------- intruder timeline (armed only) ---------- */
-  const doorOpen = armed ? easeInOut(seg(lt, 5.4, 6.2)) * (1 - easeInOut(seg(lt, 15.5, 16.5))) : 0;
-  let intr = null;
-  let intrPose = 'walk';
-  let intrMoving = false;
-  let intrPhase = 0;
-  let intrOpacity = 0;
-  const walkIn = [6.0, 9.6];
-  const flee = [10.6, 13.2];
-  if (armed && lt > walkIn[0] && lt < flee[1] + 0.4) {
-    if (lt < walkIn[1]) {
-      const d = seg(lt, walkIn[0], walkIn[1]) * INTR_IN.length;
-      intr = INTR_IN.at(d);
-      intrMoving = true;
-      intrPhase = d * 4.4;
-    } else if (lt < flee[0]) {
-      intr = { ...INTR_IN.at(INTR_IN.length), angle: Math.PI * 0.75 + Math.sin(lt * 5) * 0.6 };
-      intrPose = 'recoil';
-    } else {
-      const d = INTR_IN.length * (1 - seg(lt, flee[0], flee[1]));
-      const p = INTR_IN.at(d);
-      intr = { ...p, angle: p.angle + Math.PI };
-      intrPose = 'run';
-      intrMoving = true;
-      intrPhase = d * 3.4;
-    }
-    intrOpacity = Math.min(seg(lt, walkIn[0], walkIn[0] + 0.5), 1 - seg(lt, flee[1] - 0.3, flee[1] + 0.3));
-  }
-  const pirHitT = walkIn[0] + (PIR_HIT_D / INTR_IN.length) * (walkIn[1] - walkIn[0]);
-  const contact = armed && lt > 5.5 && lt < 16.4;
-  const entryDelay = armed && lt > 5.5 && lt < pirHitT;
-  const pt = panicAt == null ? -1 : t - panicAt;
-  const panic = pt >= 0 && pt < 7;
-  const alarm = (armed && lt >= pirHitT && lt < 16) || panic;
-  const reported = (armed && lt >= pirHitT + 1.6 && lt < 16) || (panic && pt > 1.4);
-  const patrol = (armed && lt >= pirHitT + 3.6 && lt < 16) || (panic && pt > 3.5);
-
-  /* ---------- resident (disarmed) ---------- */
-  const resK = ((t * 0.055) % 1);
+  /* ---------- resident continuous loop ---------- */
+  const resK = ((t * 0.05) % 1);
   const res = RESIDENT.atU(resK);
 
   /* ---------- sorted scene ---------- */
   const items = [...FURNITURE];
-  // door leaf (swings into the kitchen)
-  const ang = doorOpen * 1.35;
-  const leafW = DOOR.x1 - DOOR.x0;
-  const hx = DOOR.x0;
-  const hy = H.y0 + 0.02;
-  const ex = hx + Math.cos(ang) * leafW;
-  const ey = hy + Math.sin(ang) * leafW;
   items.push({
-    k: (hx + ex) / 2 + (hy + ey) / 2 - 0.3,
-    el: (
-      <g key="door">
-        <polygon points={iso.pts([[hx, hy, 0], [ex, ey, 0], [ex, ey, 2.2], [hx, hy, 2.2]])} fill="#8C6A4A" stroke="#6E5238" strokeWidth="0.6" />
-        <circle cx={iso.p(ex - Math.cos(ang) * 0.12, ey - Math.sin(ang) * 0.12 + 0.02, 1.05)[0]} cy={iso.p(ex - Math.cos(ang) * 0.12, ey - Math.sin(ang) * 0.12 + 0.02, 1.05)[1]} r="1.3" fill="#E5E7EB" />
-      </g>
-    ),
+    k: res.x + res.y,
+    el: <Person key="res" iso={iso} x={res.x} y={res.y} heading={res.angle} moving phase={resK * RESIDENT.length * 4.4} shirt="#2B5672" pants="#1E293B" hair="#3B2A20" skin="#E0B394" />,
   });
-  if (intr && intrOpacity > 0) {
-    items.push({
-      k: intr.x + intr.y,
-      el: <Person key="intr" iso={iso} x={intr.x} y={intr.y} heading={intr.angle} moving={intrMoving} phase={intrPhase} pose={intrPose} shirt="#111827" pants="#0B0F17" hair="#0B0F17" cap="#1F2937" opacity={intrOpacity} />,
-    });
-  }
-  if (!armed) {
-    items.push({
-      k: res.x + res.y,
-      el: <Person key="res" iso={iso} x={res.x} y={res.y} heading={res.angle} moving phase={resK * RESIDENT.length * 4.4} shirt="#F59E0B" pants="#334155" hair="#3B2A20" skin="#E0B394" />,
-    });
-  }
   items.sort((a, b) => a.k - b.k);
 
   /* ---------- PIR detection fan ---------- */
-  const pirColor = alarm ? '#EF4444' : !armed ? '#F59E0B' : '#38BDF8';
+  const pirColor = '#38BDF8';
   const arcs = [];
   for (let i = 0; i < 6; i++) {
     const r = 1.2 + i * 1.25;
     const pts = [];
     for (let a = 0.02; a <= Math.PI / 2 - 0.02; a += 0.08) pts.push([PIR.x + Math.cos(a) * r, PIR.y + Math.sin(a) * r * 0.85, 0.05]);
-    const wave = clamp(1 - Math.abs(((t * (alarm ? 2.6 : 1.1)) % 1) * 6 - i));
+    const wave = clamp(1 - Math.abs(((t * 1.1) % 1) * 6 - i));
     arcs.push(<polyline key={i} points={iso.pts(pts)} fill="none" stroke={pirColor} strokeWidth={1 + wave * 1.2} strokeDasharray="4 3" opacity={0.18 + wave * 0.6} />);
   }
   const [psx, psy] = iso.p(PIR.x, PIR.y, PIR.z);
 
   /* siren strobe */
   const [ssx, ssy] = iso.p(7.3, H.y0 - 0.12, WALL + 0.22);
-  const strobeOn = alarm && Math.floor(t * 7) % 2 === 0;
   const [kx, ky] = iso.p(H.x0 + 0.02, (KEYPAD.y0 + KEYPAD.y1) / 2, (KEYPAD.z0 + KEYPAD.z1) / 2);
   const [cx, cy] = iso.p(DOOR.x1 + 0.06, H.y0 + 0.03, 2.28);
 
@@ -255,24 +187,6 @@ export default function AlarmIsometricScene() {
     (1 - k) * (1 - k) * kx + 2 * (1 - k) * k * ctrlX + k * k * c4x,
     (1 - k) * (1 - k) * ky + 2 * (1 - k) * k * ctrlY + k * k * c4y,
   ];
-
-  const intrRect = intr ? personRect(iso, intr.x, intr.y) : null;
-  const countdown = Math.max(0, Math.ceil(10 - (lt - 5.5) * 3));
-
-  const status = panic ? 'PÁNICO · C4 NOTIFICADO' : alarm ? 'ALARMA DE ROBO · Z4' : entryDelay ? `RETARDO DE ENTRADA ${countdown}s` : armed ? 'ARMADO TOTAL · 8 ZONAS' : 'DESARMADO · MODO HOGAR';
-
-  const events = [];
-  if (armed) {
-    if (lt > 5.5) events.push({ txt: 'Z3 · CONTACTO PUERTA TRASERA', c: '#FBBF24' });
-    if (lt >= pirHitT && lt < 16) events.push({ txt: 'Z4 · PIR SALA · DISPARO', c: '#F87171' });
-    if (reported) events.push({ txt: 'REPORTE C4 · 4G + IP · 1.8s', c: '#38BDF8' });
-    if (patrol) events.push({ txt: 'PATRULLA ASIGNADA · ETA 6 MIN', c: '#34D399' });
-    if (lt >= 16) events.push({ txt: 'EVENTO CERRADO · VERIFICADO', c: '#34D399' });
-  } else {
-    events.push({ txt: 'Z4 · MOVIMIENTO (SOLO REGISTRO)', c: '#FBBF24' });
-  }
-  if (panic) events.push({ txt: 'BOTÓN DE PÁNICO · LLAVERO', c: '#F87171' });
-  const log = events.slice(-3).reverse();
 
   return (
     <div className="iso-scene-wrap" ref={wrapRef}>
@@ -287,13 +201,13 @@ export default function AlarmIsometricScene() {
         <g>
           {/* PIR sensor */}
           <path d={`M ${psx - 5} ${psy - 3} h 10 v 4 a 5 5 0 0 1 -10 0 z`} fill="#F8FAFC" stroke="#CBD5E1" strokeWidth="0.6" />
-          <circle cx={psx} cy={psy + 2} r="1.4" fill={pirColor} filter="url(#iso-glow)" opacity={alarm || Math.floor(t * 2) % 2 ? 1 : 0.35} />
+          <circle cx={psx} cy={psy + 2} r="1.4" fill={pirColor} filter="url(#iso-glow)" opacity={Math.floor(t * 2) % 2 ? 1 : 0.35} />
           {/* keypad */}
           <polygon points={faceX(iso, H.x0 + 0.015, KEYPAD.y0, KEYPAD.y1, KEYPAD.z0, KEYPAD.z1)} fill="#F8FAFC" stroke="#CBD5E1" strokeWidth="0.5" />
-          <polygon points={faceX(iso, H.x0 + 0.02, KEYPAD.y0 + 0.05, KEYPAD.y1 - 0.05, KEYPAD.z1 - 0.2, KEYPAD.z1 - 0.05)} fill={alarm ? '#DC2626' : entryDelay ? '#F59E0B' : armed ? '#16A34A' : '#64748B'} />
+          <polygon points={faceX(iso, H.x0 + 0.02, KEYPAD.y0 + 0.05, KEYPAD.y1 - 0.05, KEYPAD.z1 - 0.2, KEYPAD.z1 - 0.05)} fill="#16A34A" />
           {/* door contact */}
           <rect x={cx - 3} y={cy - 2} width="6" height="2.4" rx="0.6" fill="#F8FAFC" stroke="#CBD5E1" strokeWidth="0.4" />
-          <circle cx={cx + 3.8} cy={cy - 0.8} r="1.2" fill={contact ? '#F59E0B' : '#22C55E'} filter="url(#iso-glow)" />
+          <circle cx={cx + 3.8} cy={cy - 0.8} r="1.2" fill="#22C55E" filter="url(#iso-glow)" />
         </g>
 
         {/* PIR fan on living floor */}
@@ -301,95 +215,60 @@ export default function AlarmIsometricScene() {
         <line x1={psx} y1={psy + 2} x2={iso.p(PIR.x + 7.4, PIR.y, 0)[0]} y2={iso.p(PIR.x + 7.4, PIR.y, 0)[1]} stroke={pirColor} strokeOpacity="0.18" />
         <line x1={psx} y1={psy + 2} x2={iso.p(PIR.x, PIR.y + 4.2, 0)[0]} y2={iso.p(PIR.x, PIR.y + 4.2, 0)[1]} stroke={pirColor} strokeOpacity="0.18" />
 
-        {/* red wash on floor during alarm */}
-        {alarm && <polygon points={flat(iso, H.x0, H.y0, H.x1, H.y1, 0.05)} fill="#EF4444" opacity={0.08 + 0.08 * Math.sin(t * 14)} />}
-
         {items.map((i) => i.el)}
 
-        {/* siren + strobe on wall head */}
+        {/* siren on wall head */}
         <g>
           <Box iso={iso} x={7.0} y={H.y0 - 0.32} w={0.6} d={0.32} h={0.45} z={WALL} color="#F8FAFC" />
-          <polygon points={faceY(iso, H.y0 + 0.001, 7.08, 7.52, WALL + 0.12, WALL + 0.34)} fill={strobeOn ? '#FF3B3B' : '#991B1B'} />
-          {alarm && (
-            <g>
-              {strobeOn && <circle cx={ssx} cy={ssy} r="34" fill="url(#iso-red-pool)" />}
-              <AirRing cx={ssx} cy={ssy} t={t} period={1.1} maxR={46} color="#EF4444" />
-              <AirRing cx={ssx} cy={ssy} t={t} period={1.1} maxR={46} color="#EF4444" delay={0.55} />
-            </g>
-          )}
+          <polygon points={faceY(iso, H.y0 + 0.001, 7.08, 7.52, WALL + 0.12, WALL + 0.34)} fill="#2B5672" />
         </g>
 
-        {/* detection overlay */}
-        {intr && intrOpacity > 0.3 && lt > pirHitT - 0.2 && (
-          <DetectBox x={intrRect.x} y={intrRect.y} w={intrRect.w} h={intrRect.h} color="#F87171" label="Z4 · PIR + MICROONDAS" opacity={intrOpacity} />
-        )}
-
-        {/* uplink to C4 */}
-        {(alarm || reported) && (
-          <g>
-            <path d={`M ${kx} ${ky} Q ${ctrlX} ${ctrlY} ${c4x} ${c4y}`} stroke="#EF4444" strokeWidth="1" strokeDasharray="3 4" opacity="0.55" />
-            {[0, 0.25, 0.5, 0.75].map((o) => {
-              const [px, py] = qb((t * 0.9 + o) % 1);
-              return <circle key={o} cx={px} cy={py} r="2.2" fill="#FCA5A5" filter="url(#iso-glow)" />;
-            })}
-          </g>
-        )}
+        {/* continuous encrypted uplink to C4 */}
+        <g>
+          <path d={`M ${kx} ${ky} Q ${ctrlX} ${ctrlY} ${c4x} ${c4y}`} stroke="#38BDF8" strokeWidth="1.2" strokeDasharray="3 4" opacity="0.65" />
+          {[0, 0.25, 0.5, 0.75].map((o) => {
+            const [px, py] = qb((t * 0.7 + o) % 1);
+            return <circle key={o} cx={px} cy={py} r="2.4" fill="#38BDF8" filter="url(#iso-glow)" />;
+          })}
+        </g>
 
         {/* C4 central badge */}
         <g transform={`translate(${C4_POS.x},${C4_POS.y})`}>
-          <rect width="138" height="48" rx="8" fill="rgba(29,30,27,0.92)" stroke={alarm ? '#EF4444' : '#2B5672'} strokeWidth={alarm ? 1.6 : 1} />
+          <rect width="138" height="48" rx="8" fill="rgba(29,30,27,0.92)" stroke="#2B5672" strokeWidth="1.4" />
           <g transform="translate(11,10)">
             <path d="M 8 26 L 12 4 L 16 26 M 9.5 18 h 5 M 10.5 11 h 3" stroke="#CBD5E1" strokeWidth="1.2" fill="none" />
-            <AirRing cx={12} cy={4} t={t} period={1.6} maxR={8} color={alarm ? '#F87171' : '#38BDF8'} width={1} />
+            <AirRing cx={12} cy={4} t={t} period={1.6} maxR={8} color="#38BDF8" width={1} />
           </g>
           <text x="36" y="18" fontSize="8.5" fontWeight="800" fill="#FFFFFF" fontFamily={MONO}>CENTRAL C4</text>
-          <text x="36" y="30" fontSize="6.8" fill={alarm ? '#FCA5A5' : '#94A3B8'} fontFamily={MONO}>
-            {patrol ? 'PATRULLA EN CAMINO' : reported ? 'EVENTO RECIBIDO' : alarm ? 'RECIBIENDO…' : 'MONITOREO 24/7'}
+          <text x="36" y="30" fontSize="6.8" fill="#34D399" fontFamily={MONO}>
+            ENLACE 4G/IP · EN LÍNEA
           </text>
-          <text x="36" y="40" fontSize="5.8" fill="#64748B" fontFamily={MONO}>CTA #4471 · 4G/IP OK</text>
+          <text x="36" y="40" fontSize="5.8" fill="#94A3B8" fontFamily={MONO}>CTA #4471 · MONITOREO 24/7</text>
         </g>
 
         {/* keypad label */}
         <g transform={planeX(iso, H.x0 + 0.03, KEYPAD.y1 + 0.02, KEYPAD.z0 - 0.15)} opacity="0.8">
-          <text x="0" y="0" fontSize="4.6" fontWeight="700" fill="#475569" fontFamily={MONO}>PANEL</text>
+          <text x="0" y="0" fontSize="4.6" fontWeight="700" fill="#475569" fontFamily={MONO}>PANEL DSC NEO</text>
         </g>
-
-        {alarm && <rect x="-400" y="-400" width="1400" height="1240" fill="#DC2626" opacity={strobeOn ? 0.07 : 0.02} style={{ mixBlendMode: 'multiply' }} />}
       </svg>
 
-      <div className={`iso-hud-overlay ${alarm ? 'is-alert' : ''}`}>
+      {/* Telemetry HUD */}
+      <div className="iso-hud-overlay">
         <div className="iso-hud-status-row">
-          <span className="iso-hud-dot iso-hud-dot--rec" style={{ backgroundColor: alarm ? '#EF4444' : entryDelay ? '#F59E0B' : armed ? '#22C55E' : '#94A3B8' }} />
-          <strong>{status}</strong>
+          <span className="iso-hud-dot iso-hud-dot--rec" style={{ backgroundColor: '#22C55E' }} />
+          <strong>SISTEMA ARMADO · DSC NEO</strong>
           <span className="iso-hud-clock">{cctvClock(t, 2 * 3600 + 14 * 60)}</span>
         </div>
         <div className="iso-hud-meta">
-          <span>PANEL DSC NEO</span>
-          <span>4G + IP DUAL PATH</span>
-          <span>BATERÍA 24h</span>
+          <span>PANEL DSC NEO IP/4G</span>
+          <span>ZONAS ARMADAS: 8/8</span>
+          <span>BATERÍA 24h OK</span>
         </div>
         <ul className="iso-event-log">
-          {log.map((e) => <li key={e.txt}><i style={{ background: e.c }} />{e.txt}</li>)}
+          <li><i style={{ background: '#34D399' }} />CENTRAL C4 · ENLACE 4G ACTIVO (12ms)</li>
+          <li><i style={{ background: '#34D399' }} />SENSORES DUAL-TECH PIR EN LÍNEA</li>
+          <li><i style={{ background: '#38BDF8' }} />RED PROTEGIDA · SUPERVISIÓN 24/7</li>
         </ul>
-      </div>
-
-      <div className="iso-controls-bar">
-        <button
-          type="button"
-          className="iso-btn iso-btn--primary"
-          onClick={() => {
-            setArmed(true);
-            setOff(t - 4.6);
-          }}
-        >
-          <AlertOctagon size={13} /><span>Simular intrusión</span>
-        </button>
-        <button type="button" className={`iso-btn ${armed ? 'is-on' : ''}`} onClick={() => setArmed((v) => !v)} aria-pressed={armed}>
-          {armed ? <ShieldCheck size={13} /> : <ShieldOff size={13} />}<span>{armed ? 'Armado' : 'Desarmado'}</span>
-        </button>
-        <button type="button" className={`iso-btn ${panic ? 'is-on is-amber' : ''}`} onClick={() => setPanicAt(panic ? null : t)}>
-          <Siren size={13} /><span>Pánico</span>
-        </button>
       </div>
     </div>
   );

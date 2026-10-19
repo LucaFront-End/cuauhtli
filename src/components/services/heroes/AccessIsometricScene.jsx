@@ -191,20 +191,11 @@ const LED = { idle: '#38BDF8', scan: '#FBBF24', granted: '#22C55E', denied: '#EF
 export default function AccessIsometricScene() {
   const wrapRef = useRef(null);
   const t = useSceneClock(wrapRef, { still: 3.9 });
-  const initial = debugParam('isoState') || '';
-  const [cardMode, setCardMode] = useState(initial.includes('card'));
-  const [deny, setDeny] = useState(initial.includes('deny') ? { lane: 1, idx: 0 } : null);
-  const [evac, setEvac] = useState(initial.includes('evac'));
+  const cardMode = false;
+  const deny = null;
+  const evac = false;
 
   const lanes = LANES.map((l) => laneState(l, t, deny));
-
-  const triggerDeny = () => {
-    const l = LANES[1];
-    const g = t + l.off;
-    const idx = Math.floor(g / CYCLE);
-    const u = g - idx * CYCLE;
-    setDeny({ lane: 1, idx: u < 2.6 ? idx : idx + 1 });
-  };
 
   /* elevator doors open when someone arrives */
   const elevOpen = ELEV.map((_, e) =>
@@ -389,18 +380,6 @@ export default function AccessIsometricScene() {
             <li key={e.at + e.txt}><i style={{ background: e.c }} />{e.txt}</li>
           ))}
         </ul>
-      </div>
-
-      <div className="iso-controls-bar">
-        <button type="button" onClick={triggerDeny} className="iso-btn iso-btn--primary">
-          <UserX size={13} /><span>Rostro no registrado</span>
-        </button>
-        <button type="button" onClick={() => setCardMode((v) => !v)} className={`iso-btn ${cardMode ? 'is-on' : ''}`} aria-pressed={cardMode}>
-          <CreditCard size={13} /><span>Tarjeta RFID</span>
-        </button>
-        <button type="button" onClick={() => setEvac((v) => !v)} className={`iso-btn ${evac ? 'is-on is-amber' : ''}`} aria-pressed={evac}>
-          <Flame size={13} /><span>Evacuación</span>
-        </button>
       </div>
     </div>
   );

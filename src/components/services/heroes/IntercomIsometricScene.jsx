@@ -558,23 +558,18 @@ function FloatingMonitor({ callState, unlocked, night, t }) {
 export default function IntercomIsometricScene() {
   const wrapRef = useRef(null);
   const t = useSceneClock(wrapRef, { still: 5.6 });
-  const initial = debugParam('isoState') || '';
-
-  const [night, setNight] = useState(initial.includes('night'));
-  const [forceUnlock, setForceUnlock] = useState(initial.includes('unlock'));
-  const [audioActive, setAudioActive] = useState(true);
-  const [off, setOff] = useState(0);
+  const night = false;
+  const audioActive = true;
 
   // Time in current choreography cycle
-  const lt = ((t - off) % CYCLE + CYCLE) % CYCLE;
+  const lt = (t % CYCLE);
 
   const visitor = visitorState(lt);
 
   // Call status derivation
   const isRinging = lt >= T_RING && lt < T_ANSWER;
-  const isConnected = (lt >= T_ANSWER && lt < T_CLOSE) || forceUnlock;
-  const isUnlockedAuto = lt >= T_UNLOCK && lt < T_CLOSE;
-  const unlocked = isUnlockedAuto || forceUnlock;
+  const isConnected = lt >= T_ANSWER && lt < T_CLOSE;
+  const unlocked = lt >= T_UNLOCK && lt < T_CLOSE;
 
   const callState = isRinging ? 'calling' : isConnected ? 'connected' : 'standby';
 
@@ -585,39 +580,7 @@ export default function IntercomIsometricScene() {
 
   // Conduit energy pulse when unlocking
   const unlockPulse = seg(lt, T_UNLOCK - 0.2, T_UNLOCK + 0.4);
-  const pulseActive = isUnlockedAuto && unlockPulse > 0 && unlockPulse < 1;
-
-  // Outdoor illumination
-  const [sconceX, sconceY] = iso.p(INTERCOM.x, WALL_Y + 0.05, 2.5);
-
-  const status = unlocked
-    ? 'ACCESO CONCEDIDO · CHAPA 12V'
-    : isRinging
-    ? 'LLAMADA ENTRANTE · DEPTO 304'
-    : isConnected
-    ? 'EN LLAMADA SIP · AUDIO DÚPLEX'
-    : 'PORTERO IP ACTIVO · SIP 2.0';
-
-  const events = [
-    { txt: 'AUTOPRUEBA SIP 2.0 · EN LÍNEA', c: '#34D399' },
-    { txt: 'CÁMARA 2K WDR · 1440p ACTIVA', c: '#34D399' },
-  ];
-  if (lt >= T_RING) events.push({ txt: 'TIMBRE ACCESO A · DEPTO 304', c: '#FBBF24' });
-  if (lt >= T_ANSWER) events.push({ txt: 'AUDIO DÚPLEX · CANCELACIÓN ECO', c: '#38BDF8' });
-  if (unlocked) events.push({ txt: 'APERTURA REMOTA APP · 12V DC', c: '#34D399' });
-  if (lt >= T_CLOSE) events.push({ txt: 'PUERTA CERRADA · REASEGURADO', c: '#34D399' });
-  const log = events.slice(-3).reverse();
-
-  // Trigger manual call simulation
-  const handleTriggerCall = () => {
-    setOff(t - T_PRESS + 0.2);
-    setForceUnlock(false);
-  };
-
-  // Toggle remote unlock
-  const handleToggleUnlock = () => {
-    setForceUnlock((prev) => !prev);
-  };
+  const pulseActive = unlocked && unlockPulse > 0 && unlockPulse < 1;
 
   return (
     <div className="iso-scene-wrap" ref={wrapRef}>
@@ -767,8 +730,16 @@ export default function IntercomIsometricScene() {
             className="iso-hud-dot iso-hud-dot--rec"
             style={{ backgroundColor: unlocked ? '#10B981' : isRinging ? '#F59E0B' : isConnected ? '#38BDF8' : '#22C55E' }}
           />
-          <strong>{status}</strong>
-          <span className="iso-hud-clock">{cctvClock(t, night ? 22 * 3600 + 15 * 60 : 11 * 3600 + 42 * 60)}</span>
+          <strong>
+            {unlocked
+              ? 'ACCESO CONCEDIDO · CHAPA 12V'
+              : isRinging
+              ? 'LLAMADA ENTRANTE · DEPTO 304'
+              : isConnected
+              ? 'AUDIO DÚPLEX · 2K EN VIVO'
+              : 'PORTERO IP ACTIVO · SIP 2.0'}
+          </strong>
+          <span className="iso-hud-clock">{cctvClock(t, 11 * 3600 + 42 * 60)}</span>
         </div>
         <div className="iso-hud-meta">
           <span>PROTOCOLO: SIP 2.0 / P2P</span>
@@ -776,55 +747,10 @@ export default function IntercomIsometricScene() {
           <span>CHAPA: {unlocked ? 'LIBERADA (12V)' : '300KG ENERGIZADA'}</span>
         </div>
         <ul className="iso-event-log">
-          {log.map((e) => (
-            <li key={e.txt}>
-              <i style={{ background: e.c }} />
-              {e.txt}
-            </li>
-          ))}
+          <li><i style={{ background: '#34D399' }} />AUTOPRUEBA SIP 2.0 · EN LÍNEA</li>
+          <li><i style={{ background: '#38BDF8' }} />STREAM 2K QHD 60FPS · ACTIVO</li>
+          <li><i style={{ background: '#34D399' }} />AUDIO DÚPLEX · CANCELACIÓN ECO</li>
         </ul>
-      </div>
-
-      {/* Interactive Controls Bar */}
-      <div className="iso-controls-bar">
-        <button
-          type="button"
-          className="iso-btn iso-btn--primary"
-          onClick={handleTriggerCall}
-        >
-          <Bell size={13} />
-          <span>Timbrar portero</span>
-        </button>
-
-        <button
-          type="button"
-          className={`iso-btn ${unlocked ? 'is-on is-amber' : ''}`}
-          onClick={handleToggleUnlock}
-          aria-pressed={unlocked}
-        >
-          <Unlock size={13} />
-          <span>{unlocked ? 'Chapa Liberada' : 'Abrir Chapa'}</span>
-        </button>
-
-        <button
-          type="button"
-          className={`iso-btn ${audioActive ? 'is-on' : ''}`}
-          onClick={() => setAudioActive((v) => !v)}
-          aria-pressed={audioActive}
-        >
-          <Mic size={13} />
-          <span>{audioActive ? 'Audio Dúplex' : 'Mute'}</span>
-        </button>
-
-        <button
-          type="button"
-          className={`iso-btn ${night ? 'is-on' : ''}`}
-          onClick={() => setNight((v) => !v)}
-          aria-pressed={night}
-        >
-          <Moon size={13} />
-          <span>{night ? 'Día' : 'Noche (IR)'}</span>
-        </button>
       </div>
     </div>
   );
