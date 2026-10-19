@@ -143,6 +143,8 @@ export default function Footer({ onOpenQuote, onNavigateHome, onNavigateService 
               <li><a href="#testimonios" style={{ color: 'inherit', textDecoration: 'none' }}>Testimonios Verificados</a></li>
               <li><a href="#cobertura" style={{ color: 'inherit', textDecoration: 'none' }}>Presencia & Cobertura Nacional</a></li>
               <li><a href="#trayectoria" style={{ color: 'inherit', textDecoration: 'none' }}>Nuestra Trayectoria (2014-2025)</a></li>
+              <li><a href="#nosotros" onClick={handleHome} style={{ color: 'inherit', textDecoration: 'none' }}>Sobre Nosotros & Garantías</a></li>
+              <li><a href="#comunidad" onClick={handleHome} style={{ color: 'inherit', textDecoration: 'none' }}>Comunidad Cuauhtli</a></li>
               <li><a href="#contacto" style={{ color: 'inherit', textDecoration: 'none' }}>Contacto Directo</a></li>
             </ul>
           </div>

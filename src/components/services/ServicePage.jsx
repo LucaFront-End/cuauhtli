@@ -8,6 +8,7 @@ import AlarmIsometricScene from './heroes/AlarmIsometricScene';
 import FenceIsometricScene from './heroes/FenceIsometricScene';
 import IntercomIsometricScene from './heroes/IntercomIsometricScene';
 import ServiceProcessTimeline from './ServiceProcessTimeline';
+import NosotrosSection from '../NosotrosSection';
 import { 
   ShieldCheck, 
   ArrowLeft, 
@@ -317,7 +318,10 @@ export default function ServicePage({ serviceId = 'cctv', onOpenQuote, onNavigat
         </div>
       </section>
 
-      {/* 8. TECHNICAL FAQ ACCORDION */}
+      {/* 8. SOBRE NOSOTROS & RESPALDO TÉCNICO CUAUTHLI */}
+      <NosotrosSection onOpenQuote={() => onOpenQuote?.(service.name)} compact={true} />
+
+      {/* 9. TECHNICAL FAQ ACCORDION */}
       <section className="svc-faq-section">
         <div className="container">
           <div className="svc-sec-head">

@@ -54,6 +54,34 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService 
     onNavigateHome?.();
   };
 
+  const handleSectionNavigate = (e, targetHash) => {
+    if (e) e.preventDefault();
+    const isServiceRoute = window.location.hash.startsWith('#servicio-');
+
+    // If navigating to #nosotros and we are already on a service page, scroll on this page
+    if (targetHash === '#nosotros' && isServiceRoute) {
+      const el = document.getElementById('nosotros');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+    }
+
+    // If on a service page, navigate to home first and then scroll
+    if (isServiceRoute) {
+      window.location.hash = targetHash;
+      onNavigateHome?.();
+      setTimeout(() => {
+        const el = document.querySelector(targetHash);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 150);
+    } else {
+      window.location.hash = targetHash;
+      const el = document.querySelector(targetHash);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <header className={`cuauhtli-navbar ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="container cuauhtli-nav-inner">
@@ -289,8 +317,34 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService 
 
               {/* ITEM 4: DIRECT LINK TESTIMONIOS */}
               <MotionNavigationMenuItem>
-                <MotionNavigationMenuLink href="#testimonios" className="cuauhtli-direct-link">
+                <MotionNavigationMenuLink 
+                  href="#testimonios" 
+                  className="cuauhtli-direct-link"
+                  onClick={(e) => handleSectionNavigate(e, '#testimonios')}
+                >
                   Testimonios
+                </MotionNavigationMenuLink>
+              </MotionNavigationMenuItem>
+
+              {/* ITEM 5: DIRECT LINK NOSOTROS */}
+              <MotionNavigationMenuItem>
+                <MotionNavigationMenuLink 
+                  href="#nosotros" 
+                  className="cuauhtli-direct-link"
+                  onClick={(e) => handleSectionNavigate(e, '#nosotros')}
+                >
+                  Nosotros
+                </MotionNavigationMenuLink>
+              </MotionNavigationMenuItem>
+
+              {/* ITEM 6: DIRECT LINK COMUNIDAD */}
+              <MotionNavigationMenuItem>
+                <MotionNavigationMenuLink 
+                  href="#comunidad" 
+                  className="cuauhtli-direct-link"
+                  onClick={(e) => handleSectionNavigate(e, '#comunidad')}
+                >
+                  Comunidad
                 </MotionNavigationMenuLink>
               </MotionNavigationMenuItem>
 
@@ -381,7 +435,7 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService 
           <div style={{ borderTop: '1px solid #E2E8F0', paddingTop: '8px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
             <a
               href="#cobertura"
-              onClick={(e) => { setMobileMenuOpen(false); handleHomeClick(e); }}
+              onClick={(e) => { setMobileMenuOpen(false); handleSectionNavigate(e, '#cobertura'); }}
               className="cuauhtli-mob-link"
             >
               <span>Cobertura Nacional (7 Hubs)</span>
@@ -389,10 +443,34 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService 
             </a>
             <a
               href="#trayectoria"
-              onClick={(e) => { setMobileMenuOpen(false); handleHomeClick(e); }}
+              onClick={(e) => { setMobileMenuOpen(false); handleSectionNavigate(e, '#trayectoria'); }}
               className="cuauhtli-mob-link"
             >
               <span>Trayectoria (2014 – 2025)</span>
+              <ChevronRight size={15} />
+            </a>
+            <a
+              href="#testimonios"
+              onClick={(e) => { setMobileMenuOpen(false); handleSectionNavigate(e, '#testimonios'); }}
+              className="cuauhtli-mob-link"
+            >
+              <span>Testimonios Verificados</span>
+              <ChevronRight size={15} />
+            </a>
+            <a
+              href="#nosotros"
+              onClick={(e) => { setMobileMenuOpen(false); handleSectionNavigate(e, '#nosotros'); }}
+              className="cuauhtli-mob-link"
+            >
+              <span>Sobre Nosotros & Garantías</span>
+              <ChevronRight size={15} />
+            </a>
+            <a
+              href="#comunidad"
+              onClick={(e) => { setMobileMenuOpen(false); handleSectionNavigate(e, '#comunidad'); }}
+              className="cuauhtli-mob-link"
+            >
+              <span>Comunidad Cuauhtli</span>
               <ChevronRight size={15} />
             </a>
           </div>

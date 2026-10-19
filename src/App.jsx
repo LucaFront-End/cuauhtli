@@ -12,6 +12,8 @@ import Footer from './components/Footer';
 import FloatingWhatsapp from './components/FloatingWhatsapp';
 import QuickQuoteModal from './components/QuickQuoteModal';
 import ServicePage from './components/services/ServicePage';
+import NosotrosSection from './components/NosotrosSection';
+import ComunidadSection from './components/ComunidadSection';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
@@ -103,6 +105,12 @@ export default function App() {
 
             {/* TRAYECTORIA & TIMELINE DE EVOLUCIÓN TECNOLÓGICA */}
             <TimelineSection onOpenQuote={handleOpenQuote} />
+
+            {/* SOBRE NOSOTROS & GARANTÍAS */}
+            <NosotrosSection onOpenQuote={handleOpenQuote} />
+
+            {/* COMUNIDAD CUAUTHLI & RED DE SEGURIDAD */}
+            <ComunidadSection onOpenQuote={handleOpenQuote} />
 
             {/* DIAGNÓSTICO & COTIZADOR MULTIPASOS DE 3 PASOS CON LOTTIES */}
             <MultiStepQuoteForm />
