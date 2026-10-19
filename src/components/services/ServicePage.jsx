@@ -7,6 +7,7 @@ import AccessIsometricScene from './heroes/AccessIsometricScene';
 import AlarmIsometricScene from './heroes/AlarmIsometricScene';
 import FenceIsometricScene from './heroes/FenceIsometricScene';
 import IntercomIsometricScene from './heroes/IntercomIsometricScene';
+import ServiceProcessTimeline from './ServiceProcessTimeline';
 import { 
   ShieldCheck, 
   ArrowLeft, 
@@ -207,30 +208,12 @@ export default function ServicePage({ serviceId = 'cctv', onOpenQuote, onNavigat
         </div>
       </section>
 
-      {/* 4. DEPLOYMENT PIPELINE (HOW IT WORKS) */}
-      <section className="svc-workflow-section">
-        <div className="container">
-          <div className="svc-sec-head">
-            <span className="section-label">METODOLOGÍA CUAUTHLI</span>
-            <h2 className="section-title">
-              Protocolo de despliegue <span className="svc-cursive-accent">llave en mano</span>
-            </h2>
-            <p className="section-desc">
-              Desde el levantamiento inicial hasta la integración con la central de monitoreo 24/7.
-            </p>
-          </div>
-
-          <div className="svc-steps-grid">
-            {service.architecture.map((step, idx) => (
-              <div key={idx} className="svc-step-card">
-                <span className="svc-step-num">{step.step}</span>
-                <h4 className="svc-step-title">{step.title}</h4>
-                <p className="svc-step-desc">{step.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* 4. DEPLOYMENT PIPELINE (SCROLL-BASED TURNKEY TIMELINE) */}
+      <ServiceProcessTimeline
+        serviceId={service.id}
+        architecture={service.architecture}
+        onOpenQuote={onOpenQuote}
+      />
 
       {/* 5. TECHNICAL SPECIFICATIONS TABLE */}
       <section className="svc-specs-section">
