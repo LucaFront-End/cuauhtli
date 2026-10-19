@@ -116,43 +116,25 @@ export function debugParam(name) {
  * freezes on a representative frame for prefers-reduced-motion users.
  */
 export function useSceneClock(ref, { still = 6 } = {}) {
-  const [t, setT] = useState(() => {
-    const forced = parseFloat(debugParam('isoT'));
-    return Number.isFinite(forced) ? forced : 0;
-  });
+  const [t, setT] = useState(0);
 
   useEffect(() => {
-    const forced = parseFloat(debugParam('isoT'));
-    if (Number.isFinite(forced)) return undefined;
-
-    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) {
-      setT(still);
-      return undefined;
-    }
-
-    let visible = true;
     let raf;
     let last = performance.now();
     let acc = 0;
-    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0.02 });
-    if (ref.current) io.observe(ref.current);
 
     const loop = (now) => {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
-      if (visible && !document.hidden) {
-        acc += dt;
-        setT(acc);
-      }
+      acc += dt;
+      setT(acc);
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
     return () => {
       cancelAnimationFrame(raf);
-      io.disconnect();
     };
-  }, [ref, still]);
+  }, []);
 
   return t;
 }

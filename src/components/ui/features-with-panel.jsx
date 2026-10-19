@@ -8,6 +8,11 @@ import {
 } from "motion/react";
 import { ArrowRight, Bell, Check, Lock, ShieldAlert, ShieldCheck, Unlock } from "lucide-react";
 import "./features-with-panel.css";
+import CctvIsometricScene from "../services/heroes/CctvIsometricScene";
+import AccessIsometricScene from "../services/heroes/AccessIsometricScene";
+import AlarmIsometricScene from "../services/heroes/AlarmIsometricScene";
+import FenceIsometricScene from "../services/heroes/FenceIsometricScene";
+import IntercomIsometricScene from "../services/heroes/IntercomIsometricScene";
 
 const IMG = {
   entrance: "/assets/features/entrance.jpg",
@@ -764,11 +769,36 @@ function PhoneScene() {
 /* -------------------------------------------------------------------------- */
 
 const ITEMS = [
-  { title: "Videovigilancia con IA", desc: "Distingue personas y vehículos, sigue al intruso y te avisa al instante.", Scene: CameraScene },
-  { title: "Acceso biométrico", desc: "Reconocimiento facial con prueba de vida en menos de un segundo.", Scene: FaceScene },
-  { title: "Alarmas y sensores", desc: "Sensores, sirena y central conectados en una sola respuesta.", Scene: AlarmScene },
-  { title: "Monitoreo 24/7", desc: "Operadores reales vigilan tus cámaras día y noche.", Scene: MonitorScene },
-  { title: "Control desde tu celular", desc: "Mira en vivo, recibe alertas y abre accesos a distancia.", Scene: PhoneScene },
+  {
+    title: "Videovigilancia con IA",
+    desc: "Cámaras PTZ 4K con auto-seguimiento, lectura de placas LPR y analítica perimetral en tiempo real.",
+    Scene: CctvIsometricScene,
+    slug: "cctv",
+  },
+  {
+    title: "Control de Acceso Biométrico",
+    desc: "Torniquetes speed-gate con reconocimiento facial 3D liveness, código QR y tarjetas RFID.",
+    Scene: AccessIsometricScene,
+    slug: "control-acceso",
+  },
+  {
+    title: "Alarmas Inteligentes & C4",
+    desc: "Sensores dual-tech PIR de microondas, panel DSC Neo y enlace celular 4G encriptado a central.",
+    Scene: AlarmIsometricScene,
+    slug: "alarmas",
+  },
+  {
+    title: "Cercas de Alto Voltaje",
+    desc: "Pulsos disuasivos de 10 kV, sensores de flexión, corte y supervisión continua homologada NOM.",
+    Scene: FenceIsometricScene,
+    slug: "cercas-electrificadas",
+  },
+  {
+    title: "Videoporteros IP & Intercom",
+    desc: "Apertura remota de chapas magnéticas, video HD 2K y comunicación de audio bidireccional desde app.",
+    Scene: IntercomIsometricScene,
+    slug: "videoporteros",
+  },
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -797,10 +827,8 @@ export default function FeaturesWithPanel({ onOpenQuote }) {
   });
 
   const goTo = (index) => {
-    if (!isDesktop) {
-      setActive(index);
-      return;
-    }
+    setActive(index);
+    if (!isDesktop) return;
     const el = sectionRef.current;
     if (!el) return;
     const top = el.getBoundingClientRect().top + window.scrollY;
@@ -890,18 +918,30 @@ export default function FeaturesWithPanel({ onOpenQuote }) {
                           style={{ overflow: "hidden" }}
                         >
                           <p className="fwp-desc">{item.desc}</p>
-                          {onOpenQuote && (
-                            <button
-                              type="button"
-                              className="fwp-cta"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                onOpenQuote(item.title);
-                              }}
-                            >
-                              Cotizar <ArrowRight size={13} />
-                            </button>
-                          )}
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginTop: '10px', flexWrap: 'wrap' }}>
+                            {onOpenQuote && (
+                              <button
+                                type="button"
+                                className="fwp-cta"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  onOpenQuote(item.title);
+                                }}
+                              >
+                                Cotizar <ArrowRight size={13} />
+                              </button>
+                            )}
+                            {item.slug && (
+                              <a
+                                href={`#servicio-${item.slug}`}
+                                className="fwp-cta"
+                                style={{ color: '#2B5672' }}
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                Ver solución →
+                              </a>
+                            )}
+                          </div>
                           {!isDesktop && (
                             <div className="fwp-panel fwp-panel--inline">
                               <Scene />
