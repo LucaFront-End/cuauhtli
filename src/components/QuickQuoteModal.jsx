@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { X, Shield, Send, CheckCircle2, Phone, Mail, Building, MapPin } from 'lucide-react';
 
@@ -10,6 +10,12 @@ export default function QuickQuoteModal({ isOpen, onClose, defaultSolution }) {
   const [location, setLocation] = useState('CDMX');
   const [comments, setComments] = useState('');
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (defaultSolution) {
+      setService(defaultSolution);
+    }
+  }, [defaultSolution]);
 
   if (!isOpen) return null;
 
@@ -146,6 +152,7 @@ export default function QuickQuoteModal({ isOpen, onClose, defaultSolution }) {
                 <option value="Control de Acceso Biométrico">Control de Acceso Biométrico & Torniquetes</option>
                 <option value="Cercas Electrificadas Homologadas">Cercas Electrificadas de Alto Voltaje</option>
                 <option value="Alarmas Inteligentes y Monitoreo">Alarmas Inteligentes con Monitoreo 24/7</option>
+                <option value="Instalación de Salas de Monitoreo">Instalación de Salas de Monitoreo & Video Walls</option>
                 <option value="Videoporteros IP & Intercom">Videoporteros IP & Control Remoto</option>
                 <option value="Solución Integral Completa">Solución Integral Llave en Mano</option>
               </select>

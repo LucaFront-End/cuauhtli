@@ -11,6 +11,7 @@ import {
   Warehouse,
   Eye,
   Server,
+  LayoutGrid,
 } from 'lucide-react';
 import DynamicFrameLayout from './ui/dynamic-frame-layout';
 import './CoverageGrid.css';
@@ -47,10 +48,10 @@ const FRAMES = [
     video: mixkit(17536), defaultPos: { x: 0, y: 4 },
   },
   {
-    id: 5, cam: '05', zone: 'Sala de control',
-    label: 'Alertas inmediatas',
-    desc: 'Verificación visual y despacho en segundos.',
-    solution: 'Alarmas Inteligentes & Monitoreo 24/7',
+    id: 5, cam: '05', zone: 'Centro de control C4',
+    label: 'Instalación de salas de monitoreo',
+    desc: 'Diseño, video walls 24/7, consolas ergonómicas y software VMS para C4.',
+    solution: 'Instalación de Salas de Monitoreo',
     video: mixkit(23988), defaultPos: { x: 4, y: 4 },
   },
   {
@@ -99,7 +100,7 @@ const ICONS = {
   2: MonitorDot,
   3: Fingerprint,
   4: Zap,
-  5: Siren,
+  5: LayoutGrid,
   6: Smartphone,
   7: Warehouse,
   8: Eye,
