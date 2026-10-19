@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <!-- JOHNSON CONTROLS BRAND VECTOR -->
+  <g>
+    <!-- Johnson Controls Two-Tone Leaf Arc -->
+    <path d="M12 30C12 18 20 14 30 14" stroke="#0076CE" stroke-width="4" stroke-linecap="round"/>
+    <path d="M18 34C24 34 32 30 32 20" stroke="#78BE20" stroke-width="3.5" stroke-linecap="round"/>
+    <!-- Johnson Controls Text -->
+    <text x="38" y="25" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="15" letter-spacing="-0.2px" fill="#0076CE">Johnson</text>
+    <text x="38" y="37" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="700" font-size="12" letter-spacing="0.5px" fill="#0B1120">Controls</text>
+  </g>
+</svg>

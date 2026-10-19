@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <!-- PELCO BRAND VECTOR -->
+  <g>
+    <!-- Pelco Triangle Mark -->
+    <path d="M12 34L22 14L32 34Z" fill="#004B87"/>
+    <path d="M17 34L22 24L27 34Z" fill="#FFFFFF"/>
+    <!-- PELCO Text -->
+    <text x="38" y="28" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="20" letter-spacing="1.2px" fill="#004B87">PELCO</text>
+    <text x="39" y="38" font-family="'Space Grotesk', Arial, sans-serif" font-weight="600" font-size="7" letter-spacing="1.5px" fill="#64748B">BY MOTOROLA SOLUTIONS</text>
+  </g>
+</svg>

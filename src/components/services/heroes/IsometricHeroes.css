@@ -1,0 +1,332 @@
+/* ==========================================================================
+   ISOMETRIC LOTTIE-STYLE ANIMATIONS - SISTEMAS CUAUTHLI
+   Authentic brand colors: Crimson (#A6192E), Steel Blue (#2B5672), Charcoal (#1D1E1B)
+   60fps hardware-accelerated vector micro-animations
+   ========================================================================== */
+
+.iso-scene-wrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 40%, rgba(43, 86, 114, 0.08) 0%, rgba(29, 30, 27, 0.03) 70%, transparent 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.iso-svg-canvas {
+  width: 100%;
+  height: 100%;
+  max-width: 580px;
+  max-height: 480px;
+  overflow: visible;
+  filter: drop-shadow(0 14px 28px rgba(15, 23, 42, 0.07));
+}
+
+/* Floating animation for isometric elements */
+@keyframes isoFloatSlow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes isoFloatFast {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.iso-float-slow {
+  animation: isoFloatSlow 4s ease-in-out infinite;
+}
+
+.iso-float-fast {
+  animation: isoFloatFast 2.8s ease-in-out infinite;
+}
+
+/* Radar & Scanner Sweeps */
+@keyframes radarSweepIso {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.iso-radar-sweep {
+  transform-origin: 300px 240px;
+  animation: radarSweepIso 6s linear infinite;
+}
+
+/* Laser Scan Cone */
+@keyframes laserScanSweep {
+  0%, 100% {
+    transform: rotate(-18deg);
+    opacity: 0.75;
+  }
+  50% {
+    transform: rotate(22deg);
+    opacity: 0.95;
+  }
+}
+
+.iso-laser-scan {
+  transform-origin: 160px 140px;
+  animation: laserScanSweep 3.6s ease-in-out infinite;
+}
+
+/* Pulse Ripple Wave */
+@keyframes isoPulseRipple {
+  0% {
+    r: 10;
+    opacity: 0.8;
+  }
+  100% {
+    r: 90;
+    opacity: 0;
+  }
+}
+
+.iso-ripple-wave {
+  animation: isoPulseRipple 2.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+/* Electric Sparks for Fence */
+@keyframes sparkFlicker {
+  0%, 100% { opacity: 0; }
+  10%, 15% { opacity: 1; transform: scaleY(1.1); }
+  20%, 30% { opacity: 0; }
+  35%, 40% { opacity: 1; transform: scaleY(0.9); }
+  45%, 60% { opacity: 0; }
+  65%, 75% { opacity: 1; transform: scaleY(1.05); }
+  80% { opacity: 0; }
+}
+
+.iso-spark-anim {
+  animation: sparkFlicker 1.8s steps(2, start) infinite;
+}
+
+/* Live Telemetry HUD */
+.iso-hud-overlay {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(29, 30, 27, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: #FFFFFF;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.66rem;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 10;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  transition: all 0.25s ease;
+}
+
+.iso-hud-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.iso-hud-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.iso-hud-meta {
+  color: #CBD5E1;
+  font-size: 0.62rem;
+  display: flex;
+  gap: 10px;
+}
+
+/* Interactive Action Buttons Bar */
+.iso-controls-bar {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  padding: 6px 10px;
+  border-radius: var(--radius-full, 9999px);
+  border: 1px solid #E8E6E6;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+  z-index: 10;
+  max-width: 90%;
+  overflow-x: auto;
+}
+
+.iso-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-full, 9999px);
+  border: none;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.18s ease, box-shadow 0.2s ease;
+  font-family: var(--font-sans, inherit);
+  background: #F1F5F9;
+  color: #1D1E1B;
+}
+
+.iso-btn:hover {
+  transform: translateY(-1px);
+  background: #E8E6E6;
+}
+
+.iso-btn:focus-visible {
+  outline: 2px solid #2B5672;
+  outline-offset: 2px;
+}
+
+.iso-btn.is-on {
+  background: #2B5672;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(43, 86, 114, 0.35);
+}
+
+.iso-btn.is-on.is-amber {
+  background: #B45309;
+  box-shadow: 0 4px 12px rgba(180, 83, 9, 0.35);
+}
+
+.iso-btn--primary {
+  background: #FFF1F2;
+  color: #A6192E;
+}
+
+.iso-btn--primary:hover {
+  background: #FFE4E6;
+}
+
+.iso-btn--primary.is-on,
+.iso-btn--solid {
+  background: #A6192E;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(166, 25, 46, 0.35);
+}
+
+.iso-btn--solid:hover {
+  background: #8C1527;
+}
+
+/* ---------- richer HUD ---------- */
+.iso-svg-canvas--wide {
+  max-width: none;
+  max-height: none;
+}
+
+.iso-hud-overlay strong {
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: #F8FAFC;
+}
+
+.iso-hud-overlay.is-alert {
+  border-color: rgba(239, 68, 68, 0.65);
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.25), 0 6px 22px rgba(166, 25, 46, 0.35);
+}
+
+.iso-hud-clock {
+  margin-left: 6px;
+  color: #94A3B8;
+  font-size: 0.66rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.iso-hud-dot--rec {
+  animation: isoRecBlink 1.2s steps(2, start) infinite;
+}
+
+@keyframes isoRecBlink {
+  50% { opacity: 0.25; }
+}
+
+.iso-event-log {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 6px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 200px;
+}
+
+.iso-event-log li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.58rem;
+  color: #CBD5E1;
+  letter-spacing: 0.02em;
+  animation: isoLogIn 0.35s ease both;
+}
+
+.iso-event-log li:first-child {
+  color: #FFFFFF;
+}
+
+.iso-event-log li:nth-child(3) {
+  opacity: 0.55;
+}
+
+.iso-event-log i {
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  flex: none;
+}
+
+@keyframes isoLogIn {
+  from { opacity: 0; transform: translateY(-3px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 640px) {
+  .iso-hud-overlay {
+    top: 10px;
+    left: 10px;
+    padding: 8px 10px;
+    font-size: 0.66rem;
+  }
+  .iso-event-log {
+    display: none;
+  }
+  .iso-hud-meta {
+    gap: 8px;
+    font-size: 0.6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iso-hud-dot--rec,
+  .iso-event-log li {
+    animation: none;
+  }
+}

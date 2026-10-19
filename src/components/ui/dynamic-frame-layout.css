@@ -1,0 +1,234 @@
+/* DYNAMIC FRAME LAYOUT — plain CSS (project has no Tailwind)
+   Row/column sizing is animated in JS (springs); CSS handles the per-tile polish. */
+
+.dfl {
+  --dfl-radius: 14px;
+  --dfl-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 4fr 4fr 4fr;
+  grid-template-columns: 4fr 4fr 4fr;
+}
+
+.dfl-tile {
+  --mx: 0;
+  --my: 0;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  border-radius: var(--dfl-radius);
+  cursor: pointer;
+  outline: none;
+  background: var(--bg-tertiary, #f1f5f9);
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.06),
+    0 1px 2px rgba(15, 23, 42, 0.04);
+  transition:
+    box-shadow 0.8s var(--dfl-ease),
+    border-radius 0.8s var(--dfl-ease);
+  isolation: isolate;
+  will-change: transform;
+}
+
+.dfl-tile.is-active {
+  border-radius: calc(var(--dfl-radius) + 4px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.6),
+    0 0 0 4px rgba(37, 99, 235, 0.12),
+    0 28px 50px -22px rgba(15, 23, 42, 0.5),
+    0 10px 24px -14px rgba(37, 99, 235, 0.35);
+}
+
+.dfl-tile:focus-visible {
+  box-shadow: 0 0 0 2px var(--primary, #2563eb);
+}
+
+.dfl-reveal {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  transform: translateZ(0); /* keeps overflow+radius clipping crisp in Safari */
+}
+
+.dfl-frame {
+  position: absolute;
+  inset: 0;
+}
+
+.dfl-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  transform: scale(var(--dfl-media-scale, 1));
+}
+
+.dfl-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: translate3d(0, 0, 0) scale(1.12);
+  filter: grayscale(0.55) saturate(0.8) contrast(0.94) brightness(1.06);
+  transition:
+    transform 1.6s var(--dfl-ease),
+    filter 1s var(--dfl-ease);
+}
+
+/* active: colour comes back + gentle cursor parallax */
+.dfl-tile.is-active .dfl-video {
+  transform:
+    translate3d(calc(var(--mx) * -14px), calc(var(--my) * -10px), 0)
+    scale(1.05);
+  filter: none;
+  transition:
+    transform 0.9s var(--dfl-ease),
+    filter 1s var(--dfl-ease);
+}
+
+.dfl-veil {
+  position: absolute;
+  inset: 0;
+  background: rgba(248, 250, 252, 0.06);
+  transition: background 0.9s var(--dfl-ease);
+  pointer-events: none;
+}
+
+.dfl-veil.is-dimmed {
+  background: rgba(248, 250, 252, 0.48);
+}
+
+.dfl-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(2, 6, 23, 0.38) 0%, rgba(2, 6, 23, 0) 30%),
+    linear-gradient(0deg, rgba(2, 6, 23, 0.74) 0%, rgba(2, 6, 23, 0.14) 45%, rgba(2, 6, 23, 0) 64%);
+  opacity: 0.7;
+  transition: opacity 0.9s var(--dfl-ease);
+}
+
+.dfl-tile.is-active .dfl-shade { opacity: 1; }
+.dfl--has-active .dfl-tile:not(.is-active) .dfl-shade { opacity: 0.3; }
+
+/* faint CRT scanlines, only on the live tile */
+.dfl-scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.035) 0px,
+    rgba(255, 255, 255, 0.035) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.dfl-tile.is-active .dfl-scan { opacity: 1; }
+
+/* one soft light sweep each time a tile becomes active */
+.dfl-sweep {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.22) 48%,
+    rgba(255, 255, 255, 0.05) 54%,
+    transparent 62%
+  );
+  transform: translateX(-70%);
+  opacity: 0;
+}
+
+.dfl-tile.is-active .dfl-sweep {
+  animation: dfl-sweep 1.5s var(--dfl-ease) 0.1s both;
+}
+
+@keyframes dfl-sweep {
+  0% { transform: translateX(-70%); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateX(70%); opacity: 0; }
+}
+
+/* CCTV corner brackets */
+.dfl-brackets {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.dfl-bracket {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 0 solid rgba(255, 255, 255, 0.9);
+  opacity: 0;
+  transition:
+    opacity 0.6s ease,
+    transform 0.9s var(--dfl-ease);
+}
+
+/* 8px inset: brackets frame the HUD (which sits at 18–20px) instead of colliding with it */
+.dfl-bracket--tl { top: 8px; left: 8px; border-top-width: 1.5px; border-left-width: 1.5px; border-top-left-radius: 5px; transform: translate(8px, 8px); }
+.dfl-bracket--tr { top: 8px; right: 8px; border-top-width: 1.5px; border-right-width: 1.5px; border-top-right-radius: 5px; transform: translate(-8px, 8px); }
+.dfl-bracket--bl { bottom: 8px; left: 8px; border-bottom-width: 1.5px; border-left-width: 1.5px; border-bottom-left-radius: 5px; transform: translate(8px, -8px); }
+.dfl-bracket--br { bottom: 8px; right: 8px; border-bottom-width: 1.5px; border-right-width: 1.5px; border-bottom-right-radius: 5px; transform: translate(-8px, -8px); }
+
+.dfl-tile.is-active .dfl-bracket {
+  opacity: 1;
+  transform: translate(0, 0);
+  transition-delay: 0.12s;
+}
+
+.dfl-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.dfl-overlay a,
+.dfl-overlay button {
+  pointer-events: auto;
+}
+
+/* ------------------------------------------------------------------ */
+/* Mobile: stacked list, tap to activate                               */
+/* ------------------------------------------------------------------ */
+
+.dfl--mobile {
+  height: auto;
+  grid-template-rows: none;
+  grid-template-columns: 1fr;
+}
+
+.dfl--mobile .dfl-tile {
+  height: 112px;
+  transition:
+    height 0.8s var(--dfl-ease),
+    box-shadow 0.8s var(--dfl-ease),
+    border-radius 0.8s var(--dfl-ease);
+}
+
+.dfl--mobile .dfl-tile.is-active {
+  height: 250px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dfl-video,
+  .dfl-bracket,
+  .dfl--mobile .dfl-tile {
+    transition: none;
+  }
+  .dfl-tile.is-active .dfl-sweep { animation: none; }
+}

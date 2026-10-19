@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <!-- BOSCH BRAND VECTOR -->
+  <g>
+    <!-- Bosch Circle Magneto Symbol -->
+    <circle cx="24" cy="24" r="14" stroke="#E20015" stroke-width="3.5" fill="none"/>
+    <rect x="18" y="15" width="12" height="18" rx="2" stroke="#E20015" stroke-width="2.5" fill="none"/>
+    <line x1="14" y1="24" x2="34" y2="24" stroke="#E20015" stroke-width="2.5"/>
+    <!-- BOSCH Bold Text -->
+    <text x="46" y="32" font-family="'Arial Black', 'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="22" letter-spacing="1px" fill="#1F2429">BOSCH</text>
+  </g>
+</svg>

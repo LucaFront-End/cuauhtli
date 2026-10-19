@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <!-- ZKTECO BRAND VECTOR -->
+  <g>
+    <!-- ZKTeco Green / Blue Biometric Arch -->
+    <path d="M12 34C12 20 22 14 30 14" stroke="#72BF44" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M18 34C18 25 24 20 30 20" stroke="#0072BC" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="30" cy="14" r="3" fill="#72BF44"/>
+    <!-- ZKTECO text -->
+    <text x="38" y="32" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="22" letter-spacing="0.5px" fill="#0072BC">ZK<tspan fill="#72BF44">T</tspan>ECO</text>
+  </g>
+</svg>

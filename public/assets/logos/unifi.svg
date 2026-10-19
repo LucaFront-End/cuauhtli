@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <!-- UBIQUITI UNIFI BRAND VECTOR -->
+  <g>
+    <!-- UniFi Stylized U Icon -->
+    <rect x="8" y="10" width="28" height="28" rx="8" fill="#006FFF"/>
+    <path d="M16 18V24C16 27.3 18.7 30 22 30C25.3 30 28 27.3 28 24V18" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+    <!-- Text -->
+    <text x="42" y="27" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="19" letter-spacing="-0.3px" fill="#0B1120">UniFi</text>
+    <text x="43" y="38" font-family="'Space Grotesk', Arial, sans-serif" font-weight="700" font-size="8" letter-spacing="2.2px" fill="#006FFF">PROTECT</text>
+  </g>
+</svg>

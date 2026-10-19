@@ -1,0 +1,1180 @@
+/* ==========================================================================
+   MULTI-STEP QUOTE FORM - SISTEMAS CUAUTHLI
+   Ultra-clean, modern, minimalist & editorial with Instrument Serif cursive
+   Hardware-accelerated 60fps Cyber HUD vector animations
+   ========================================================================== */
+
+.msf-section {
+  position: relative;
+  padding: 100px 24px 120px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FAFCFF 40%, #F8FAFC 100%);
+  border-top: 1px solid rgba(226, 232, 240, 0.7);
+  overflow: hidden;
+}
+
+/* Very subtle ambient gradient */
+.msf-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 420px;
+  background: radial-gradient(ellipse at top, rgba(37, 99, 235, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.msf-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   HEADER (EDITORIAL & MINIMALIST)
+   -------------------------------------------------------------------------- */
+.msf-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 44px;
+}
+
+.msf-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 13px;
+  background: var(--primary-subtle, #FFF1F2);
+  border: 1px solid var(--primary-border, #FECDD3);
+  border-radius: 9999px;
+  color: var(--primary, #A6192E);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-family: var(--font-mono, monospace);
+}
+
+.msf-eyebrow-icon {
+  color: var(--primary, #A6192E);
+}
+
+.msf-heading {
+  margin: 0 0 14px;
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+  color: var(--text-main, #1D1E1B);
+}
+
+/* EDITORIAL CURSIVE SERIF (Same as Timeline, Coverage & Testimonials) */
+.msf-heading em {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.08em;
+  letter-spacing: -0.01em;
+  padding-right: 0.05em;
+  background: linear-gradient(95deg, #1D1E1B 15%, #A6192E 65%, #2B5672 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.msf-sub {
+  margin: 0 auto;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-muted, #64748B);
+}
+
+/* --------------------------------------------------------------------------
+   MAIN CARD (MINIMALIST APPLE-GRADE SURFACE)
+   -------------------------------------------------------------------------- */
+.msf-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 20px;
+  box-shadow: 0 16px 36px -12px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.03);
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow 0.25s ease;
+}
+
+/* --------------------------------------------------------------------------
+   MINIMALIST STEPPER
+   -------------------------------------------------------------------------- */
+.msf-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 36px;
+  background: #FAFCFE;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+  gap: 16px;
+}
+
+.msf-step-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 2;
+  transition: all 0.2s ease;
+}
+
+.msf-step-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: #FFFFFF;
+  color: #94A3B8;
+  border: 1px solid #CBD5E1;
+  transition: all 0.2s ease;
+  font-family: var(--font-mono, monospace);
+}
+
+.msf-step-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748B;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.msf-step-item.is-active .msf-step-circle {
+  background: var(--primary, #2563EB);
+  color: #FFFFFF;
+  border-color: var(--primary, #2563EB);
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.28);
+}
+
+.msf-step-item.is-active .msf-step-name {
+  color: var(--text-main, #0B1120);
+  font-weight: 700;
+}
+
+.msf-step-item.is-completed .msf-step-circle {
+  background: #10B981;
+  color: #FFFFFF;
+  border-color: #10B981;
+}
+
+.msf-step-item.is-completed .msf-step-name {
+  color: #0F172A;
+}
+
+.msf-step-track {
+  flex: 1;
+  height: 1.5px;
+  background: #E2E8F0;
+  position: relative;
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 0 6px;
+}
+
+.msf-step-track::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  background: var(--primary, #2563EB);
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.msf-step-track.is-filled::after {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   SPLIT LAYOUT
+   -------------------------------------------------------------------------- */
+.msf-split {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  min-height: 500px;
+}
+
+/* LEFT COLUMN: INTERACTIVE ANIMATION SHOWCASE */
+.msf-visual-col {
+  background: linear-gradient(180deg, #FAFCFE 0%, #F8FAFC 100%);
+  border-right: 1px solid rgba(226, 232, 240, 0.7);
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+
+.msf-lottie-wrap {
+  width: 220px;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.msf-hud-motion-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   CYBER HUD VECTOR ANIMATIONS (60 FPS HARDWARE ACCELERATED)
+   -------------------------------------------------------------------------- */
+.msf-hud-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.msf-hud-svg {
+  width: 180px;
+  height: 180px;
+  overflow: visible;
+  filter: drop-shadow(0 8px 24px rgba(37, 99, 235, 0.12));
+}
+
+/* Concentric rotating rings */
+.msf-ring-cw {
+  fill: none;
+  stroke: rgba(37, 99, 235, 0.18);
+  stroke-width: 1;
+  stroke-dasharray: 6 8;
+  transform-origin: 100px 100px;
+  animation: hudRotateCw 24s linear infinite;
+}
+
+.msf-ring-ccw {
+  fill: none;
+  stroke: rgba(14, 165, 233, 0.3);
+  stroke-width: 1.2;
+  stroke-dasharray: 12 16 4 16;
+  transform-origin: 100px 100px;
+  animation: hudRotateCcw 16s linear infinite;
+}
+
+@keyframes hudRotateCw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes hudRotateCcw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* HUD Reticle Brackets */
+.msf-hud-reticle {
+  fill: none;
+  stroke: rgba(37, 99, 235, 0.4);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+/* Shield geometry */
+.msf-shield-outer {
+  fill: none;
+  stroke: #2563EB;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 6px rgba(37, 99, 235, 0.35));
+}
+
+.msf-shield-inner {
+  opacity: 0.18;
+}
+
+.msf-eye-ring {
+  fill: none;
+  stroke: #0284C7;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+  transform-origin: 100px 96px;
+  animation: hudRotateCw 8s linear infinite;
+}
+
+.msf-eye-pupil {
+  fill: #2563EB;
+  animation: pupilPulse 2s ease-in-out infinite;
+}
+
+@keyframes pupilPulse {
+  0%, 100% { r: 5px; opacity: 0.8; }
+  50% { r: 7px; opacity: 1; }
+}
+
+/* Laser sweep */
+.msf-shield-laser {
+  stroke: #38BDF8;
+  stroke-width: 2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px #38BDF8);
+  animation: laserSweep 3.2s ease-in-out infinite;
+}
+
+@keyframes laserSweep {
+  0%, 100% {
+    transform: translateY(-38px);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(38px);
+    opacity: 0.95;
+  }
+}
+
+/* Coordinate blips */
+.msf-blip-pulse-1,
+.msf-blip-pulse-2,
+.msf-blip-pulse-3 {
+  fill: #38BDF8;
+  animation: blipFade 1.8s ease-in-out infinite;
+}
+
+.msf-blip-pulse-2 { animation-delay: 0.6s; }
+.msf-blip-pulse-3 { animation-delay: 1.2s; }
+
+@keyframes blipFade {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* --------------------------------------------------------------------------
+   STEP 2: RADAR 360° ANIMATION
+   -------------------------------------------------------------------------- */
+.msf-radar-circle {
+  fill: none;
+  stroke: rgba(37, 99, 235, 0.14);
+  stroke-width: 1;
+}
+
+.msf-radar-outer {
+  stroke: rgba(37, 99, 235, 0.3);
+  stroke-width: 1.5;
+}
+
+.msf-radar-axis {
+  stroke: rgba(37, 99, 235, 0.2);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+
+.msf-radar-axis-subtle {
+  stroke: rgba(37, 99, 235, 0.08);
+  stroke-width: 1;
+}
+
+.msf-radar-sweep-rotor {
+  transform-origin: 100px 100px;
+  animation: radarRotate 3.6s linear infinite;
+}
+
+.msf-radar-sweep-lead {
+  stroke: #38BDF8;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px #38BDF8);
+}
+
+@keyframes radarRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.msf-radar-center-dot {
+  fill: #2563EB;
+  filter: drop-shadow(0 0 4px #2563EB);
+}
+
+.msf-tblip-core {
+  fill: #10B981;
+}
+
+.msf-tblip-wave {
+  fill: none;
+  stroke: #10B981;
+  stroke-width: 1.2;
+  transform-origin: center;
+  animation: targetPing 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.msf-tblip-2 .msf-tblip-wave { animation-delay: 0.6s; }
+.msf-tblip-3 .msf-tblip-wave { animation-delay: 1.2s; }
+
+@keyframes targetPing {
+  0% { r: 3.5px; opacity: 1; }
+  100% { r: 11px; opacity: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   STEP 3: BLUEPRINT & FIELD SURVEY ANIMATION
+   -------------------------------------------------------------------------- */
+.msf-bp-frame {
+  fill: #FFFFFF;
+  stroke: rgba(37, 99, 235, 0.25);
+  stroke-width: 1.5;
+}
+
+.msf-bp-grid {
+  stroke: rgba(226, 232, 240, 0.8);
+  stroke-width: 0.8;
+  stroke-dasharray: 2 3;
+}
+
+.msf-iso-top {
+  fill: rgba(37, 99, 235, 0.15);
+  stroke: #2563EB;
+  stroke-width: 1.2;
+}
+
+.msf-iso-left {
+  fill: rgba(37, 99, 235, 0.08);
+  stroke: #2563EB;
+  stroke-width: 1.2;
+}
+
+.msf-iso-right {
+  fill: rgba(37, 99, 235, 0.22);
+  stroke: #2563EB;
+  stroke-width: 1.2;
+}
+
+.msf-bp-laser {
+  stroke: #38BDF8;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 2;
+  filter: drop-shadow(0 0 6px #38BDF8);
+  animation: bpLaserScan 2.8s ease-in-out infinite;
+}
+
+@keyframes bpLaserScan {
+  0%, 100% {
+    transform: translateY(-28px);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(28px);
+    opacity: 1;
+  }
+}
+
+.msf-pin-ripple {
+  fill: none;
+  stroke: #2563EB;
+  stroke-width: 1.2;
+  animation: pinWave 1.6s ease-out infinite;
+}
+
+.msf-pin-dot {
+  fill: #2563EB;
+}
+
+@keyframes pinWave {
+  0% { r: 4px; opacity: 1; }
+  100% { r: 16px; opacity: 0; }
+}
+
+.msf-bp-txt {
+  font-family: var(--font-mono, monospace);
+  font-size: 6.5px;
+  font-weight: 700;
+  fill: #64748B;
+  letter-spacing: 0.04em;
+}
+
+/* Status strip underneath HUD */
+.msf-hud-status-strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(37, 99, 235, 0.05);
+  border: 1px solid rgba(37, 99, 235, 0.14);
+  border-radius: 9999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  font-family: var(--font-mono, monospace);
+  color: var(--primary, #2563EB);
+  letter-spacing: 0.05em;
+  margin-top: 10px;
+}
+
+.msf-hud-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 8px #10B981;
+  animation: liveDotPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes liveDotPulse {
+  0%, 100% { opacity: 0.5; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* --------------------------------------------------------------------------
+   SUCCESS / CELEBRATION HUD
+   -------------------------------------------------------------------------- */
+.msf-success-hud-wrap {
+  margin-bottom: 8px;
+}
+
+.msf-success-svg {
+  width: 120px;
+  height: 120px;
+  overflow: visible;
+}
+
+.msf-succ-wave-1 {
+  fill: none;
+  stroke: rgba(16, 185, 129, 0.25);
+  stroke-width: 1;
+  animation: succWave 2s ease-out infinite;
+}
+
+.msf-succ-wave-2 {
+  fill: none;
+  stroke: rgba(16, 185, 129, 0.4);
+  stroke-width: 1.2;
+  animation: succWave 2s ease-out infinite 0.4s;
+}
+
+@keyframes succWave {
+  0% { r: 44px; opacity: 1; }
+  100% { r: 72px; opacity: 0; }
+}
+
+.msf-succ-circle {
+  fill: #10B981;
+  filter: drop-shadow(0 8px 20px rgba(16, 185, 129, 0.35));
+}
+
+.msf-succ-checkmark {
+  fill: none;
+  stroke: #FFFFFF;
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+  animation: drawCheck 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes drawCheck {
+  from { stroke-dashoffset: 60; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Visual info below HUD */
+.msf-visual-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 260px;
+}
+
+.msf-vinfo-title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-main, #0B1120);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.msf-vinfo-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted, #64748B);
+  line-height: 1.45;
+  margin-bottom: 16px;
+}
+
+.msf-vinfo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #334155;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.msf-vinfo-badge svg {
+  color: var(--primary, #2563EB);
+}
+
+/* RIGHT COLUMN: FORM INTERACTIONS */
+.msf-form-col {
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.msf-step-content {
+  flex: 1;
+}
+
+.msf-prompt {
+  margin-bottom: 24px;
+}
+
+.msf-prompt h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main, #0B1120);
+  letter-spacing: -0.02em;
+  margin-bottom: 5px;
+}
+
+.msf-prompt p {
+  font-size: 0.85rem;
+  color: var(--text-muted, #64748B);
+}
+
+/* --------------------------------------------------------------------------
+   STEP 1: SOLUTIONS GRID (MINIMALIST CARDS)
+   -------------------------------------------------------------------------- */
+.msf-solutions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.msf-sol-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  font-family: inherit;
+}
+
+.msf-sol-card:hover {
+  border-color: #CBD5E1;
+  background: #FAFCFF;
+  transform: translateY(-1px);
+}
+
+.msf-sol-card.is-selected {
+  border-color: var(--primary, #2563EB);
+  background: #F0F7FF;
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.08);
+}
+
+.msf-sol-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: #F8FAFC;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.18s ease;
+  border: 1px solid #E2E8F0;
+}
+
+.msf-sol-card.is-selected .msf-sol-icon {
+  background: var(--primary, #2563EB);
+  color: #FFFFFF;
+  border-color: var(--primary, #2563EB);
+}
+
+.msf-sol-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.msf-sol-body strong {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main, #0B1120);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.msf-sol-body span {
+  font-size: 0.72rem;
+  color: var(--text-muted, #64748B);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.msf-checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1.5px solid #CBD5E1;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+  color: #FFFFFF;
+}
+
+.msf-checkbox.is-checked {
+  background: var(--primary, #2563EB);
+  border-color: var(--primary, #2563EB);
+}
+
+/* --------------------------------------------------------------------------
+   STEP 2: DIMENSIONS & ALCANCE
+   -------------------------------------------------------------------------- */
+.msf-field-group {
+  margin-bottom: 20px;
+}
+
+.msf-group-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-main, #0B1120);
+  margin-bottom: 8px;
+}
+
+.msf-pills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.msf-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  font-family: inherit;
+}
+
+.msf-pill:hover {
+  border-color: #CBD5E1;
+  background: #F8FAFC;
+}
+
+.msf-pill.is-active {
+  border-color: var(--primary, #2563EB);
+  background: #EFF6FF;
+  color: var(--primary, #2563EB);
+  font-weight: 700;
+}
+
+.msf-inline-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.msf-select {
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 0.84rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--text-main, #0B1120);
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.msf-select:focus {
+  border-color: var(--primary, #2563EB);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   STEP 3: CONTACT FORM
+   -------------------------------------------------------------------------- */
+.msf-inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.msf-input-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.msf-input-field label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-main, #0B1120);
+  margin-bottom: 5px;
+}
+
+.msf-input-field input {
+  padding: 9px 12px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: var(--text-main, #0B1120);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.msf-input-field input::placeholder {
+  color: #94A3B8;
+}
+
+.msf-input-field input:focus {
+  border-color: var(--primary, #2563EB);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.msf-input-field input.has-error {
+  border-color: #EF4444;
+  background: #FEF2F2;
+}
+
+.msf-err {
+  font-size: 0.7rem;
+  color: #DC2626;
+  font-weight: 600;
+  margin-top: 3px;
+}
+
+.msf-check-option {
+  padding: 10px 12px;
+  background: #FAFCFE;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+}
+
+.msf-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1E293B;
+  cursor: pointer;
+}
+
+.msf-checkbox-label input[type="checkbox"] {
+  accent-color: var(--primary, #2563EB);
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   ACTIONS BAR
+   -------------------------------------------------------------------------- */
+.msf-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 22px;
+  border-top: 1px solid #F1F5F9;
+  margin-top: 18px;
+}
+
+.msf-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  background: transparent;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+}
+
+.msf-back-btn:hover {
+  background: #F8FAFC;
+  color: var(--text-main, #0B1120);
+  border-color: #94A3B8;
+}
+
+.msf-next-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: var(--primary, #2563EB);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.24);
+  font-family: inherit;
+}
+
+.msf-next-btn:hover {
+  background: var(--primary-hover, #1D4ED8);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.32);
+}
+
+.msf-next-btn:active {
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   SUCCESS / CONFIRMATION STATE
+   -------------------------------------------------------------------------- */
+.msf-success-wrap {
+  padding: 50px 28px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.msf-success-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #059669;
+  margin-bottom: 16px;
+}
+
+.msf-success-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-main, #0B1120);
+  line-height: 1.25;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.msf-folio-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  background: #F8FAFC;
+  border: 1px dashed #CBD5E1;
+  border-radius: 10px;
+  margin-bottom: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.msf-folio-card:hover {
+  background: #F1F5F9;
+  border-color: var(--primary, #2563EB);
+}
+
+.msf-folio-label {
+  font-size: 0.78rem;
+  color: #64748B;
+  font-weight: 500;
+}
+
+.msf-folio-code {
+  font-family: var(--font-mono, monospace);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary, #2563EB);
+  letter-spacing: 0.04em;
+}
+
+.msf-folio-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.msf-folio-copy-btn:hover {
+  background: #EFF6FF;
+  color: var(--primary, #2563EB);
+  border-color: var(--primary, #2563EB);
+}
+
+.msf-success-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted, #64748B);
+  line-height: 1.55;
+  margin-bottom: 28px;
+}
+
+.msf-success-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.msf-whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #10B981;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.24);
+  transition: all 0.18s ease;
+}
+
+.msf-whatsapp-btn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.32);
+}
+
+.msf-reset-form-btn {
+  background: transparent;
+  border: 1px solid #CBD5E1;
+  padding: 9px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748B;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+}
+
+.msf-reset-form-btn:hover {
+  background: #F1F5F9;
+  color: var(--text-main, #0B1120);
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE DESIGN
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .msf-split {
+    grid-template-columns: 1fr;
+  }
+
+  .msf-visual-col {
+    border-right: none;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+    padding: 28px 20px;
+  }
+
+  .msf-lottie-wrap {
+    width: 180px;
+    min-height: 180px;
+    margin-bottom: 14px;
+  }
+
+  .msf-hud-svg {
+    width: 150px;
+    height: 150px;
+  }
+
+  .msf-form-col {
+    padding: 28px 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .msf-section {
+    padding: 60px 16px 80px;
+  }
+
+  .msf-stepper {
+    padding: 14px 16px;
+  }
+
+  .msf-step-name {
+    display: none;
+  }
+
+  .msf-solutions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .msf-inline-fields,
+  .msf-inputs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .msf-actions-bar {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .msf-back-btn,
+  .msf-next-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

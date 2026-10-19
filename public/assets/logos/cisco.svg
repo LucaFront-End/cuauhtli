@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <!-- CISCO MERAKI BRAND VECTOR -->
+  <g>
+    <!-- Cisco Vertical Bars Wave -->
+    <path d="M12 28V20M16 32V16M20 28V20M24 34V14M28 28V20M32 32V16M36 28V20" stroke="#049FD9" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- CISCO Text -->
+    <text x="44" y="27" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="18" letter-spacing="1px" fill="#049FD9">CISCO</text>
+    <text x="44" y="38" font-family="'Space Grotesk', Arial, sans-serif" font-weight="700" font-size="9" letter-spacing="2px" fill="#1C1D1F">MERAKI</text>
+  </g>
+</svg>

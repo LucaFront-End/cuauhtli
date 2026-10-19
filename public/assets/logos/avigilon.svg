@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <!-- AVIGILON BRAND VECTOR -->
+  <g>
+    <!-- Avigilon Dynamic Chevrons -->
+    <path d="M10 32L18 14L22 14L14 32Z" fill="#005A9C"/>
+    <path d="M18 32L26 14L30 14L22 32Z" fill="#00A3E0"/>
+    <!-- AVIGILON Text -->
+    <text x="36" y="27" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="18" letter-spacing="1px" fill="#005A9C">AVIGILON</text>
+    <text x="37" y="38" font-family="'Space Grotesk', Arial, sans-serif" font-weight="600" font-size="7.5" letter-spacing="1.5px" fill="#64748B">A MOTOROLA SOLUTIONS CO.</text>
+  </g>
+</svg>

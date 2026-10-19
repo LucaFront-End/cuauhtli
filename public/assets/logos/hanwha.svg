@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <!-- HANWHA VISION BRAND VECTOR -->
+  <g>
+    <!-- Hanwha Intersecting Circles -->
+    <circle cx="16" cy="24" r="8" stroke="#F37321" stroke-width="3" fill="none"/>
+    <circle cx="24" cy="20" r="7" stroke="#E82C2A" stroke-width="2.5" fill="none"/>
+    <circle cx="28" cy="27" r="6" stroke="#FDB913" stroke-width="2.5" fill="none"/>
+    <!-- Hanwha Vision Text -->
+    <text x="40" y="26" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="18" letter-spacing="-0.3px" fill="#0B1120">Hanwha</text>
+    <text x="41" y="38" font-family="'Space Grotesk', Arial, sans-serif" font-weight="700" font-size="8.5" letter-spacing="2px" fill="#F37321">VISION</text>
+  </g>
+</svg>

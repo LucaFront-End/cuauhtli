@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <!-- DSC SECURITY BRAND VECTOR -->
+  <g>
+    <!-- DSC Blue Shield Badge -->
+    <rect x="10" y="10" width="32" height="28" rx="6" fill="#004B87"/>
+    <text x="14" y="30" font-family="'Arial Black', sans-serif" font-weight="900" font-style="italic" font-size="14" fill="#FFFFFF">DSC</text>
+    <!-- DSC Text -->
+    <text x="48" y="27" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="18" letter-spacing="1px" fill="#004B87">DSC</text>
+    <text x="48" y="38" font-family="'Space Grotesk', Arial, sans-serif" font-weight="700" font-size="8.5" letter-spacing="2px" fill="#64748B">SECURITY</text>
+  </g>
+</svg>

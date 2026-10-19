@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <!-- HIKVISION OFFICIAL BRAND VECTOR -->
+  <g>
+    <!-- Red Accent Mark -->
+    <path d="M12 10L24 10L18 38L6 38Z" fill="#E60012"/>
+    <path d="M26 10L32 10L26 38L20 38Z" fill="#E60012" opacity="0.85"/>
+    <!-- Bold HIKVISION Lettering -->
+    <text x="38" y="32" font-family="'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif" font-weight="900" font-size="21" letter-spacing="-0.5px" fill="#1C1D1F">HIKVISION</text>
+  </g>
+</svg>

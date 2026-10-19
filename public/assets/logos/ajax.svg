@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <!-- AJAX SYSTEMS BRAND VECTOR -->
+  <g>
+    <!-- Geometric Ajax Hex Shield -->
+    <path d="M12 24L22 14L32 24L22 34Z" stroke="#0B1120" stroke-width="3.5" fill="none"/>
+    <circle cx="22" cy="24" r="3" fill="#2563EB"/>
+    <!-- AJAX text -->
+    <text x="40" y="32" font-family="'Space Grotesk', 'Plus Jakarta Sans', Arial, sans-serif" font-weight="900" font-size="24" letter-spacing="4px" fill="#0B1120">AJAX</text>
+  </g>
+</svg>
