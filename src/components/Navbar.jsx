@@ -56,29 +56,14 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService 
 
   const handleSectionNavigate = (e, targetHash) => {
     if (e) e.preventDefault();
-    const isServiceRoute = window.location.hash.startsWith('#servicio-');
-
-    // If navigating to #nosotros and we are already on a service page, scroll on this page
-    if (targetHash === '#nosotros' && isServiceRoute) {
-      const el = document.getElementById('nosotros');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return;
-      }
-    }
-
-    // If on a service page, navigate to home first and then scroll
-    if (isServiceRoute) {
-      window.location.hash = targetHash;
-      onNavigateHome?.();
+    window.location.hash = targetHash;
+    if (targetHash === '#nosotros' || targetHash === '#comunidad') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
       setTimeout(() => {
         const el = document.querySelector(targetHash);
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 150);
-    } else {
-      window.location.hash = targetHash;
-      const el = document.querySelector(targetHash);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
     }
   };
 
@@ -315,18 +300,7 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService 
                 </MotionNavigationMenuContent>
               </MotionNavigationMenuItem>
 
-              {/* ITEM 4: DIRECT LINK TESTIMONIOS */}
-              <MotionNavigationMenuItem>
-                <MotionNavigationMenuLink 
-                  href="#testimonios" 
-                  className="cuauhtli-direct-link"
-                  onClick={(e) => handleSectionNavigate(e, '#testimonios')}
-                >
-                  Testimonios
-                </MotionNavigationMenuLink>
-              </MotionNavigationMenuItem>
-
-              {/* ITEM 5: DIRECT LINK NOSOTROS */}
+              {/* ITEM 4: DIRECT LINK NOSOTROS */}
               <MotionNavigationMenuItem>
                 <MotionNavigationMenuLink 
                   href="#nosotros" 
@@ -337,7 +311,7 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService 
                 </MotionNavigationMenuLink>
               </MotionNavigationMenuItem>
 
-              {/* ITEM 6: DIRECT LINK COMUNIDAD */}
+              {/* ITEM 5: DIRECT LINK COMUNIDAD */}
               <MotionNavigationMenuItem>
                 <MotionNavigationMenuLink 
                   href="#comunidad" 
@@ -447,14 +421,6 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService 
               className="cuauhtli-mob-link"
             >
               <span>Trayectoria (2014 – 2025)</span>
-              <ChevronRight size={15} />
-            </a>
-            <a
-              href="#testimonios"
-              onClick={(e) => { setMobileMenuOpen(false); handleSectionNavigate(e, '#testimonios'); }}
-              className="cuauhtli-mob-link"
-            >
-              <span>Testimonios Verificados</span>
               <ChevronRight size={15} />
             </a>
             <a

@@ -12,8 +12,8 @@ import Footer from './components/Footer';
 import FloatingWhatsapp from './components/FloatingWhatsapp';
 import QuickQuoteModal from './components/QuickQuoteModal';
 import ServicePage from './components/services/ServicePage';
-import NosotrosSection from './components/NosotrosSection';
-import ComunidadSection from './components/ComunidadSection';
+import NosotrosPage from './components/pages/NosotrosPage';
+import ComunidadPage from './components/pages/ComunidadPage';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
@@ -27,11 +27,21 @@ export default function App() {
         const slug = hash.replace('#servicio-', '');
         setCurrentRoute(slug);
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#nosotros') {
+        setCurrentRoute('nosotros');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#comunidad') {
+        setCurrentRoute('comunidad');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '' || hash === '#') {
         setCurrentRoute('home');
       } else {
-        // Section anchors on home like #cobertura or #trayectoria
+        // Section anchors on home like #cobertura, #trayectoria, #testimonios
         setCurrentRoute('home');
+        setTimeout(() => {
+          const el = document.querySelector(hash);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
       }
     };
 
@@ -73,7 +83,19 @@ export default function App() {
 
       {/* MAIN CONTENT */}
       <main style={{ flex: 1 }}>
-        {currentRoute !== 'home' ? (
+        {currentRoute === 'nosotros' ? (
+          <NosotrosPage 
+            onOpenQuote={handleOpenQuote}
+            onNavigateHome={handleNavigateHome}
+            onNavigateService={handleNavigateService}
+          />
+        ) : currentRoute === 'comunidad' ? (
+          <ComunidadPage 
+            onOpenQuote={handleOpenQuote}
+            onNavigateHome={handleNavigateHome}
+            onNavigateService={handleNavigateService}
+          />
+        ) : currentRoute !== 'home' ? (
           <ServicePage 
             serviceId={currentRoute}
             onOpenQuote={handleOpenQuote}
@@ -105,12 +127,6 @@ export default function App() {
 
             {/* TRAYECTORIA & TIMELINE DE EVOLUCIÓN TECNOLÓGICA */}
             <TimelineSection onOpenQuote={handleOpenQuote} />
-
-            {/* SOBRE NOSOTROS & GARANTÍAS */}
-            <NosotrosSection onOpenQuote={handleOpenQuote} />
-
-            {/* COMUNIDAD CUAUTHLI & RED DE SEGURIDAD */}
-            <ComunidadSection onOpenQuote={handleOpenQuote} />
 
             {/* DIAGNÓSTICO & COTIZADOR MULTIPASOS DE 3 PASOS CON LOTTIES */}
             <MultiStepQuoteForm />
