@@ -1,4 +1,6 @@
 import React from 'react';
+import { Lottie } from 'lottie-react';
+import shieldLottie from '../assets/lottie/shield-step.json';
 import { 
   Award, 
   ShieldCheck, 
@@ -8,10 +10,12 @@ import {
   Phone, 
   ArrowRight, 
   Cpu, 
-  Layers, 
-  Check,
-  Building2,
-  Sparkles
+  Building2, 
+  Sparkles,
+  Zap,
+  Lock,
+  UserCheck,
+  FileBadge2
 } from 'lucide-react';
 import './NosotrosSection.css';
 
@@ -28,7 +32,7 @@ export default function NosotrosSection({ onOpenQuote, compact = false }) {
       id: 'ingenieria',
       tag: 'Certificación Tier-1',
       title: 'Ingeniería Propia & Cuadrillas Certificadas',
-      desc: 'No subcontratamos instaladores improvisados. Nuestro equipo está conformado por ingenieros y técnicos de planta avalados directamente por Hikvision Platinum, Dahua Tier-1, Honeywell, Ajax y ZKTeco.',
+      desc: 'No subcontratamos instaladores improvisados. Nuestro equipo está conformado por ingenieros y técnicos de nómina avalados directamente por Hikvision Platinum, Dahua Tier-1, Honeywell, Ajax y ZKTeco.',
       badge: 'Personal con control de confianza',
       icon: Award,
     },
@@ -66,11 +70,11 @@ export default function NosotrosSection({ onOpenQuote, compact = false }) {
     >
       <div className="container">
         
-        {/* HEADER */}
+        {/* HEADER WITH LOTTIE BADGE */}
         <div className="nosotros-header">
           <div className="nosotros-badge">
             <span className="nosotros-badge-dot" />
-            <span>Sobre Sistemas Cuauhtli</span>
+            <span>Sobre Sistemas Cuauhtli · Desde 2014</span>
           </div>
 
           <h2 id="nosotros-heading" className="nosotros-title">
@@ -82,6 +86,56 @@ export default function NosotrosSection({ onOpenQuote, compact = false }) {
             y los falsos disparos en la seguridad electrónica. Hoy blindamos la continuidad operativa 
             de más de 1,200 industrias, centros logísticos CEDIS y corporativos en todo el país.
           </p>
+        </div>
+
+        {/* HERO FEATURE BOX WITH LOTTIE SHIELD */}
+        <div 
+          style={{
+            background: 'linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%)',
+            border: '1px solid #E2E8F0',
+            borderRadius: '24px',
+            padding: '36px',
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr auto',
+            gap: '32px',
+            alignItems: 'center',
+            marginBottom: '44px',
+            boxShadow: '0 10px 30px -5px rgba(15, 23, 42, 0.04)'
+          }}
+        >
+          <div style={{ width: '130px', height: '130px', flexShrink: 0 }}>
+            <Lottie 
+              animationData={shieldLottie} 
+              loop={true} 
+              autoplay={true} 
+              style={{ width: '100%', height: '100%' }} 
+            />
+          </div>
+
+          <div>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.74rem', fontFamily: 'var(--font-mono)', color: 'var(--primary)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '6px' }}>
+              <Lock size={13} />
+              <span>Póliza de Calidad Certificada</span>
+            </div>
+            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0F172A', marginBottom: '8px' }}>
+              Garantía Vitalicia de Mano de Obra y Respaldo Civil de $10M MXN
+            </h3>
+            <p style={{ fontSize: '0.94rem', color: '#475569', lineHeight: 1.6, margin: 0 }}>
+              Cada proyecto es ejecutado exclusivamente por ingenieros de planta de Sistemas Cuauhtli con control de confianza. No subcontratamos instaladores ni arriesgamos la confidencialidad de tu infraestructura.
+            </p>
+          </div>
+
+          <div style={{ flexShrink: 0, textAlign: 'center' }}>
+            <button
+              type="button"
+              onClick={() => onOpenQuote?.('Solución Integral Completa')}
+              className="btn btn-primary"
+              style={{ padding: '14px 24px', whiteSpace: 'nowrap' }}
+            >
+              <span>Cotizar con Garantía</span>
+              <ArrowRight size={16} />
+            </button>
+          </div>
         </div>
 
         {/* METRICS STRIP */}
@@ -145,8 +199,7 @@ export default function NosotrosSection({ onOpenQuote, compact = false }) {
             </h3>
             <p className="nosotros-banner-desc">
               Un ingeniero especialista de nuestro equipo visitará tu inmueble, 
-              evaluará vulnerabilidades y te entregará una propuesta ejecutiva formal 
-              con planos y especificaciones sin compromiso.
+              evaluará puntos ciegos y te entregará un anteproyecto técnico formal sin compromiso.
             </p>
           </div>
 
