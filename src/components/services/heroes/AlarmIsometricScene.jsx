@@ -10,7 +10,7 @@ import './IsometricHeroes.css';
    siren + strobe → event reported to C4 over 4G/IP → intruder flees.
    ========================================================================== */
 
-const iso = createIso({ ox: 292, oy: 96, s: 22 });
+const iso = createIso({ ox: 298, oy: 78, s: 25.5 });
 const G = 12;
 const WALL = 3.0;
 const CYCLE = 18;
@@ -143,7 +143,7 @@ const FURNITURE = [
   { k: 11.1 + 6.5, el: <Bush key="b4" iso={iso} x={11.1} y={6.0} size={0.7} /> },
 ];
 
-const C4_POS = { x: 452, y: 30 };
+const C4_POS = { x: 444, y: 32 };
 
 export default function AlarmIsometricScene() {
   const wrapRef = useRef(null);
@@ -337,16 +337,16 @@ export default function AlarmIsometricScene() {
 
         {/* C4 central badge */}
         <g transform={`translate(${C4_POS.x},${C4_POS.y})`}>
-          <rect width="128" height="44" rx="8" fill="rgba(29,30,27,0.92)" stroke={alarm ? '#EF4444' : '#2B5672'} strokeWidth={alarm ? 1.6 : 1} />
-          <g transform="translate(10,9)">
+          <rect width="138" height="48" rx="8" fill="rgba(29,30,27,0.92)" stroke={alarm ? '#EF4444' : '#2B5672'} strokeWidth={alarm ? 1.6 : 1} />
+          <g transform="translate(11,10)">
             <path d="M 8 26 L 12 4 L 16 26 M 9.5 18 h 5 M 10.5 11 h 3" stroke="#CBD5E1" strokeWidth="1.2" fill="none" />
             <AirRing cx={12} cy={4} t={t} period={1.6} maxR={8} color={alarm ? '#F87171' : '#38BDF8'} width={1} />
           </g>
-          <text x="34" y="17" fontSize="7.5" fontWeight="800" fill="#FFFFFF" fontFamily={MONO}>CENTRAL C4</text>
-          <text x="34" y="28" fontSize="6" fill={alarm ? '#FCA5A5' : '#94A3B8'} fontFamily={MONO}>
+          <text x="36" y="18" fontSize="8.5" fontWeight="800" fill="#FFFFFF" fontFamily={MONO}>CENTRAL C4</text>
+          <text x="36" y="30" fontSize="6.8" fill={alarm ? '#FCA5A5' : '#94A3B8'} fontFamily={MONO}>
             {patrol ? 'PATRULLA EN CAMINO' : reported ? 'EVENTO RECIBIDO' : alarm ? 'RECIBIENDO…' : 'MONITOREO 24/7'}
           </text>
-          <text x="34" y="37" fontSize="5.4" fill="#64748B" fontFamily={MONO}>CTA #4471 · 4G/IP OK</text>
+          <text x="36" y="40" fontSize="5.8" fill="#64748B" fontFamily={MONO}>CTA #4471 · 4G/IP OK</text>
         </g>
 
         {/* keypad label */}
