@@ -1,5 +1,4 @@
-import React from 'react';
-import { Lottie } from 'lottie-react';
+import LottiePlayer from './ui/LottiePlayer';
 import shieldLottie from '../assets/lottie/shield-step.json';
 import { 
   Award, 
@@ -104,7 +103,7 @@ export default function NosotrosSection({ onOpenQuote, compact = false }) {
           }}
         >
           <div style={{ width: '130px', height: '130px', flexShrink: 0 }}>
-            <Lottie 
+            <LottiePlayer 
               animationData={shieldLottie} 
               loop={true} 
               autoplay={true} 
