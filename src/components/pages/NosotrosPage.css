@@ -8,7 +8,7 @@
   background: #FFFFFF;
   padding-top: 76px;
   color: var(--text-main, #1D1E1B);
-  overflow-x: hidden;
+  overflow-x: clip; /* clip avoids horizontal overflow without breaking position:sticky! */
 }
 
 /* --------------------------------------------------------------------------
@@ -351,27 +351,29 @@
   background: #0B1120;
   color: #FFFFFF;
   position: relative;
-  overflow: hidden;
+  overflow: visible !important; /* CRITICAL: Must be visible for position:sticky to work on children! */
 }
 
 .nos-lab-glow-top {
   position: absolute;
-  top: -100px;
+  top: 0;
   left: 20%;
-  width: 600px;
-  height: 400px;
+  width: 500px;
+  height: 350px;
   background: radial-gradient(circle, rgba(43, 86, 114, 0.35) 0%, transparent 70%);
   pointer-events: none;
+  filter: blur(40px);
 }
 
 .nos-lab-glow-bottom {
   position: absolute;
-  bottom: -100px;
+  bottom: 0;
   right: 15%;
-  width: 500px;
-  height: 400px;
+  width: 450px;
+  height: 350px;
   background: radial-gradient(circle, rgba(166, 25, 46, 0.28) 0%, transparent 70%);
   pointer-events: none;
+  filter: blur(40px);
 }
 
 .nos-lab-header {
@@ -473,11 +475,11 @@
 /* Scroll-Based Lab Layout: Benches Track + Sticky C4 Console */
 .nos-lab-scroll-layout {
   display: grid;
-  grid-template-columns: 1.25fr 0.75fr;
+  grid-template-columns: 1.15fr 0.85fr;
   gap: 48px;
-  align-items: flex-start;
   position: relative;
   z-index: 2;
+  align-items: stretch;
 }
 
 @media (max-width: 1024px) {
@@ -492,7 +494,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 48px;
   padding-left: 28px;
 }
 
@@ -519,7 +521,8 @@
   background: rgba(15, 23, 42, 0.82);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 24px;
-  padding: 32px 30px;
+  padding: 38px 32px;
+  min-height: 320px;
   position: relative;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
@@ -714,13 +717,24 @@
 /* Right: STICKY C4 DIAGNOSTICS & LOTTIE CONSOLE */
 .nos-lab-sticky-col {
   position: relative;
+  height: 100%;
 }
 
 @media (min-width: 1025px) {
-  .nos-lab-sticky-console {
+  .nos-lab-sticky-col {
+    position: -webkit-sticky;
     position: sticky;
-    top: 110px;
+    top: 125px;
     align-self: flex-start;
+    height: auto;
+    z-index: 25;
+  }
+
+  .nos-lab-sticky-console {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 125px;
+    z-index: 25;
   }
 }
 
@@ -730,7 +744,7 @@
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(56, 189, 248, 0.28);
   border-radius: 28px;
-  padding: 32px 28px;
+  padding: 28px 24px;
   position: relative;
   box-shadow: 
     0 25px 60px -15px rgba(0, 0, 0, 0.7),
@@ -797,11 +811,11 @@
 .nos-lab-lottie-stage {
   position: relative;
   width: 100%;
-  height: 220px;
+  height: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
   border-radius: 20px;
   border: 1px dashed rgba(56, 189, 248, 0.2);
@@ -809,7 +823,7 @@
 
 .nos-lottie-reticle {
   position: absolute;
-  inset: 12px;
+  inset: 10px;
   border: 1px solid rgba(56, 189, 248, 0.1);
   border-radius: 14px;
   pointer-events: none;
@@ -838,8 +852,8 @@
 }
 
 .nos-lottie-display-box {
-  width: 180px;
-  height: 180px;
+  width: 145px;
+  height: 145px;
   display: flex;
   align-items: center;
   justify-content: center;
