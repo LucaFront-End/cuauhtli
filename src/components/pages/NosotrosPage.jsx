@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import LottiePlayer from '../ui/LottiePlayer';
-import shieldLottie from '../../assets/lottie/shield-step.json';
-import radarLottie from '../../assets/lottie/radar-step.json';
-import securityLottie from '../../assets/lottie/security-step.json';
-import checkLottie from '../../assets/lottie/success-check.json';
+import {
+  HeroLifetimeShieldAnimation,
+  OpticsWaterShockAnimation,
+  LuxometryRadarAnimation,
+  CybersecurityHardeningAnimation,
+  ClimaticBurnInAnimation
+} from '../ui/SecurityHudAnimations';
 import { 
   Award, 
   ShieldCheck, 
@@ -97,12 +99,12 @@ export default function NosotrosPage({ onOpenQuote, onNavigateHome, onNavigateSe
   const testBenches = [
     {
       id: 'b1',
-      code: 'BENCH-01 // OPTICS & ARMOR',
+      code: 'BENCH-01 // OPTICS & WATER RESISTANCE',
       title: 'Cámara Estanca & Hermeticidad IP67 / IK10',
-      subtitle: 'Prueba de Inmersión y Choque Cinético de 20 Joules',
-      desc: 'Inmersión continua en agua a 1m de profundidad, chorro a presión de 100 kPa y choque mecánico de 20 Joules (impacto directo de masa de 5 kg a 40 cm). Cero condensación en lente, cero fisura en domo óptico.',
+      subtitle: 'Inmersión en Agua a 1m & Choque Mecánico de 20 Joules',
+      desc: 'Inmersión continua en agua a 1m de profundidad, chorro a presión de 100 kPa y choque mecánico de 20 Joules (impacto directo de 5 kg a 40 cm). Cero condensación en lente óptico, cero fisura en domo óptico.',
       status: 'TEST PASSED (100%)',
-      lottie: shieldLottie,
+      component: OpticsWaterShockAnimation,
       metricA: 'IP67 / IK10',
       lblA: 'Protección Mecánica',
       metricB: '20 Joules',
@@ -111,12 +113,12 @@ export default function NosotrosPage({ onOpenQuote, onNavigateHome, onNavigateSe
     },
     {
       id: 'b2',
-      code: 'BENCH-02 // LUXOMETRY & THERMAL',
+      code: 'BENCH-02 // LUXOMETRY & THERMAL RADAR',
       title: 'Luxometría Crítica & Detección Térmica 300m',
-      subtitle: 'Sensibilidad 0.0005 Lux en Oscuridad Total',
-      desc: 'Calibración en laboratorio cerrado de oscuridad extrema (0.0005 Lux). Ajuste fino milimétrico de sensores ColorVu y térmicos Bi-Spectrales para identificación humana y vehicular sin necesidad de lámparas auxiliares.',
+      subtitle: 'Sensibilidad 0.0005 Lux en Oscuridad Total & Radar 360°',
+      desc: 'Calibración en laboratorio de oscuridad extrema (0.0005 Lux). Ajuste milimétrico de sensores ColorVu y térmicos Bi-Spectrales para identificación humana y vehicular nítida a más de 300 metros sin iluminación auxiliar.',
       status: 'CALIBRATED (0.0005 lx)',
-      lottie: radarLottie,
+      component: LuxometryRadarAnimation,
       metricA: '0.0005 Lux',
       lblA: 'Sensibilidad Nocturna',
       metricB: '300+ m',
@@ -127,10 +129,10 @@ export default function NosotrosPage({ onOpenQuote, onNavigateHome, onNavigateSe
       id: 'b3',
       code: 'BENCH-03 // CYBERSECURITY & HARDENING',
       title: 'Auditoría de Ciberseguridad & Firmware Hardening',
-      subtitle: 'Cifrado de Video TLS 1.3 & Cero Backdoors',
-      desc: 'Escaneo integral de vulnerabilidades antes de instalación: cierre de puertos Telnet / UPnP inseguros, cifrado TLS 1.3 de extremo a extremo en streaming de video y cambio estricto de contraseñas de fábrica bajo norma de ciberseguridad.',
+      subtitle: 'Cifrado de Video TLS 1.3 & Cierre Total de Puertos Inseguros',
+      desc: 'Escaneo integral de vulnerabilidades previo a entrega: cierre de puertos Telnet / UPnP inseguros, cifrado TLS 1.3 de extremo a extremo en streaming de video y cambio estricto de contraseñas de fábrica bajo norma de ciberseguridad.',
       status: 'SECURE // TLS 1.3',
-      lottie: securityLottie,
+      component: CybersecurityHardeningAnimation,
       metricA: 'TLS 1.3',
       lblA: 'Cifrado de Video',
       metricB: '0 Puertos',
@@ -141,10 +143,10 @@ export default function NosotrosPage({ onOpenQuote, onNavigateHome, onNavigateSe
       id: 'b4',
       code: 'BENCH-04 // CLIMATIC BURN-IN 72H',
       title: 'Prueba de Estrés Térmico & Carga Continua 72h',
-      subtitle: 'Operación Extrema de -20°C a +60°C Sin Pérdida de Cuadros',
+      subtitle: 'Operación Extrema de -20°C a +60°C en Grabación RAID Continua',
       desc: 'Operación continua en cámara climática a temperaturas extremas (-20°C a +60°C) con grabación RAID intensiva simultánea al 100% de CPU para asegurar total estabilidad en naves industriales sin aire acondicionado.',
       status: '72H CONTINUOUS BURN-IN',
-      lottie: checkLottie,
+      component: ClimaticBurnInAnimation,
       metricA: '-20° a +60°C',
       lblA: 'Rango Térmico',
       metricB: '0 Dropouts',
@@ -289,17 +291,12 @@ export default function NosotrosPage({ onOpenQuote, onNavigateHome, onNavigateSe
               </div>
             </div>
 
-            {/* Right Column: Lottie Security Card */}
+            {/* Right Column: Lifetime Shield Security Card */}
             <div>
               <div className="nos-hero-lottie-card">
                 <div className="nos-hero-lottie-glow" />
                 <div className="nos-lottie-box">
-                  <LottiePlayer 
-                    animationData={shieldLottie} 
-                    loop={true} 
-                    autoplay={true} 
-                    style={{ width: '100%', height: '100%' }} 
-                  />
+                  <HeroLifetimeShieldAnimation />
                 </div>
                 <h3 className="nos-hero-lottie-title">Garantía Vitalicia Homologada</h3>
                 <p className="nos-hero-lottie-sub">
@@ -433,15 +430,10 @@ export default function NosotrosPage({ onOpenQuote, onNavigateHome, onNavigateSe
                         </div>
                       </div>
 
-                      {/* Mobile Inline Lottie Player */}
+                      {/* Mobile Inline HUD Player */}
                       <div className="nos-bench-mobile-lottie">
-                        <div style={{ width: '130px', height: '130px', margin: '15px auto 0 auto' }}>
-                          <LottiePlayer 
-                            animationData={b.lottie} 
-                            loop={true} 
-                            autoplay={true} 
-                            style={{ width: '100%', height: '100%' }} 
-                          />
+                        <div style={{ width: '100px', height: '100px', margin: '12px auto 0 auto' }}>
+                          {React.createElement(b.component)}
                         </div>
                       </div>
 
@@ -470,17 +462,11 @@ export default function NosotrosPage({ onOpenQuote, onNavigateHome, onNavigateSe
                   </div>
                 </div>
 
-                {/* Animated Lottie Radar / Diagnostics Stage */}
+                {/* Animated Diagnostics HUD Stage */}
                 <div className="nos-lab-lottie-stage">
                   <div className="nos-lottie-reticle" />
                   <div className="nos-lottie-display-box">
-                    <LottiePlayer 
-                      key={`bench-lottie-${activeBench}`}
-                      animationData={currentBench.lottie} 
-                      loop={true} 
-                      autoplay={true} 
-                      style={{ width: '100%', height: '100%' }} 
-                    />
+                    {React.createElement(currentBench.component)}
                   </div>
                 </div>
 

@@ -1,5 +1,4 @@
-import LottiePlayer from './ui/LottiePlayer';
-import shieldLottie from '../assets/lottie/shield-step.json';
+import { HeroLifetimeShieldAnimation } from './ui/SecurityHudAnimations';
 import { 
   Award, 
   ShieldCheck, 
@@ -103,12 +102,7 @@ export default function NosotrosSection({ onOpenQuote, compact = false }) {
           }}
         >
           <div style={{ width: '130px', height: '130px', flexShrink: 0 }}>
-            <LottiePlayer 
-              animationData={shieldLottie} 
-              loop={true} 
-              autoplay={true} 
-              style={{ width: '100%', height: '100%' }} 
-            />
+            <HeroLifetimeShieldAnimation />
           </div>
 
           <div>
