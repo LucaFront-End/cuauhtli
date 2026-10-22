@@ -50,8 +50,26 @@ export default function ReformaLaboralPage({ onOpenQuote, onNavigateHome, onNavi
     return () => clearInterval(timer);
   }, []);
 
-  // Hero Kinetic Dial State (Idea 2: 48h vs 40h)
-  const [jornadaMode, setJornadaMode] = useState('40h'); // '48h' | '40h'
+  // Hero Master Switch & Radial Ripple Wave (Idea 3: Todo el Hero)
+  const [heroMode, setHeroMode] = useState('compliant'); // 'compliant' | 'vulnerable'
+  const [isWiping, setIsWiping] = useState(false);
+  const [rippleClass, setRippleClass] = useState('');
+
+  const triggerHeroTransition = (targetMode) => {
+    if (targetMode === heroMode || isWiping) return;
+    setIsWiping(true);
+    setRippleClass(`animating-${targetMode}`);
+
+    // Sincronizar el cambio de contenido en la cresta de la onda expansiva
+    setTimeout(() => {
+      setHeroMode(targetMode);
+    }, 180);
+
+    setTimeout(() => {
+      setIsWiping(false);
+      setRippleClass('');
+    }, 650);
+  };
 
   // Simulator State
   const [employees, setEmployees] = useState(65);
@@ -288,219 +306,327 @@ export default function ReformaLaboralPage({ onOpenQuote, onNavigateHome, onNavi
         </div>
       </div>
 
-      {/* 2. HERO SECTION WITH INTERACTIVE HUD SIMULATOR */}
-      <header className="reforma-hero">
-        <div className="reforma-hero-container">
-          
-          {/* LEFT: VALUE PROPOSITION */}
-          <div>
-            <div className="reforma-hero-badge">
-              <Scale size={14} />
-              <span>Transición Oficial de 48 a 40 Horas Semanales</span>
-            </div>
+      {/* 2. HERO SECTION CON MASTER TOGGLE Y ONDA EXPANSIVA FORENSE (IDEA 3) */}
+      <header className={`reforma-hero ${heroMode}`}>
+        
+        {/* Radial Ripple Wave Overlay */}
+        <div className={`reforma-ripple-wave ${rippleClass}`} />
 
-            <h1 className="reforma-hero-title">
-              Blindaje Técnico y Legal en <span className="reforma-title-gradient">Control de Asistencia Biométrico</span> ante la STPS
-            </h1>
+        {/* Master Switch Bar (Centrado arriba del Hero) */}
+        <div className="reforma-master-switch-bar">
+          <div className="reforma-master-switch-container">
+            <button
+              type="button"
+              className={`reforma-master-toggle-btn ${heroMode === 'vulnerable' ? 'active vulnerable' : ''}`}
+              onClick={() => triggerHeroTransition('vulnerable')}
+            >
+              <AlertTriangle size={15} />
+              <span>Escenario A: Sin Registro Homologado (Riesgo)</span>
+            </button>
 
-            <p className="reforma-hero-desc">
-              La reducción de la jornada laboral de 48 a 40 horas y la exigencia federal de un 
-              <strong> registro de asistencia electrónico, trazable y no alterable a partir del 1 de enero de 2027</strong> demandan 
-              certeza operativa inmediata. Evite sanciones de hasta <strong>$586,000+ MXN</strong>, suprima la suplantación de identidad 
-              y audite en tiempo real las horas extraordinarias con la solución integral de <strong>Sistemas Cuauhtli</strong> y tecnología <strong>Hikvision</strong>.
-            </p>
-
-            {/* Quick Metrics */}
-            <div className="reforma-hero-metrics-pill">
-              <div className="reforma-hero-pill-item">
-                <Lock className="reforma-pill-icon" size={20} />
-                <div className="reforma-pill-text">
-                  <strong>100% Inalterable & Trazable</strong>
-                  Firma criptográfica con marca de tiempo NTP no modificable.
-                </div>
-              </div>
-              <div className="reforma-hero-pill-item">
-                <ShieldAlert className="reforma-pill-icon" size={20} />
-                <div className="reforma-pill-text">
-                  <strong>Blindaje contra Multas STPS</strong>
-                  Elimina riesgos de 250 a 5,000 UMA por inspección laboral.
-                </div>
-              </div>
-              <div className="reforma-hero-pill-item">
-                <Clock className="reforma-pill-icon" size={20} />
-                <div className="reforma-pill-text">
-                  <strong>Auditoría de Horas Extra</strong>
-                  Cálculo automático de topes LFT, horas dobles y triples.
-                </div>
-              </div>
-              <div className="reforma-hero-pill-item">
-                <Building2 className="reforma-pill-icon" size={20} />
-                <div className="reforma-pill-text">
-                  <strong>Centralización Multi-Sede</strong>
-                  Monitoreo de todas sus sucursales desde una sola pantalla.
-                </div>
-              </div>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="reforma-hero-actions">
-              <button 
-                className="reforma-btn-primary"
-                onClick={() => onOpenQuote('Control de Asistencia Biométrico (Reforma Laboral 40 Horas / STPS)')}
-              >
-                <FileCheck2 size={18} />
-                <span>Solicitar Levantamiento Técnico Sin Costo</span>
-              </button>
-
-              <button 
-                className="reforma-btn-secondary"
-                onClick={() => {
-                  const el = document.getElementById('simulador-multas');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                <Scale size={16} />
-                <span>Simulador de Riesgo y Sanciones</span>
-              </button>
-            </div>
+            <button
+              type="button"
+              className={`reforma-master-toggle-btn ${heroMode === 'compliant' ? 'active compliant' : ''}`}
+              onClick={() => triggerHeroTransition('compliant')}
+            >
+              <ShieldCheck size={15} />
+              <span>Escenario B: Con Sistemas Cuauhtli (Blindado)</span>
+            </button>
           </div>
+        </div>
 
-          {/* RIGHT: KINETIC DIAL COMPARATOR (IDEA 2: MINIMALISTA, LINDA Y WOW) */}
-          <div className="reforma-hero-dial-card">
+        {/* Dynamic Hero Content Container with smooth fade on wipe */}
+        <div className={`reforma-hero-dynamic-content ${isWiping ? 'fading' : ''}`}>
+          <div className="reforma-hero-container">
             
-            <div className="reforma-dial-header">
-              <div className="reforma-dial-tag">
-                <Scale size={13} />
-                <span>Simulador Dinámico de Jornada</span>
-              </div>
-              <h3 className="reforma-dial-title">
-                {jornadaMode === '48h' ? 'Esquema Tradicional: 48 Horas' : 'Nueva Norma STPS: 40 Horas'}
-              </h3>
-              <p className="reforma-dial-sub">
-                {jornadaMode === '48h' 
-                  ? 'Alta exposición a multas de hasta 5,000 UMA y demandas por horas extra no auditadas.' 
-                  : 'Cero contingencias legales: registro electrónico inalterable y cálculo automático LFT.'}
-              </p>
-            </div>
-
-            {/* Kinetic Dual Segment Toggle */}
-            <div className="reforma-dial-toggle-wrap">
-              <button 
-                type="button"
-                className={`reforma-dial-btn ${jornadaMode === '48h' ? 'active mode-48h' : ''}`}
-                onClick={() => setJornadaMode('48h')}
-              >
-                <Clock size={15} />
-                <span>48 Horas (Actual)</span>
-              </button>
-
-              <button 
-                type="button"
-                className={`reforma-dial-btn ${jornadaMode === '40h' ? 'active mode-40h' : ''}`}
-                onClick={() => setJornadaMode('40h')}
-              >
-                <ShieldCheck size={15} />
-                <span>40 Horas (Reforma)</span>
-              </button>
-            </div>
-
-            {/* Kinetic Progress Gauge Bar */}
-            <div className="reforma-dial-progress-track">
-              <div className={`reforma-dial-progress-bar ${jornadaMode === '48h' ? 'bar-48h' : 'bar-40h'}`} />
-            </div>
-
-            {/* Metrics 2x2 Grid */}
-            <div className="reforma-dial-metrics-grid">
-              
-              <div className="reforma-dial-metric-box">
-                <span className="reforma-dial-metric-label">Riesgo Multa STPS</span>
-                <span className={`reforma-dial-metric-val ${jornadaMode === '48h' ? 'alert' : 'success'}`}>
-                  {jornadaMode === '48h' ? '$586,550 MXN' : '$0 MXN'}
-                </span>
-                <span className="reforma-dial-metric-sub">
-                  {jornadaMode === '48h' ? 'Hasta 5,000 UMA acumulables' : '100% blindado ante inspección'}
-                </span>
-              </div>
-
-              <div className="reforma-dial-metric-box">
-                <span className="reforma-dial-metric-label">Horas Extras</span>
-                <span className={`reforma-dial-metric-val ${jornadaMode === '48h' ? 'alert' : 'success'}`}>
-                  {jornadaMode === '48h' ? 'Cálculo Manual' : 'Auditoría LFT'}
-                </span>
-                <span className="reforma-dial-metric-sub">
-                  {jornadaMode === '48h' ? 'Litigios por horas dobles/triples' : 'Desglose y topes automáticos'}
-                </span>
-              </div>
-
-              <div className="reforma-dial-metric-box">
-                <span className="reforma-dial-metric-label">Validez Jurídica</span>
-                <span className={`reforma-dial-metric-val ${jornadaMode === '48h' ? 'alert' : 'success'}`}>
-                  {jornadaMode === '48h' ? 'Nula / Objetable' : 'Plena (SHA-256)'}
-                </span>
-                <span className="reforma-dial-metric-sub">
-                  {jornadaMode === '48h' ? 'Listas de papel sin valor' : 'Prueba pericial inalterable'}
-                </span>
-              </div>
-
-              <div className="reforma-dial-metric-box">
-                <span className="reforma-dial-metric-label">Velocidad Marcaje</span>
-                <span className={`reforma-dial-metric-val ${jornadaMode === '48h' ? 'alert' : 'success'}`}>
-                  {jornadaMode === '48h' ? 'Filas / Retardos' : '< 0.2s Facial AI'}
-                </span>
-                <span className="reforma-dial-metric-sub">
-                  {jornadaMode === '48h' ? 'Suplantación de compañeros' : 'Anti-spoofing rostro vivo'}
-                </span>
-              </div>
-
-            </div>
-
-            {/* Diagnostic Alert Callout */}
-            <div className={`reforma-dial-status-alert ${jornadaMode === '48h' ? 'alert-48h' : 'alert-40h'}`}>
-              {jornadaMode === '48h' ? (
+            {/* LEFT COLUMN: DYNAMIC VALUE PROPOSITION */}
+            <div>
+              {heroMode === 'vulnerable' ? (
                 <>
-                  <AlertTriangle size={18} style={{ flexShrink: 0, marginTop: 2 }} />
-                  <div>
-                    <strong>Régimen Vulnerable a Sanciones Federales</strong>
-                    La reducción a 40 horas convierte cualquier retraso en tiempo extra sujeto a controversias sin una bitácora electrónica sellada.
+                  <div className="reforma-hero-badge vulnerable">
+                    <AlertTriangle size={14} />
+                    <span>DIAGNÓSTICO STPS: ALTO RIESGO DE INFRACCIÓN LABORAL</span>
+                  </div>
+
+                  <h1 className="reforma-hero-title">
+                    De 48 a 40 Horas: <span className="reforma-title-alert">La Falta de Registro Electrónico</span> Expone a tu Empresa a Multas de $586,000+ MXN
+                  </h1>
+
+                  <p className="reforma-hero-desc">
+                    Operar con listas de papel, firmas en libreta o archivos de Excel 
+                    <strong> carece de validez probatoria ante el Tribunal Laboral</strong>. 
+                    Bajo el Artículo 784 de la LFT, el patrón tiene la carga de la prueba; sin un sistema digital inalterable, 
+                    cualquier controversia sobre la nueva jornada reducida se resuelve automáticamente a favor del trabajador.
+                  </p>
+
+                  {/* 4 Metric Pills: Vulnerable */}
+                  <div className="reforma-hero-metrics-pill">
+                    <div className="reforma-hero-pill-item vulnerable-pill">
+                      <ShieldAlert className="reforma-pill-icon" size={20} />
+                      <div className="reforma-pill-text alert-text">
+                        <strong>Hasta 5,000 UMA ($586k)</strong>
+                        Sanciones acumulables por inspección STPS.
+                      </div>
+                    </div>
+                    <div className="reforma-hero-pill-item vulnerable-pill">
+                      <Clock className="reforma-pill-icon" size={20} />
+                      <div className="reforma-pill-text alert-text">
+                        <strong>Litigios de Horas Extra</strong>
+                        Disputas por horas dobles y triples no auditadas.
+                      </div>
+                    </div>
+                    <div className="reforma-hero-pill-item vulnerable-pill">
+                      <XCircle className="reforma-pill-icon" size={20} />
+                      <div className="reforma-pill-text alert-text">
+                        <strong>Nula Validez ante Juez</strong>
+                        Listas de papel desechadas por fragilidad pericial.
+                      </div>
+                    </div>
+                    <div className="reforma-hero-pill-item vulnerable-pill">
+                      <Users className="reforma-pill-icon" size={20} />
+                      <div className="reforma-pill-text alert-text">
+                        <strong>Suplantación Continua</strong>
+                        Checadas cruzadas entre compañeros en planta.
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Actions: Vulnerable */}
+                  <div className="reforma-hero-actions">
+                    <button 
+                      className="reforma-btn-primary"
+                      style={{ background: 'linear-gradient(135deg, #B91C1C 0%, #991B1B 100%)' }}
+                      onClick={() => onOpenQuote('Diagnóstico de Riesgo Urgente (Reforma 40H / Sin Registro STPS)')}
+                    >
+                      <ShieldAlert size={18} />
+                      <span>Eliminar este Riesgo: Solicitar Auditoría Gratuita</span>
+                    </button>
+
+                    <button 
+                      className="reforma-btn-secondary"
+                      onClick={() => {
+                        const el = document.getElementById('simulador-multas');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                    >
+                      <Scale size={16} />
+                      <span>Simular Multa Específica</span>
+                    </button>
                   </div>
                 </>
               ) : (
                 <>
-                  <ShieldCheck size={18} style={{ flexShrink: 0, marginTop: 2 }} />
-                  <div>
-                    <strong>Operación Certificada y Homologada STPS 2027</strong>
-                    Trazabilidad digital exacta para plantas, corporativos y CEDIS con respaldo integral de Sistemas Cuauhtli.
+                  <div className="reforma-hero-badge compliant">
+                    <ShieldCheck size={14} />
+                    <span>CERTIFICACIÓN OFICIAL: BLINDAJE STPS & LFT 2027</span>
+                  </div>
+
+                  <h1 className="reforma-hero-title">
+                    De 48 a 40 Horas: <span className="reforma-title-gradient">Blindaje Biométrico Inalterable</span> y Cero Sanciones con Cuauhtli
+                  </h1>
+
+                  <p className="reforma-hero-desc">
+                    Garantizamos certeza jurídica y operativa total mediante terminales 
+                    <strong> Hikvision MinMoe AI con reconocimiento en menos de 0.2 segundos</strong>. 
+                    Bitácoras electrónicas selladas con hash criptográfico SHA-256, auditoría automática de horas dobles y triples, 
+                    y reportes ejecutivos listos en 1 clic ante cualquier inspección federal del trabajo.
+                  </p>
+
+                  {/* 4 Metric Pills: Compliant */}
+                  <div className="reforma-hero-metrics-pill">
+                    <div className="reforma-hero-pill-item compliant-pill">
+                      <ShieldCheck className="reforma-pill-icon" size={20} />
+                      <div className="reforma-pill-text success-text">
+                        <strong>$0 MXN en Sanciones</strong>
+                        100% blindado ante inspecciones STPS 2027.
+                      </div>
+                    </div>
+                    <div className="reforma-hero-pill-item compliant-pill">
+                      <Clock className="reforma-pill-icon" size={20} />
+                      <div className="reforma-pill-text success-text">
+                        <strong>Auditoría Automática LFT</strong>
+                        Desglose exacto y topes de 3h diarias respetados.
+                      </div>
+                    </div>
+                    <div className="reforma-hero-pill-item compliant-pill">
+                      <Lock className="reforma-pill-icon" size={20} />
+                      <div className="reforma-pill-text success-text">
+                        <strong>Plena Validez Jurídica</strong>
+                        Prueba pericial digital con sello de tiempo NTP inmutable.
+                      </div>
+                    </div>
+                    <div className="reforma-hero-pill-item compliant-pill">
+                      <ScanFace className="reforma-pill-icon" size={20} />
+                      <div className="reforma-pill-text success-text">
+                        <strong>Facial AI en &lt; 0.2s</strong>
+                        Algoritmo anti-spoofing con 99.98% de rostro vivo.
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Actions: Compliant */}
+                  <div className="reforma-hero-actions">
+                    <button 
+                      className="reforma-btn-primary"
+                      onClick={() => onOpenQuote('Control de Asistencia Biométrico (Reforma Laboral 40 Horas / STPS)')}
+                    >
+                      <FileCheck2 size={18} />
+                      <span>Solicitar Levantamiento Técnico Sin Costo</span>
+                    </button>
+
+                    <button 
+                      className="reforma-btn-secondary"
+                      onClick={() => {
+                        const el = document.getElementById('simulador-multas');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                    >
+                      <Scale size={16} />
+                      <span>Simulador de Riesgo y Sanciones</span>
+                    </button>
                   </div>
                 </>
               )}
             </div>
 
-            {/* Hardware Micro-Chip */}
-            <div className="reforma-dial-hardware-chip">
-              <div className="reforma-dial-chip-left">
-                <ScanFace size={16} color="#2B5672" />
-                <span>
-                  {jornadaMode === '48h' ? 'Checador análogo / Firmas en libreta' : 'Terminal Facial Hikvision MinMoe AI'}
+            {/* RIGHT COLUMN: DYNAMIC STATE CARD (IDEA 3) */}
+            <div className={`reforma-hero-state-card ${heroMode}`}>
+              
+              <div className="reforma-state-card-header">
+                <span className="reforma-state-card-lbl">
+                  {heroMode === 'vulnerable' ? (
+                    <>
+                      <AlertTriangle size={15} />
+                      <span>Expediente de Auditoría STPS</span>
+                    </>
+                  ) : (
+                    <>
+                      <ShieldCheck size={15} />
+                      <span>Dictamen Técnico Cuauhtli</span>
+                    </>
+                  )}
+                </span>
+
+                <span className={`reforma-state-badge ${heroMode}`}>
+                  {heroMode === 'vulnerable' ? 'No Conforme' : 'Conforme STPS'}
                 </span>
               </div>
-              <span className={`reforma-dial-chip-badge ${jornadaMode === '48h' ? 'red' : 'green'}`}>
-                {jornadaMode === '48h' ? 'No Conforme' : 'Conforme STPS'}
-              </span>
+
+              <h3 className="reforma-state-card-title">
+                {heroMode === 'vulnerable' 
+                  ? 'Diagnóstico: Empresa en Riesgo Crítico' 
+                  : 'Certificación: Empresa Blindada ante la Ley'}
+              </h3>
+              
+              <p className="reforma-state-card-desc">
+                {heroMode === 'vulnerable'
+                  ? 'La empresa opera sin infraestructura biométrica inalterable, dejándola desprotegida ante multas federales y demandas laborales.'
+                  : 'Infraestructura biométrica de grado pericial instalada, centralizada y homologada conforme a los criterios STPS 2027.'}
+              </p>
+
+              {/* Checklist */}
+              <ul className="reforma-state-checklist">
+                {heroMode === 'vulnerable' ? (
+                  <>
+                    <li className="reforma-state-check-item">
+                      <XCircle size={17} className="reforma-check-icon bad" />
+                      <div>
+                        <strong>Registro manual en papel o Excel:</strong> Fácilmente alterable sin valor probatorio ante el juez.
+                      </div>
+                    </li>
+                    <li className="reforma-state-check-item">
+                      <XCircle size={17} className="reforma-check-icon bad" />
+                      <div>
+                        <strong>Horas extras sin auditar:</strong> Reclamos de horas triples acumuladas por falta de bitácora digital.
+                      </div>
+                    </li>
+                    <li className="reforma-state-check-item">
+                      <XCircle size={17} className="reforma-check-icon bad" />
+                      <div>
+                        <strong>Sanción federal potencial:</strong> Multas de 250 a 5,000 UMA ($29,327 a $586,550+ MXN).
+                      </div>
+                    </li>
+                    <li className="reforma-state-check-item">
+                      <XCircle size={17} className="reforma-check-icon bad" />
+                      <div>
+                        <strong>Carga de la prueba patronal perdida:</strong> Condena automática al pago del tiempo reclamado por el empleado.
+                      </div>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="reforma-state-check-item">
+                      <CheckCircle2 size={17} className="reforma-check-icon good" />
+                      <div>
+                        <strong>Terminal Facial MinMoe con IA:</strong> Autenticación en &lt; 0.2s sin contacto ni filas de acceso.
+                      </div>
+                    </li>
+                    <li className="reforma-state-check-item">
+                      <CheckCircle2 size={17} className="reforma-check-icon good" />
+                      <div>
+                        <strong>Registro inmutable con Hash SHA-256:</strong> Sellos de tiempo oficiales NTP con pleno valor pericial.
+                      </div>
+                    </li>
+                    <li className="reforma-state-check-item">
+                      <CheckCircle2 size={17} className="reforma-check-icon good" />
+                      <div>
+                        <strong>Auditoría automática de 40 Horas:</strong> Desglose contable de horas dobles y triples listo para nómina.
+                      </div>
+                    </li>
+                    <li className="reforma-state-check-item">
+                      <CheckCircle2 size={17} className="reforma-check-icon good" />
+                      <div>
+                        <strong>Plataforma Multi-Sede Centralizada:</strong> Monitoreo de todas sus sucursales desde una sola pantalla.
+                      </div>
+                    </li>
+                  </>
+                )}
+              </ul>
+
+              {/* Summary Callout Box */}
+              <div className="reforma-state-summary-box">
+                {heroMode === 'vulnerable' ? (
+                  <>
+                    <strong>⚠️ Contingencia Estimada: $380,000 – $1,200,000 MXN</strong>
+                    <span>La transición a 40 horas sin reloj checador homologado genera un pasivo laboral inmediato en nómina y multas.</span>
+                  </>
+                ) : (
+                  <>
+                    <strong>🛡️ Dictamen de Cumplimiento: 100% Protegido</strong>
+                    <span>Solución llave en mano de Sistemas Cuauhtli implementada en 48 a 72 horas con póliza de garantía y soporte local en CDMX.</span>
+                  </>
+                )}
+              </div>
+
+              {/* Action Button */}
+              <button
+                type="button"
+                className="reforma-state-cta-btn"
+                onClick={() => onOpenQuote(
+                  heroMode === 'vulnerable' 
+                    ? 'Blindaje Urgente contra Multas STPS (Reforma 40 Horas)' 
+                    : 'Cotización de Solución Biométrica Homologada 40H STPS'
+                )}
+              >
+                {heroMode === 'vulnerable' ? (
+                  <>
+                    <ShieldAlert size={16} />
+                    <span>Blindar mi Empresa con Cuauhtli</span>
+                  </>
+                ) : (
+                  <>
+                    <ShieldCheck size={16} />
+                    <span>Solicitar Levantamiento Técnico</span>
+                  </>
+                )}
+                <ArrowRight size={15} />
+              </button>
+
             </div>
 
-            {/* Direct CTA */}
-            <button 
-              type="button"
-              className="reforma-dial-cta-btn"
-              onClick={() => onOpenQuote(`Diagnóstico para Régimen de ${jornadaMode === '48h' ? '48 a 40 Horas' : '40 Horas STPS'}`)}
-            >
-              <span>Cotizar Solución Homologada para 40 Horas</span>
-              <ArrowRight size={15} />
-            </button>
-
           </div>
-
         </div>
+
       </header>
 
       {/* 3. CRONOGRAMA & RUTA CRÍTICA DE LA REFORMA (4 FASES) */}
