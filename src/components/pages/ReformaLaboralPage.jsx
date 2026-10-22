@@ -242,6 +242,26 @@ export default function ReformaLaboralPage({ onOpenQuote, onNavigateHome, onNavi
   return (
     <div className="reforma-page">
 
+      {/* 0. SUBNAV BREADCRUMBS BAR */}
+      <div className="reforma-subnav-bar">
+        <div className="reforma-subnav-inner">
+          <nav className="reforma-breadcrumbs" aria-label="Breadcrumb">
+            <button className="reforma-back-btn" onClick={() => onNavigateHome?.()}>
+              <ArrowLeft size={14} />
+              <span>Inicio</span>
+            </button>
+            <span className="reforma-breadcrumb-sep">/</span>
+            <span>Soluciones Especiales</span>
+            <span className="reforma-breadcrumb-sep">/</span>
+            <span className="reforma-breadcrumb-current">Reforma Laboral 40 Horas & STPS 2027</span>
+          </nav>
+          <div className="reforma-subnav-badge">
+            <ShieldCheck size={13} color="#991B1B" />
+            <span>NORMA OFICIAL VIGENTE</span>
+          </div>
+        </div>
+      </div>
+
       {/* 1. TOP REGULATORY ALERT TICKER */}
       <div className="reforma-top-ticker">
         <div className="reforma-ticker-inner">

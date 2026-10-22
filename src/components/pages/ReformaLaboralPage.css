@@ -1,34 +1,112 @@
 /* ==========================================================================
    REFORMA LABORAL 40 HORAS & CONTROL BIOMÉTRICO STPS 2027
    Sistemas Cuauhtli - Landing Page de Cumplimiento Técnico y Legal
+   LIGHT THEME DESIGN SYSTEM (Clean, Corporate, High-Authority)
    ========================================================================== */
 
 .reforma-page {
-  background-color: #070B13;
-  color: #E2E8F0;
+  background-color: #FFFFFF;
+  color: #1D1E1B;
   font-family: var(--font-sans);
   overflow-x: hidden;
   position: relative;
   min-height: 100vh;
+  padding-top: 76px;
+}
+
+/* --------------------------------------------------------------------------
+   SUBNAV BREADCRUMBS BAR (STICKY)
+   -------------------------------------------------------------------------- */
+.reforma-subnav-bar {
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border-light, #E8E6E6);
+  padding: 12px 24px;
+  position: sticky;
+  top: 70px;
+  z-index: 40;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.reforma-subnav-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.reforma-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted, #666963);
+}
+
+.reforma-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: var(--text-main, #1D1E1B);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-xs, 6px);
+  transition: all 0.2s ease;
+}
+
+.reforma-back-btn:hover {
+  background: var(--bg-secondary, #F8FAFC);
+  color: var(--primary, #A6192E);
+}
+
+.reforma-breadcrumb-sep {
+  color: var(--border-hover, #CBD5E1);
+  font-weight: 400;
+}
+
+.reforma-breadcrumb-current {
+  color: var(--primary, #A6192E);
+  font-weight: 800;
+}
+
+.reforma-subnav-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-family: var(--font-mono, monospace);
+  font-weight: 800;
+  color: #991B1B;
+  background: #FFF1F2;
+  border: 1px solid #FECDD3;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  text-transform: uppercase;
 }
 
 /* --------------------------------------------------------------------------
    TOP COMPLIANCE TICKER / REGULATORY ALERT BANNER
    -------------------------------------------------------------------------- */
 .reforma-top-ticker {
-  background: linear-gradient(90deg, #8B0018 0%, #A6192E 50%, #8B0018 100%);
+  background: linear-gradient(90deg, #A6192E 0%, #8C1527 50%, #A6192E 100%);
   color: #FFFFFF;
-  padding: 10px 16px;
-  font-size: 0.82rem;
+  padding: 11px 24px;
+  font-size: 0.84rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  letter-spacing: 0.02em;
   position: relative;
-  z-index: 40;
+  z-index: 35;
+  box-shadow: 0 2px 10px rgba(166, 25, 46, 0.15);
 }
 
 .reforma-ticker-inner {
-  max-width: 1280px;
+  max-width: 1240px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -41,7 +119,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.25);
   padding: 4px 10px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.25);
@@ -67,22 +145,24 @@
 .reforma-ticker-text {
   flex: 1;
   min-width: 280px;
-  font-size: 0.82rem;
+  font-size: 0.84rem;
+  line-height: 1.4;
 }
 
 .reforma-ticker-action {
   background: #FFFFFF;
-  color: #8B0018;
+  color: #8C1527;
   border: none;
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  padding: 4px 12px;
+  padding: 5px 14px;
   border-radius: 6px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .reforma-ticker-action:hover {
@@ -91,15 +171,25 @@
 }
 
 /* --------------------------------------------------------------------------
-   HERO SECTION
+   HERO SECTION (LIGHT BACKGROUND)
    -------------------------------------------------------------------------- */
 .reforma-hero {
   position: relative;
-  padding: 60px 24px 80px;
-  background: radial-gradient(circle at 50% 10%, rgba(166, 25, 46, 0.18) 0%, transparent 60%),
-              radial-gradient(circle at 85% 35%, rgba(43, 86, 114, 0.16) 0%, transparent 50%),
-              #070B13;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 50px 24px 70px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+  border-bottom: 1px solid var(--border-light, #E8E6E6);
+}
+
+.reforma-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(166, 25, 46, 0.05) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .reforma-hero-container {
@@ -109,36 +199,39 @@
   grid-template-columns: 1.15fr 0.85fr;
   gap: 48px;
   align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 .reforma-hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(224, 57, 57, 0.12);
-  border: 1px solid rgba(224, 57, 57, 0.35);
-  color: #F87171;
+  background: #FFF1F2;
+  border: 1px solid #FECDD3;
+  color: #A6192E;
   padding: 6px 14px;
   border-radius: 999px;
   font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   font-family: var(--font-mono);
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .reforma-hero-title {
-  font-size: 2.75rem;
+  font-size: 2.7rem;
   line-height: 1.15;
   font-weight: 900;
-  color: #FFFFFF;
+  color: #0F172A;
   margin-bottom: 20px;
   letter-spacing: -0.02em;
 }
 
 .reforma-title-gradient {
-  background: linear-gradient(135deg, #F87171 0%, #FFFFFF 60%, #38BDF8 100%);
+  color: #A6192E;
+  background: linear-gradient(135deg, #A6192E 0%, #C8102E 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -146,48 +239,54 @@
 .reforma-hero-desc {
   font-size: 1.05rem;
   line-height: 1.65;
-  color: #94A3B8;
+  color: #475569;
   margin-bottom: 28px;
   max-width: 620px;
 }
 
 .reforma-hero-desc strong {
-  color: #F1F5F9;
+  color: #0F172A;
 }
 
 .reforma-hero-metrics-pill {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 14px;
   margin-bottom: 34px;
 }
 
 .reforma-hero-pill-item {
-  background: rgba(15, 23, 42, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 12px 14px;
-  border-radius: 10px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  padding: 14px;
+  border-radius: 12px;
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  backdrop-filter: blur(8px);
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  transition: all 0.2s ease;
+}
+
+.reforma-hero-pill-item:hover {
+  border-color: #CBD5E1;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
 }
 
 .reforma-pill-icon {
-  color: #38BDF8;
+  color: #2B5672;
   flex-shrink: 0;
   margin-top: 2px;
 }
 
 .reforma-pill-text {
   font-size: 0.82rem;
-  color: #CBD5E1;
-  line-height: 1.35;
+  color: #64748B;
+  line-height: 1.4;
 }
 
 .reforma-pill-text strong {
   display: block;
-  color: #FFFFFF;
+  color: #0F172A;
   font-size: 0.88rem;
   margin-bottom: 2px;
 }
@@ -200,7 +299,7 @@
 }
 
 .reforma-btn-primary {
-  background: linear-gradient(135deg, #A6192E 0%, #C8102E 100%);
+  background: linear-gradient(135deg, #A6192E 0%, #8C1527 100%);
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 14px 26px;
@@ -211,21 +310,21 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  box-shadow: 0 10px 25px rgba(166, 25, 46, 0.35);
+  box-shadow: 0 8px 22px rgba(166, 25, 46, 0.25);
   transition: all 0.25s ease;
   text-decoration: none;
 }
 
 .reforma-btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(166, 25, 46, 0.5);
-  filter: brightness(1.08);
+  box-shadow: 0 12px 28px rgba(166, 25, 46, 0.35);
+  filter: brightness(1.05);
 }
 
 .reforma-btn-secondary {
-  background: rgba(43, 86, 114, 0.25);
-  color: #38BDF8;
-  border: 1px solid rgba(56, 189, 248, 0.35);
+  background: #F0F5F8;
+  color: #2B5672;
+  border: 1px solid #C8DCE8;
   padding: 14px 22px;
   border-radius: 10px;
   font-size: 0.92rem;
@@ -239,22 +338,23 @@
 }
 
 .reforma-btn-secondary:hover {
-  background: rgba(43, 86, 114, 0.45);
-  border-color: #38BDF8;
-  color: #FFFFFF;
+  background: #E2ECF2;
+  border-color: #2B5672;
+  color: #1F3E53;
 }
 
 /* --------------------------------------------------------------------------
-   HERO INTERACTIVE HUD TERMINAL SIMULATOR
+   HERO INTERACTIVE HUD TERMINAL SIMULATOR (BEZEL DESIGN)
    -------------------------------------------------------------------------- */
 .reforma-terminal-hud {
   background: #0B1120;
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  border-radius: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.8);
+  border-radius: 20px;
   padding: 24px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(56, 189, 248, 0.12);
+  box-shadow: 0 15px 40px rgba(15, 23, 42, 0.15), 0 0 2px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
+  color: #E2E8F0;
 }
 
 .reforma-terminal-hud::before {
@@ -263,7 +363,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 4px;
   background: linear-gradient(90deg, #A6192E, #38BDF8, #10B981);
 }
 
@@ -271,8 +371,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin-bottom: 18px;
 }
 
@@ -393,7 +493,7 @@
 
 .reforma-hud-telemetry-cell {
   background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   padding: 8px;
   text-align: center;
@@ -401,7 +501,7 @@
 
 .reforma-telemetry-lbl {
   font-size: 0.68rem;
-  color: #64748B;
+  color: #94A3B8;
   text-transform: uppercase;
   font-family: var(--font-mono);
 }
@@ -448,48 +548,64 @@
 }
 
 /* --------------------------------------------------------------------------
-   CRONOGRAMA & CALENDARIO OFICIAL DE REFORMA
+   SECTIONS GENERAL (LIGHT)
    -------------------------------------------------------------------------- */
 .reforma-section {
-  padding: 70px 24px;
+  padding: 65px 24px;
   max-width: 1240px;
   margin: 0 auto;
+}
+
+.reforma-section.alt-bg {
+  background: #F8FAFC;
+  border-top: 1px solid var(--border-light, #E8E6E6);
+  border-bottom: 1px solid var(--border-light, #E8E6E6);
+  max-width: 100%;
+  padding-left: calc((100% - 1240px) / 2);
+  padding-right: calc((100% - 1240px) / 2);
 }
 
 .reforma-section-header {
   text-align: center;
   max-width: 780px;
-  margin: 0 auto 50px;
+  margin: 0 auto 46px;
 }
 
 .reforma-section-tag {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #F59E0B;
+  color: #A6192E;
   font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   font-family: var(--font-mono);
-  margin-bottom: 12px;
+  background: #FFF1F2;
+  border: 1px solid #FECDD3;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
 }
 
 .reforma-section-title {
-  font-size: 2.1rem;
-  font-weight: 800;
-  color: #FFFFFF;
+  font-size: 2.15rem;
+  font-weight: 900;
+  color: #0F172A;
   line-height: 1.25;
   letter-spacing: -0.01em;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .reforma-section-subtitle {
-  font-size: 0.98rem;
-  color: #94A3B8;
+  font-size: 1rem;
+  color: #64748B;
   line-height: 1.6;
 }
 
+/* --------------------------------------------------------------------------
+   CRONOGRAMA & CALENDARIO OFICIAL (LIGHT CARDS)
+   -------------------------------------------------------------------------- */
 .reforma-timeline-track {
   position: relative;
   display: grid;
@@ -511,55 +627,56 @@
 .reforma-timeline-step {
   position: relative;
   z-index: 2;
-  background: rgba(15, 23, 42, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 14px;
   padding: 24px 18px;
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
 }
 
 .reforma-timeline-step:hover {
   transform: translateY(-4px);
-  border-color: rgba(56, 189, 248, 0.4);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+  border-color: #CBD5E1;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
 }
 
 .reforma-timeline-dot {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #0B1120;
+  background: #FFFFFF;
   border: 2px solid #A6192E;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF;
+  color: #A6192E;
   margin-bottom: 18px;
   font-weight: 800;
   font-size: 0.9rem;
   font-family: var(--font-mono);
-  box-shadow: 0 0 14px rgba(166, 25, 46, 0.4);
+  box-shadow: 0 2px 8px rgba(166, 25, 46, 0.2);
 }
 
 .reforma-timeline-step.active .reforma-timeline-dot {
   border-color: #F59E0B;
-  box-shadow: 0 0 16px rgba(245, 158, 11, 0.6);
-  color: #F59E0B;
+  color: #D97706;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
 }
 
 .reforma-timeline-step.mandatory .reforma-timeline-dot {
-  border-color: #EF4444;
+  border-color: #A6192E;
   background: #A6192E;
   color: #FFFFFF;
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.7);
+  box-shadow: 0 4px 12px rgba(166, 25, 46, 0.35);
 }
 
 .reforma-timeline-step.future .reforma-timeline-dot {
   border-color: #10B981;
-  color: #10B981;
-  box-shadow: 0 0 14px rgba(16, 185, 129, 0.4);
+  color: #059669;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
 }
 
 .reforma-step-date {
@@ -567,7 +684,7 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #38BDF8;
+  color: #2B5672;
   font-family: var(--font-mono);
   margin-bottom: 6px;
 }
@@ -575,14 +692,14 @@
 .reforma-step-title {
   font-size: 1.05rem;
   font-weight: 800;
-  color: #FFFFFF;
+  color: #0F172A;
   margin-bottom: 10px;
   line-height: 1.3;
 }
 
 .reforma-step-desc {
   font-size: 0.84rem;
-  color: #94A3B8;
+  color: #64748B;
   line-height: 1.5;
   margin-bottom: 14px;
 }
@@ -590,58 +707,47 @@
 .reforma-step-badge {
   margin-top: auto;
   align-self: flex-start;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  padding: 3px 8px;
+  padding: 4px 9px;
   border-radius: 6px;
   font-family: var(--font-mono);
   text-transform: uppercase;
 }
 
 .reforma-step-badge.warning {
-  background: rgba(245, 158, 11, 0.15);
-  color: #FBBF24;
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: #FEF3C7;
+  color: #B45309;
+  border: 1px solid #FDE68A;
 }
 
 .reforma-step-badge.danger {
-  background: rgba(239, 68, 68, 0.18);
-  color: #F87171;
-  border: 1px solid rgba(239, 68, 68, 0.35);
+  background: #FEE2E2;
+  color: #B91C1C;
+  border: 1px solid #FECACA;
 }
 
 .reforma-step-badge.success {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34D399;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: #D1FAE5;
+  color: #047857;
+  border: 1px solid #A7F3D0;
 }
 
 /* --------------------------------------------------------------------------
-   INTERACTIVE SIMULATOR: RIESGO & MULTAS STPS (250 A 5,000 UMA)
+   INTERACTIVE SIMULATOR (LIGHT THEME)
    -------------------------------------------------------------------------- */
 .reforma-calc-card {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(11, 17, 32, 0.98) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 20px;
   padding: 36px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 40px;
   align-items: center;
   position: relative;
   overflow: hidden;
-}
-
-.reforma-calc-card::after {
-  content: '';
-  position: absolute;
-  top: -50px;
-  right: -50px;
-  width: 250px;
-  height: 250px;
-  background: radial-gradient(circle, rgba(166, 25, 46, 0.25) 0%, transparent 70%);
-  pointer-events: none;
 }
 
 .reforma-calc-controls {
@@ -662,13 +768,13 @@
   align-items: center;
   font-size: 0.88rem;
   font-weight: 700;
-  color: #CBD5E1;
+  color: #334155;
 }
 
 .reforma-calc-value-badge {
-  background: rgba(56, 189, 248, 0.15);
-  border: 1px solid rgba(56, 189, 248, 0.4);
-  color: #38BDF8;
+  background: #F0F5F8;
+  border: 1px solid #C8DCE8;
+  color: #2B5672;
   padding: 3px 10px;
   border-radius: 6px;
   font-family: var(--font-mono);
@@ -681,7 +787,7 @@
   appearance: none;
   width: 100%;
   height: 8px;
-  background: #1E293B;
+  background: #E2E8F0;
   border-radius: 4px;
   outline: none;
   cursor: pointer;
@@ -695,7 +801,7 @@
   border-radius: 50%;
   background: #A6192E;
   border: 2px solid #FFFFFF;
-  box-shadow: 0 0 10px rgba(166, 25, 46, 0.8);
+  box-shadow: 0 2px 6px rgba(166, 25, 46, 0.4);
   cursor: pointer;
 }
 
@@ -706,12 +812,12 @@
 }
 
 .reforma-method-btn {
-  background: rgba(30, 41, 59, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #94A3B8;
+  background: #F8FAFC;
+  border: 1px solid #CBD5E1;
+  color: #475569;
   padding: 12px;
   border-radius: 8px;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 700;
   text-align: left;
   cursor: pointer;
@@ -722,20 +828,21 @@
 }
 
 .reforma-method-btn:hover {
-  background: rgba(30, 41, 59, 0.9);
-  color: #FFFFFF;
+  background: #F1F5F9;
+  color: #0F172A;
+  border-color: #94A3B8;
 }
 
 .reforma-method-btn.selected {
-  background: rgba(166, 25, 46, 0.2);
+  background: #FFF1F2;
   border-color: #A6192E;
-  color: #FFFFFF;
-  box-shadow: 0 0 12px rgba(166, 25, 46, 0.35);
+  color: #991B1B;
+  box-shadow: 0 0 0 1px #A6192E;
 }
 
 .reforma-calc-results {
-  background: #0B1120;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
   border-radius: 16px;
   padding: 26px;
   display: flex;
@@ -748,7 +855,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid #E2E8F0;
   padding-bottom: 12px;
 }
 
@@ -759,48 +866,51 @@
   padding: 5px 12px;
   border-radius: 999px;
   font-size: 0.78rem;
-  font-weight: 900;
+  font-weight: 800;
   font-family: var(--font-mono);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .reforma-risk-pill.critico {
-  background: rgba(239, 68, 68, 0.2);
-  color: #F87171;
-  border: 1px solid #EF4444;
+  background: #FEE2E2;
+  color: #B91C1C;
+  border: 1px solid #FECACA;
 }
 
 .reforma-risk-pill.alto {
-  background: rgba(245, 158, 11, 0.2);
-  color: #FBBF24;
-  border: 1px solid #F59E0B;
+  background: #FEF3C7;
+  color: #B45309;
+  border: 1px solid #FDE68A;
 }
 
 .reforma-risk-pill.moderado {
-  background: rgba(56, 189, 248, 0.2);
-  color: #38BDF8;
-  border: 1px solid #38BDF8;
+  background: #E0F2FE;
+  color: #0369A1;
+  border: 1px solid #BAE6FD;
 }
 
 .reforma-fine-box {
-  background: rgba(15, 23, 42, 0.7);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 12px;
-  padding: 16px;
-  border-left: 3px solid #EF4444;
+  padding: 18px;
+  border-left: 4px solid #EF4444;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
 }
 
 .reforma-fine-uma {
   font-size: 0.74rem;
-  color: #94A3B8;
+  color: #64748B;
   text-transform: uppercase;
   font-family: var(--font-mono);
+  font-weight: 700;
 }
 
 .reforma-fine-amount {
   font-size: 1.85rem;
   font-weight: 900;
-  color: #F87171;
+  color: #B91C1C;
   font-family: var(--font-mono);
   margin: 4px 0 2px;
 }
@@ -808,28 +918,28 @@
 .reforma-fine-note {
   font-size: 0.75rem;
   color: #64748B;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 .reforma-results-breakdown {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  font-size: 0.82rem;
+  font-size: 0.84rem;
 }
 
 .reforma-breakdown-row {
   display: flex;
   justify-content: space-between;
-  color: #94A3B8;
+  color: #475569;
 }
 
 .reforma-breakdown-row strong {
-  color: #FFFFFF;
+  color: #0F172A;
 }
 
 /* --------------------------------------------------------------------------
-   LOS 4 PILARES DE CUMPLIMIENTO EXIGIDOS POR STPS
+   LOS 4 PILARES (LIGHT CARDS)
    -------------------------------------------------------------------------- */
 .reforma-pillars-grid {
   display: grid;
@@ -838,21 +948,21 @@
 }
 
 .reforma-pillar-card {
-  background: rgba(15, 23, 42, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 16px;
-  padding: 28px;
+  padding: 30px;
   transition: all 0.3s ease;
   position: relative;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
 }
 
 .reforma-pillar-card:hover {
-  background: rgba(15, 23, 42, 0.85);
-  border-color: rgba(166, 25, 46, 0.4);
+  border-color: #CBD5E1;
   transform: translateY(-3px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
 }
 
 .reforma-pillar-top {
@@ -863,38 +973,38 @@
 }
 
 .reforma-pillar-icon {
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   border-radius: 12px;
-  background: rgba(166, 25, 46, 0.15);
-  border: 1px solid rgba(166, 25, 46, 0.35);
+  background: #FFF1F2;
+  border: 1px solid #FECDD3;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #F87171;
+  color: #A6192E;
   flex-shrink: 0;
 }
 
 .reforma-pillar-tag {
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   font-weight: 800;
   text-transform: uppercase;
-  color: #38BDF8;
+  color: #2B5672;
   font-family: var(--font-mono);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
 }
 
 .reforma-pillar-title {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: #FFFFFF;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #0F172A;
   margin-bottom: 12px;
   line-height: 1.3;
 }
 
 .reforma-pillar-desc {
-  font-size: 0.88rem;
-  color: #94A3B8;
+  font-size: 0.9rem;
+  color: #64748B;
   line-height: 1.6;
   margin-bottom: 20px;
 }
@@ -910,65 +1020,65 @@
 .reforma-pillar-bullet-item {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  font-size: 0.83rem;
-  color: #CBD5E1;
+  gap: 9px;
+  font-size: 0.85rem;
+  color: #334155;
   line-height: 1.4;
 }
 
 .reforma-bullet-check {
-  color: #10B981;
+  color: #059669;
   flex-shrink: 0;
   margin-top: 2px;
 }
 
 /* --------------------------------------------------------------------------
-   COMPARATIVE MATRIX: TRADICIONAL VS CUAUTHLI BIOMÉTRICO
+   COMPARATIVE MATRIX (LIGHT TABLE)
    -------------------------------------------------------------------------- */
 .reforma-table-wrap {
   overflow-x: auto;
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
 }
 
 .reforma-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 0.86rem;
-  background: #0B1120;
+  font-size: 0.88rem;
+  background: #FFFFFF;
 }
 
 .reforma-table th,
 .reforma-table td {
   padding: 18px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid #E2E8F0;
 }
 
 .reforma-table th {
-  background: #0F172A;
-  color: #CBD5E1;
+  background: #F1F5F9;
+  color: #1E293B;
   font-weight: 800;
   font-size: 0.84rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   font-family: var(--font-mono);
 }
 
 .reforma-table th.highlight-col {
-  background: rgba(166, 25, 46, 0.25);
-  color: #FFFFFF;
+  background: #FFF1F2;
+  color: #A6192E;
   border-left: 2px solid #A6192E;
   border-right: 2px solid #A6192E;
 }
 
 .reforma-table td.highlight-col {
-  background: rgba(166, 25, 46, 0.08);
+  background: #FFF9FA;
   border-left: 2px solid #A6192E;
   border-right: 2px solid #A6192E;
   font-weight: 600;
-  color: #FFFFFF;
+  color: #0F172A;
 }
 
 .reforma-table tr:last-child td {
@@ -976,22 +1086,22 @@
 }
 
 .reforma-td-bad {
-  color: #F87171;
+  color: #DC2626;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .reforma-td-good {
-  color: #34D399;
+  color: #059669;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-weight: 700;
 }
 
 /* --------------------------------------------------------------------------
-   HARDWARE & ECOSISTEMA HIKVISION SHOWCASE
+   HARDWARE SHOWCASE (LIGHT THEME)
    -------------------------------------------------------------------------- */
 .reforma-hardware-tabs {
   display: flex;
@@ -1002,9 +1112,9 @@
 }
 
 .reforma-tab-btn {
-  background: rgba(30, 41, 59, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #94A3B8;
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  color: #475569;
   padding: 10px 20px;
   border-radius: 999px;
   font-size: 0.84rem;
@@ -1017,34 +1127,34 @@
 }
 
 .reforma-tab-btn:hover {
-  color: #FFFFFF;
-  background: rgba(30, 41, 59, 0.9);
+  color: #0F172A;
+  background: #E2E8F0;
 }
 
 .reforma-tab-btn.active {
   background: #A6192E;
-  border-color: #C8102E;
+  border-color: #8C1527;
   color: #FFFFFF;
-  box-shadow: 0 0 16px rgba(166, 25, 46, 0.4);
+  box-shadow: 0 4px 12px rgba(166, 25, 46, 0.25);
 }
 
 .reforma-hardware-display {
-  background: linear-gradient(135deg, #0B1120 0%, #111A2E 100%);
-  border: 1px solid rgba(56, 189, 248, 0.25);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 20px;
   padding: 38px;
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   gap: 40px;
   align-items: center;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
 }
 
 .reforma-hw-preview-box {
-  background: radial-gradient(circle at center, rgba(30, 41, 59, 0.8) 0%, rgba(11, 17, 32, 0.95) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 14px;
-  padding: 30px;
+  background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 32px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -1055,30 +1165,29 @@
 }
 
 .reforma-hw-icon-huge {
-  color: #38BDF8;
+  color: #2B5672;
   margin-bottom: 18px;
-  filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.4));
 }
 
 .reforma-hw-title {
-  font-size: 1.6rem;
+  font-size: 1.65rem;
   font-weight: 900;
-  color: #FFFFFF;
-  margin-bottom: 12px;
+  color: #0F172A;
+  margin-bottom: 10px;
 }
 
 .reforma-hw-tagline {
-  font-size: 0.92rem;
-  color: #38BDF8;
-  font-weight: 700;
+  font-size: 0.94rem;
+  color: #A6192E;
+  font-weight: 800;
   margin-bottom: 16px;
   font-family: var(--font-mono);
 }
 
 .reforma-hw-desc {
-  font-size: 0.9rem;
-  color: #94A3B8;
-  line-height: 1.6;
+  font-size: 0.92rem;
+  color: #475569;
+  line-height: 1.65;
   margin-bottom: 24px;
 }
 
@@ -1089,33 +1198,33 @@
 }
 
 .reforma-hw-spec-item {
-  background: rgba(15, 23, 42, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
   border-radius: 10px;
-  padding: 10px 14px;
+  padding: 12px 14px;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
 .reforma-spec-icon {
-  color: #10B981;
+  color: #059669;
   flex-shrink: 0;
 }
 
 .reforma-spec-text {
-  font-size: 0.8rem;
-  color: #CBD5E1;
+  font-size: 0.82rem;
+  color: #475569;
 }
 
 .reforma-spec-text strong {
   display: block;
-  color: #FFFFFF;
-  font-size: 0.84rem;
+  color: #0F172A;
+  font-size: 0.85rem;
 }
 
 /* --------------------------------------------------------------------------
-   SECTORES IDEALES & CASOS DE USO
+   SECTORES IDEALES (LIGHT CARDS)
    -------------------------------------------------------------------------- */
 .reforma-sectors-grid {
   display: grid;
@@ -1124,29 +1233,30 @@
 }
 
 .reforma-sector-card {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 14px;
-  padding: 22px 18px;
+  padding: 24px 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
 }
 
 .reforma-sector-card:hover {
-  background: rgba(15, 23, 42, 0.85);
-  border-color: rgba(56, 189, 248, 0.35);
+  border-color: #CBD5E1;
   transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
 }
 
 .reforma-sector-icon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 10px;
-  background: rgba(43, 86, 114, 0.25);
-  border: 1px solid rgba(43, 86, 114, 0.45);
-  color: #38BDF8;
+  background: #F0F5F8;
+  border: 1px solid #C8DCE8;
+  color: #2B5672;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1154,20 +1264,20 @@
 }
 
 .reforma-sector-name {
-  font-size: 0.98rem;
+  font-size: 1rem;
   font-weight: 800;
-  color: #FFFFFF;
+  color: #0F172A;
   margin-bottom: 6px;
 }
 
 .reforma-sector-desc {
-  font-size: 0.8rem;
-  color: #94A3B8;
-  line-height: 1.45;
+  font-size: 0.82rem;
+  color: #64748B;
+  line-height: 1.5;
 }
 
 /* --------------------------------------------------------------------------
-   PROCESO LLAVE EN MANO CUAUTHLI EN 7 PASOS
+   PROCESO LLAVE EN MANO EN 7 PASOS (LIGHT CARDS)
    -------------------------------------------------------------------------- */
 .reforma-steps-grid {
   display: grid;
@@ -1176,27 +1286,34 @@
 }
 
 .reforma-turnkey-step {
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 14px;
   padding: 24px;
   position: relative;
   display: flex;
   gap: 16px;
   align-items: flex-start;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  transition: all 0.2s ease;
+}
+
+.reforma-turnkey-step:hover {
+  border-color: #CBD5E1;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.07);
 }
 
 .reforma-turnkey-number {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 900;
   color: #A6192E;
   font-family: var(--font-mono);
   line-height: 1;
-  background: rgba(166, 25, 46, 0.1);
+  background: #FFF1F2;
   width: 42px;
   height: 42px;
   border-radius: 10px;
-  border: 1px solid rgba(166, 25, 46, 0.3);
+  border: 1px solid #FECDD3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1204,20 +1321,20 @@
 }
 
 .reforma-turnkey-content h4 {
-  font-size: 1rem;
+  font-size: 1.02rem;
   font-weight: 800;
-  color: #FFFFFF;
+  color: #0F172A;
   margin-bottom: 6px;
 }
 
 .reforma-turnkey-content p {
-  font-size: 0.84rem;
-  color: #94A3B8;
+  font-size: 0.85rem;
+  color: #64748B;
   line-height: 1.5;
 }
 
 /* --------------------------------------------------------------------------
-   FAQ SECTION (ACORDEÓN)
+   FAQ SECTION (LIGHT ACORDEÓN)
    -------------------------------------------------------------------------- */
 .reforma-faq-list {
   max-width: 860px;
@@ -1228,16 +1345,17 @@
 }
 
 .reforma-faq-item {
-  background: rgba(15, 23, 42, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   border-radius: 12px;
   overflow: hidden;
   transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
 }
 
 .reforma-faq-item.open {
-  border-color: rgba(56, 189, 248, 0.4);
-  background: rgba(15, 23, 42, 0.95);
+  border-color: #2B5672;
+  background: #F8FAFC;
 }
 
 .reforma-faq-btn {
@@ -1249,39 +1367,42 @@
   justify-content: space-between;
   align-items: center;
   text-align: left;
-  color: #FFFFFF;
+  color: #0F172A;
   font-size: 0.96rem;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
   gap: 16px;
 }
 
 .reforma-faq-answer {
   padding: 0 22px 20px;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   line-height: 1.6;
-  color: #94A3B8;
+  color: #475569;
+  border-top: 1px solid #E2E8F0;
+  padding-top: 14px;
 }
 
 .reforma-faq-answer strong {
-  color: #E2E8F0;
+  color: #0F172A;
 }
 
 /* --------------------------------------------------------------------------
-   FINAL CONVERSION & DIRECT FORM CTA
+   FINAL CONVERSION CTA BANNER
    -------------------------------------------------------------------------- */
 .reforma-cta-banner {
-  background: linear-gradient(135deg, rgba(166, 25, 46, 0.9) 0%, rgba(43, 86, 114, 0.9) 100%);
+  background: linear-gradient(135deg, #A6192E 0%, #2B5672 100%);
   border-radius: 24px;
   padding: 50px 40px;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 40px;
   align-items: center;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 15px 40px rgba(166, 25, 46, 0.2);
   position: relative;
   overflow: hidden;
   margin-bottom: 40px;
+  color: #FFFFFF;
 }
 
 .reforma-cta-banner h2 {
@@ -1300,23 +1421,24 @@
 }
 
 .reforma-cta-inline-form {
-  background: #0B1120;
+  background: #FFFFFF;
   border-radius: 18px;
-  padding: 28px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 30px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  border: 1px solid #E2E8F0;
+  color: #0F172A;
 }
 
 .reforma-form-title {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: #FFFFFF;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: #0F172A;
   margin-bottom: 6px;
 }
 
 .reforma-form-sub {
-  font-size: 0.8rem;
-  color: #94A3B8;
+  font-size: 0.82rem;
+  color: #64748B;
   margin-bottom: 18px;
 }
 
@@ -1329,50 +1451,52 @@
 
 .reforma-input-group label {
   font-size: 0.76rem;
-  font-weight: 700;
-  color: #CBD5E1;
+  font-weight: 800;
+  color: #334155;
   text-transform: uppercase;
   font-family: var(--font-mono);
 }
 
 .reforma-input-group input,
 .reforma-input-group select {
-  background: #1E293B;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #FFFFFF;
+  background: #F8FAFC;
+  border: 1px solid #CBD5E1;
+  color: #0F172A;
   padding: 10px 14px;
   border-radius: 8px;
   font-size: 0.88rem;
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.2s;
 }
 
 .reforma-input-group input:focus,
 .reforma-input-group select:focus {
-  border-color: #38BDF8;
+  border-color: #A6192E;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 2px rgba(166, 25, 46, 0.15);
 }
 
 .reforma-form-submit {
   width: 100%;
-  background: linear-gradient(135deg, #A6192E 0%, #C8102E 100%);
+  background: linear-gradient(135deg, #A6192E 0%, #8C1527 100%);
   color: #FFFFFF;
   border: none;
   padding: 13px;
   border-radius: 8px;
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   font-weight: 800;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 8px 20px rgba(166, 25, 46, 0.4);
+  box-shadow: 0 6px 18px rgba(166, 25, 46, 0.3);
   transition: all 0.25s ease;
   margin-top: 8px;
 }
 
 .reforma-form-submit:hover {
-  filter: brightness(1.1);
+  filter: brightness(1.08);
   transform: translateY(-1px);
 }
 
@@ -1416,7 +1540,7 @@
 
 @media (max-width: 640px) {
   .reforma-hero {
-    padding: 40px 16px 60px;
+    padding: 30px 16px 50px;
   }
 
   .reforma-hero-title {
