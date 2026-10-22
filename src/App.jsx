@@ -23,33 +23,39 @@ export default function App() {
 
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash;
-      if (hash.startsWith('#servicio-')) {
-        const slug = hash.replace('#servicio-', '');
+      const rawHash = window.location.hash || '';
+      // Normalizar hash: remover '#' inicial y barras '/' iniciales/finales, case-insensitive
+      const clean = rawHash.replace(/^#\/?/, '').replace(/\/+$/, '').toLowerCase();
+
+      if (clean.startsWith('servicio-')) {
+        const slug = clean.replace('servicio-', '');
         setCurrentRoute(slug);
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#nosotros') {
+      } else if (clean === 'nosotros') {
         setCurrentRoute('nosotros');
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#comunidad') {
+      } else if (clean === 'comunidad') {
         setCurrentRoute('comunidad');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (
-        hash === '#reforma-laboral-40-horas' ||
-        hash === '#reforma-40-horas' ||
-        hash === '#control-asistencia-reforma' ||
-        hash === '#reloj-checador-stps' ||
-        hash === '#cumplimiento-stps'
+        clean === 'reforma-laboral-40-horas' ||
+        clean === 'reforma-40-horas' ||
+        clean === 'control-asistencia-reforma' ||
+        clean === 'reloj-checador-stps' ||
+        clean === 'cumplimiento-stps' ||
+        clean === 'reforma' ||
+        clean === 'reforma-laboral' ||
+        clean === '40-horas'
       ) {
         setCurrentRoute('reforma-laboral-40-horas');
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '' || hash === '#') {
+      } else if (clean === '' || clean === '#') {
         setCurrentRoute('home');
       } else {
         // Section anchors on home like #cobertura, #trayectoria, #testimonios
         setCurrentRoute('home');
         setTimeout(() => {
-          const el = document.querySelector(hash);
+          const el = document.getElementById(clean) || document.querySelector(rawHash);
           if (el) el.scrollIntoView({ behavior: 'smooth' });
         }, 100);
       }
