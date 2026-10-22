@@ -122,6 +122,19 @@ export default function Footer({ onOpenQuote, onNavigateHome, onNavigateService 
               </li>
               <li>
                 <a 
+                  href="#reforma-laboral-40-horas" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.location.hash = 'reforma-laboral-40-horas';
+                  }}
+                  style={{ color: '#F87171', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700 }}
+                >
+                  <span>Reforma 40H & STPS 2027</span>
+                  <span style={{ fontSize: '0.65rem', background: 'rgba(239, 68, 68, 0.2)', color: '#FCA5A5', padding: '1px 6px', borderRadius: '4px', textTransform: 'uppercase' }}>Norma</span>
+                </a>
+              </li>
+              <li>
+                <a 
                   href="#trayectoria" 
                   onClick={handleHome}
                   style={{ color: '#C8DCE8', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}

@@ -14,6 +14,7 @@ import QuickQuoteModal from './components/QuickQuoteModal';
 import ServicePage from './components/services/ServicePage';
 import NosotrosPage from './components/pages/NosotrosPage';
 import ComunidadPage from './components/pages/ComunidadPage';
+import ReformaLaboralPage from './components/pages/ReformaLaboralPage';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
@@ -32,6 +33,15 @@ export default function App() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#comunidad') {
         setCurrentRoute('comunidad');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (
+        hash === '#reforma-laboral-40-horas' ||
+        hash === '#reforma-40-horas' ||
+        hash === '#control-asistencia-reforma' ||
+        hash === '#reloj-checador-stps' ||
+        hash === '#cumplimiento-stps'
+      ) {
+        setCurrentRoute('reforma-laboral-40-horas');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '' || hash === '#') {
         setCurrentRoute('home');
@@ -91,6 +101,12 @@ export default function App() {
           />
         ) : currentRoute === 'comunidad' ? (
           <ComunidadPage 
+            onOpenQuote={handleOpenQuote}
+            onNavigateHome={handleNavigateHome}
+            onNavigateService={handleNavigateService}
+          />
+        ) : currentRoute === 'reforma-laboral-40-horas' ? (
+          <ReformaLaboralPage 
             onOpenQuote={handleOpenQuote}
             onNavigateHome={handleNavigateHome}
             onNavigateService={handleNavigateService}
