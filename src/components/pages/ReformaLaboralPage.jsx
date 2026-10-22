@@ -50,6 +50,9 @@ export default function ReformaLaboralPage({ onOpenQuote, onNavigateHome, onNavi
     return () => clearInterval(timer);
   }, []);
 
+  // Hero Kinetic Dial State (Idea 2: 48h vs 40h)
+  const [jornadaMode, setJornadaMode] = useState('40h'); // '48h' | '40h'
+
   // Simulator State
   const [employees, setEmployees] = useState(65);
   const [branches, setBranches] = useState(2);
@@ -362,61 +365,139 @@ export default function ReformaLaboralPage({ onOpenQuote, onNavigateHome, onNavi
             </div>
           </div>
 
-          {/* RIGHT: INTERACTIVE HUD TERMINAL SIMULATOR */}
-          <div className="reforma-terminal-hud">
-            <div className="reforma-hud-header">
-              <div className="reforma-hud-brand">
-                <span className="reforma-hud-brand-dot" />
-                <span>HIKVISION AI BIOMETRIC • STPS COMPLIANT</span>
+          {/* RIGHT: KINETIC DIAL COMPARATOR (IDEA 2: MINIMALISTA, LINDA Y WOW) */}
+          <div className="reforma-hero-dial-card">
+            
+            <div className="reforma-dial-header">
+              <div className="reforma-dial-tag">
+                <Scale size={13} />
+                <span>Simulador Dinámico de Jornada</span>
               </div>
-              <div className="reforma-hud-time">{currentTime} CST</div>
+              <h3 className="reforma-dial-title">
+                {jornadaMode === '48h' ? 'Esquema Tradicional: 48 Horas' : 'Nueva Norma STPS: 40 Horas'}
+              </h3>
+              <p className="reforma-dial-sub">
+                {jornadaMode === '48h' 
+                  ? 'Alta exposición a multas de hasta 5,000 UMA y demandas por horas extra no auditadas.' 
+                  : 'Cero contingencias legales: registro electrónico inalterable y cálculo automático LFT.'}
+              </p>
             </div>
 
-            {/* Scanner Stage */}
-            <div className="reforma-hud-scanner-stage">
-              <div className="reforma-hud-scan-beam" />
+            {/* Kinetic Dual Segment Toggle */}
+            <div className="reforma-dial-toggle-wrap">
+              <button 
+                type="button"
+                className={`reforma-dial-btn ${jornadaMode === '48h' ? 'active mode-48h' : ''}`}
+                onClick={() => setJornadaMode('48h')}
+              >
+                <Clock size={15} />
+                <span>48 Horas (Actual)</span>
+              </button>
+
+              <button 
+                type="button"
+                className={`reforma-dial-btn ${jornadaMode === '40h' ? 'active mode-40h' : ''}`}
+                onClick={() => setJornadaMode('40h')}
+              >
+                <ShieldCheck size={15} />
+                <span>40 Horas (Reforma)</span>
+              </button>
+            </div>
+
+            {/* Kinetic Progress Gauge Bar */}
+            <div className="reforma-dial-progress-track">
+              <div className={`reforma-dial-progress-bar ${jornadaMode === '48h' ? 'bar-48h' : 'bar-40h'}`} />
+            </div>
+
+            {/* Metrics 2x2 Grid */}
+            <div className="reforma-dial-metrics-grid">
               
-              <div className="reforma-hud-face-reticle">
-                <ScanFace size={54} color="#38BDF8" />
+              <div className="reforma-dial-metric-box">
+                <span className="reforma-dial-metric-label">Riesgo Multa STPS</span>
+                <span className={`reforma-dial-metric-val ${jornadaMode === '48h' ? 'alert' : 'success'}`}>
+                  {jornadaMode === '48h' ? '$586,550 MXN' : '$0 MXN'}
+                </span>
+                <span className="reforma-dial-metric-sub">
+                  {jornadaMode === '48h' ? 'Hasta 5,000 UMA acumulables' : '100% blindado ante inspección'}
+                </span>
               </div>
 
-              <div className="reforma-hud-employee-badge">
-                <div className="reforma-hud-employee-name">Ing. Roberto Méndez Cruz</div>
-                <div className="reforma-hud-employee-meta">ID: CQ-8942 • PLANTA CDMX • TURNO 40H MATUTINO</div>
+              <div className="reforma-dial-metric-box">
+                <span className="reforma-dial-metric-label">Horas Extras</span>
+                <span className={`reforma-dial-metric-val ${jornadaMode === '48h' ? 'alert' : 'success'}`}>
+                  {jornadaMode === '48h' ? 'Cálculo Manual' : 'Auditoría LFT'}
+                </span>
+                <span className="reforma-dial-metric-sub">
+                  {jornadaMode === '48h' ? 'Litigios por horas dobles/triples' : 'Desglose y topes automáticos'}
+                </span>
               </div>
+
+              <div className="reforma-dial-metric-box">
+                <span className="reforma-dial-metric-label">Validez Jurídica</span>
+                <span className={`reforma-dial-metric-val ${jornadaMode === '48h' ? 'alert' : 'success'}`}>
+                  {jornadaMode === '48h' ? 'Nula / Objetable' : 'Plena (SHA-256)'}
+                </span>
+                <span className="reforma-dial-metric-sub">
+                  {jornadaMode === '48h' ? 'Listas de papel sin valor' : 'Prueba pericial inalterable'}
+                </span>
+              </div>
+
+              <div className="reforma-dial-metric-box">
+                <span className="reforma-dial-metric-label">Velocidad Marcaje</span>
+                <span className={`reforma-dial-metric-val ${jornadaMode === '48h' ? 'alert' : 'success'}`}>
+                  {jornadaMode === '48h' ? 'Filas / Retardos' : '< 0.2s Facial AI'}
+                </span>
+                <span className="reforma-dial-metric-sub">
+                  {jornadaMode === '48h' ? 'Suplantación de compañeros' : 'Anti-spoofing rostro vivo'}
+                </span>
+              </div>
+
             </div>
 
-            {/* Telemetry Grid */}
-            <div className="reforma-hud-telemetry-grid">
-              <div className="reforma-hud-telemetry-cell">
-                <div className="reforma-telemetry-lbl">Anti-Spoofing</div>
-                <div className="reforma-telemetry-val">99.98% VIVO</div>
-              </div>
-              <div className="reforma-hud-telemetry-cell">
-                <div className="reforma-telemetry-lbl">Horas Semana</div>
-                <div className="reforma-telemetry-val cyan">38.5 / 40.0 H</div>
-              </div>
-              <div className="reforma-hud-telemetry-cell">
-                <div className="reforma-telemetry-lbl">Hrs Extra Dobles</div>
-                <div className="reforma-telemetry-val warn">1.5 H (Auditada)</div>
-              </div>
+            {/* Diagnostic Alert Callout */}
+            <div className={`reforma-dial-status-alert ${jornadaMode === '48h' ? 'alert-48h' : 'alert-40h'}`}>
+              {jornadaMode === '48h' ? (
+                <>
+                  <AlertTriangle size={18} style={{ flexShrink: 0, marginTop: 2 }} />
+                  <div>
+                    <strong>Régimen Vulnerable a Sanciones Federales</strong>
+                    La reducción a 40 horas convierte cualquier retraso en tiempo extra sujeto a controversias sin una bitácora electrónica sellada.
+                  </div>
+                </>
+              ) : (
+                <>
+                  <ShieldCheck size={18} style={{ flexShrink: 0, marginTop: 2 }} />
+                  <div>
+                    <strong>Operación Certificada y Homologada STPS 2027</strong>
+                    Trazabilidad digital exacta para plantas, corporativos y CEDIS con respaldo integral de Sistemas Cuauhtli.
+                  </div>
+                </>
+              )}
             </div>
 
-            {/* Live Events Audit Log */}
-            <div className="reforma-hud-events-log">
-              <div className="reforma-log-line">
-                <span>[LOG-STPS-2027]</span>
-                <span className="reforma-log-success">REGISTRO FIRMADO SHA-256</span>
+            {/* Hardware Micro-Chip */}
+            <div className="reforma-dial-hardware-chip">
+              <div className="reforma-dial-chip-left">
+                <ScanFace size={16} color="#2B5672" />
+                <span>
+                  {jornadaMode === '48h' ? 'Checador análogo / Firmas en libreta' : 'Terminal Facial Hikvision MinMoe AI'}
+                </span>
               </div>
-              <div className="reforma-log-line">
-                <span>INSPECCIÓN LABORAL:</span>
-                <span className="reforma-log-success">EVIDENCIA VÁLIDA / INALTERABLE</span>
-              </div>
-              <div className="reforma-log-line">
-                <span>SEDE VINCULADA:</span>
-                <span>NUBE CORPORATIVA CUAUTHLI</span>
-              </div>
+              <span className={`reforma-dial-chip-badge ${jornadaMode === '48h' ? 'red' : 'green'}`}>
+                {jornadaMode === '48h' ? 'No Conforme' : 'Conforme STPS'}
+              </span>
             </div>
+
+            {/* Direct CTA */}
+            <button 
+              type="button"
+              className="reforma-dial-cta-btn"
+              onClick={() => onOpenQuote(`Diagnóstico para Régimen de ${jornadaMode === '48h' ? '48 a 40 Horas' : '40 Horas STPS'}`)}
+            >
+              <span>Cotizar Solución Homologada para 40 Horas</span>
+              <ArrowRight size={15} />
+            </button>
+
           </div>
 
         </div>
