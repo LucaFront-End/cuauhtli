@@ -1,0 +1,316 @@
+/* ==========================================================================
+   REFORMA COMPACT STICKY TIMELINE (MINIMALIST & SLEEK)
+   Clean, Apple / Linear aesthetic - Sistemas Cuauhtli
+   ========================================================================== */
+
+.reforma-mini-timeline-root {
+  position: relative;
+  width: 100%;
+  background: #FFFFFF;
+  border-top: 1px solid #F1F5F9;
+  border-bottom: 1px solid #F1F5F9;
+  margin-top: -120px; /* Seamless gap close from hero CTA */
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.reforma-mini-inner {
+  position: relative;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   1. COMPACT HEADER
+   -------------------------------------------------------------------------- */
+.reforma-mini-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.reforma-mini-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reforma-mini-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #A6192E;
+  font-family: var(--font-mono, monospace);
+}
+
+.reforma-mini-title {
+  font-size: clamp(1.35rem, 1.8vw, 1.75rem);
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* Step Numbers Quick Nav */
+.reforma-mini-steps-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  padding: 3px 4px;
+  border-radius: 9999px;
+}
+
+.mini-step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.mini-step-btn:hover {
+  color: #0F172A;
+}
+
+.mini-step-btn.is-active {
+  background: #FFFFFF;
+  color: #0F172A;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.04);
+}
+
+.mini-step-num {
+  font-family: var(--font-mono, monospace);
+  font-weight: 800;
+  color: #A6192E;
+}
+
+.mini-step-name {
+  font-size: 0.72rem;
+}
+
+/* --------------------------------------------------------------------------
+   2. ULTRA-THIN PROGRESS HAIRLINE
+   -------------------------------------------------------------------------- */
+.reforma-mini-progress-track {
+  width: 100%;
+  height: 2px;
+  background: #F1F5F9;
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.reforma-mini-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #A6192E 0%, #1D1E1B 100%);
+  border-radius: 9999px;
+  transition: width 0.15s ease-out;
+}
+
+/* --------------------------------------------------------------------------
+   3. HORIZONTAL VIEWPORT & MINIMAL CARDS
+   -------------------------------------------------------------------------- */
+.reforma-mini-viewport {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+  padding: 8px 0;
+}
+
+.reforma-mini-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  will-change: transform;
+}
+
+.reforma-mini-card {
+  position: relative;
+  width: clamp(270px, 22vw, 310px);
+  min-height: 190px;
+  background: #FFFFFF;
+  border: 1px solid #E8EBF0;
+  border-radius: 16px;
+  padding: 20px 20px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+  transition: all 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.reforma-mini-card:hover {
+  transform: translateY(-3px);
+  border-color: #CBD5E1;
+  box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.08);
+}
+
+.reforma-mini-card.is-active {
+  border-color: #A6192E;
+  box-shadow: 0 10px 24px -4px rgba(166, 25, 46, 0.12), 0 0 0 1px rgba(166, 25, 46, 0.12);
+  transform: translateY(-3px);
+}
+
+.reforma-mini-card.is-mandatory {
+  border-left: 3px solid #A6192E;
+}
+
+/* Card Header */
+.mini-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.mini-card-num {
+  font-size: 1.4rem;
+  font-weight: 800;
+  font-family: var(--font-mono, monospace);
+  color: #94A3B8;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.reforma-mini-card.is-active .mini-card-num {
+  color: #A6192E;
+}
+
+.mini-card-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #64748B;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  font-family: var(--font-mono, monospace);
+  letter-spacing: 0.02em;
+}
+
+.mini-card-tag.is-mandatory {
+  background: #FFF1F2;
+  color: #991B1B;
+  border-color: #FECDD3;
+}
+
+/* Card Typography */
+.mini-card-title {
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.3;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.015em;
+}
+
+.mini-card-desc {
+  font-size: 0.84rem;
+  color: #64748B;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Card Footer Action */
+.mini-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 10px;
+  margin-top: 12px;
+  border-top: 1px solid #F8FAFC;
+}
+
+.mini-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #A6192E;
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.mini-card-action:hover {
+  background: #FFF1F2;
+}
+
+/* --------------------------------------------------------------------------
+   4. RESPONSIVE (MOBILE / TABLET)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .reforma-mini-timeline-root {
+    margin-top: -60px;
+  }
+
+  .reforma-mini-inner {
+    padding: 20px 20px;
+  }
+
+  .reforma-mini-steps-nav {
+    display: none;
+  }
+
+  .reforma-mini-viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+  }
+
+  .reforma-mini-track {
+    padding-right: 20px;
+  }
+
+  .reforma-mini-card {
+    scroll-snap-align: center;
+    width: 78vw;
+    max-width: 290px;
+  }
+}
+
+@media (max-width: 640px) {
+  .reforma-mini-timeline-root {
+    margin-top: -24px;
+  }
+
+  .reforma-mini-inner {
+    padding: 16px 14px;
+    gap: 12px;
+  }
+
+  .reforma-mini-title {
+    font-size: 1.25rem;
+  }
+}

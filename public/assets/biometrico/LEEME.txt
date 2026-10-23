@@ -1,0 +1,89 @@
+ANIMACIÓN BIOMÉTRICA ISOMÉTRICA
+==============================
+
+Un terminal de grafito con pantalla y sensor, un rostro holográfico de
+triángulos, una lámina de escaneo cian y una confirmación geométrica verde.
+La escena usa cámara ortográfica a 30° de elevación.
+
+ARCHIVOS
+
+animacion-biometrica.html
+La animación 3D completa, editable y autocontenida. Funciona sin descargar
+librerías, imágenes ni fuentes externas. El archivo ya incluye Three.js.
+Se adapta al espacio disponible y admite fondo negro o transparente.
+
+biometrico-loop.mp4
+Video de 8 segundos, 1080 x 1080 px, 30 fps, sin audio y con fondo negro.
+
+biometrico-transparente.webm
+El mismo loop, con canal alfa para ponerlo sobre el fondo de tu web.
+La reproducción del canal alfa depende del navegador/plataforma de destino.
+Si tu plataforma no lo admite, usá el HTML transparente o el MP4 negro.
+
+biometrico-transparente.png
+Imagen fija de 1080 x 1080 px, con fondo transparente y estado confirmado.
+
+biometrico-poster.png
+Imagen fija de 1080 x 1080 px, con fondo negro y escaneo activo.
+Se puede usar como portada del video mientras carga.
+
+INCORPORAR LA ANIMACIÓN 3D A TU WEB
+
+1. Subí animacion-biometrica.html a la carpeta de archivos de tu web.
+2. Insertá este bloque y ajustá la ruta a la ubicación del archivo:
+
+<iframe
+  src="/assets/animacion-biometrica.html?embed=1"
+  title="Animación de reconocimiento biométrico"
+  loading="lazy"
+  style="width:100%;max-width:720px;aspect-ratio:1;border:0;display:block"
+></iframe>
+
+Para usar fondo transparente, cambiá el src por:
+
+/assets/animacion-biometrica.html?embed=1&background=transparent
+
+El parámetro embed=1 oculta los controles de edición. Sin ese parámetro,
+al mover el cursor aparecen Pausar, Reiniciar, Fondo transparente y
+Guardar PNG. En pantallas táctiles los controles quedan visibles.
+
+El archivo respeta la preferencia de reducir movimiento: en ese caso
+inicia con una imagen quieta. También pausa el render cuando la escena
+sale de la vista o la pestaña queda oculta. Incluye una imagen de respaldo
+si WebGL no está disponible o JavaScript está deshabilitado.
+
+INCORPORAR EL VIDEO
+
+Subí el MP4 y el poster al mismo directorio. Ajustá las rutas:
+
+<video autoplay muted loop playsinline preload="metadata"
+  poster="/assets/biometrico-poster.png"
+  aria-label="Animación de reconocimiento biométrico"
+  style="width:100%;max-width:720px;aspect-ratio:1;display:block">
+  <source src="/assets/biometrico-loop.mp4" type="video/mp4">
+</video>
+
+Para el video transparente, usá biometrico-transparente.webm como fuente,
+con type="video/webm". No uses el poster negro si querés conservar la
+transparencia. El elemento video no aplica automáticamente la preferencia
+de reducir movimiento; tu web puede pausarlo cuando esa opción esté activa.
+
+PERSONALIZACIÓN
+
+El HTML incluye el código completo. Al final del archivo está la escena
+original, después de la librería. Colores principales: cian #4ee6ff,
+verde #64f5ab y materiales grafito/navy. CYCLE define los 8 segundos.
+
+Desde JavaScript, en el documento de la animación:
+window.biometricAnimation.pause()
+window.biometricAnimation.play()
+window.biometricAnimation.seek(2.7)
+window.biometricAnimation.setTransparent(true)
+
+La función makeFaceGeometryData() contiene la geometría original del rostro.
+
+LICENCIAS
+
+Geometría, composición y animación creadas para este pedido.
+La librería Three.js r160.1 se distribuye con licencia MIT. Se incluye
+su aviso completo en THREE-LICENSE.txt.

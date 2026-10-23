@@ -1,0 +1,523 @@
+/* ==========================================================================
+   HORIZONTAL FEATURE REVEAL (STEP 1 -> 2 -> 3 -> 4)
+   Sistemas Cuauhtli - Luxury Enterprise Transition Showcase
+   ========================================================================== */
+
+.hfr-section-root {
+  position: relative;
+  width: 100%;
+  background-color: #FFFFFF;
+  color: #0F172A;
+  border-top: 1px solid #F1F5F9;
+  border-bottom: 1px solid #E2E8F0;
+  box-sizing: border-box;
+  overflow-x: clip;
+}
+
+.hfr-pinned-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 76px);
+  min-height: 580px;
+  max-height: 840px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 36px 16px 36px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   1. TOP NAVIGATION BAR & STEP PILLS
+   -------------------------------------------------------------------------- */
+.hfr-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  z-index: 10;
+}
+
+.hfr-nav-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hfr-nav-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #A6192E;
+  font-family: var(--font-mono, monospace);
+  background: #FFF1F2;
+  border: 1px solid #FECDD3;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  width: fit-content;
+}
+
+.hfr-nav-title {
+  font-size: clamp(1.4rem, 2vw, 1.95rem);
+  font-weight: 700;
+  color: #0F172A;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.hfr-nav-title em {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  padding-right: 0.06em;
+  background: linear-gradient(95deg, #0F172A 15%, #A6192E 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Step Selector Pills */
+.hfr-nav-steps {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  padding: 4px 6px;
+  border-radius: 9999px;
+}
+
+.hfr-step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+  user-select: none;
+}
+
+.hfr-step-btn:hover {
+  color: #0F172A;
+}
+
+.hfr-step-btn.is-active {
+  background: #FFFFFF;
+  color: #0F172A;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(15, 23, 42, 0.05);
+}
+
+.hfr-step-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  transition: all 0.25s ease;
+}
+
+.hfr-step-number {
+  font-family: var(--font-mono, monospace);
+  font-weight: 800;
+}
+
+.hfr-step-label {
+  font-size: 0.74rem;
+}
+
+/* Progress Hairline */
+.hfr-progress-hairline {
+  width: 100%;
+  max-width: 1320px;
+  margin: 6px auto 0 auto;
+  height: 2px;
+  background: #E2E8F0;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.hfr-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #F59E0B 0%, #A6192E 40%, #0284C7 75%, #10B981 100%);
+  border-radius: 9999px;
+  transition: width 0.15s ease-out;
+}
+
+/* --------------------------------------------------------------------------
+   2. HORIZONTAL VIEWPORT & SLIDES TRACK
+   -------------------------------------------------------------------------- */
+.hfr-viewport {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 12px 0;
+}
+
+.hfr-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+.hfr-slide-panel {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(30px, 4.5vw, 64px);
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   3. LEFT COLUMN: IMAGE CARD WITH AMBIENT LIGHT
+   -------------------------------------------------------------------------- */
+.hfr-image-card-wrap {
+  position: relative;
+  width: clamp(320px, 32vw, 440px);
+  height: clamp(320px, 46vh, 440px);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hfr-image-card-ambient {
+  position: absolute;
+  inset: -20px;
+  border-radius: 36px;
+  pointer-events: none;
+  filter: blur(30px);
+  opacity: 0.8;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hfr-slide-image-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: #0A0E17;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 20px 50px -12px rgba(15, 23, 42, 0.16);
+  z-index: 1;
+}
+
+.hfr-slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease-out;
+}
+
+.hfr-image-overlay-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 5px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+}
+
+.hfr-badge-num {
+  font-family: var(--font-mono, monospace);
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: #38BDF8;
+}
+
+.hfr-badge-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* --------------------------------------------------------------------------
+   4. RIGHT COLUMN: TEXT CONTENT & TECHNICAL BLOCKS
+   -------------------------------------------------------------------------- */
+.hfr-slide-text {
+  flex: 1;
+  max-width: 580px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  box-sizing: border-box;
+}
+
+.hfr-slide-header-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hfr-slide-giant-num {
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  font-weight: 900;
+  font-family: var(--font-mono, monospace);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.hfr-slide-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-family: var(--font-mono, monospace);
+}
+
+.hfr-slide-badge.warning {
+  background: #FEF3C7;
+  color: #B45309;
+  border: 1px solid #FDE68A;
+}
+
+.hfr-slide-badge.danger {
+  background: #FFF1F2;
+  color: #991B1B;
+  border: 1px solid #FECDD3;
+}
+
+.hfr-slide-badge.cyan {
+  background: #F0F9FF;
+  color: #0369A1;
+  border: 1px solid #BAE6FD;
+}
+
+.hfr-slide-badge.success {
+  background: #ECFDF5;
+  color: #047857;
+  border: 1px solid #A7F3D0;
+}
+
+.hfr-slide-title {
+  font-size: clamp(1.45rem, 2.2vw, 2.1rem);
+  font-weight: 900;
+  color: #0F172A;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.hfr-slide-desc {
+  font-size: clamp(0.92rem, 1.1vw, 1.05rem);
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Highlight Box */
+.hfr-slide-highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-left-width: 3px;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #1E293B;
+  line-height: 1.45;
+}
+
+.hfr-check-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Action Button */
+.hfr-slide-action-row {
+  margin-top: 4px;
+}
+
+.hfr-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0F172A;
+  color: #FFFFFF;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 11px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+}
+
+.hfr-action-btn:hover {
+  background: #A6192E;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(166, 25, 46, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   5. BOTTOM CONTROLS & COUNTER
+   -------------------------------------------------------------------------- */
+.hfr-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  z-index: 10;
+  padding-top: 6px;
+}
+
+.hfr-counter-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hfr-dot-btn {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.hfr-dot-inner {
+  display: block;
+  width: 22px;
+  height: 4px;
+  border-radius: 9999px;
+  background: #CBD5E1;
+  transition: all 0.25s ease;
+}
+
+.hfr-dot-btn.is-active .hfr-dot-inner {
+  width: 36px;
+  background: #A6192E;
+}
+
+.hfr-step-counter-text {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #64748B;
+  font-family: var(--font-mono, monospace);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* --------------------------------------------------------------------------
+   6. RESPONSIVE MEDIA QUERIES (MOBILE / TABLET)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .hfr-pinned-container {
+    height: auto;
+    max-height: none;
+    min-height: auto;
+    padding: 28px 20px;
+    gap: 20px;
+  }
+
+  .hfr-nav-steps {
+    display: none;
+  }
+
+  .hfr-progress-hairline {
+    display: none;
+  }
+
+  .hfr-viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 0;
+  }
+
+  .hfr-track {
+    width: max-content;
+  }
+
+  .hfr-slide-panel {
+    flex: 0 0 88vw;
+    width: 88vw;
+    max-width: 440px;
+    flex-direction: column;
+    scroll-snap-align: center;
+    gap: 18px;
+    padding: 0;
+  }
+
+  .hfr-image-card-wrap {
+    width: 100%;
+    height: 50vw;
+    max-height: 240px;
+  }
+
+  .hfr-slide-text {
+    width: 100%;
+    gap: 12px;
+  }
+
+  .hfr-slide-giant-num {
+    font-size: 2rem;
+  }
+
+  .hfr-action-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .hfr-pinned-container {
+    padding: 20px 14px;
+  }
+
+  .hfr-slide-panel {
+    flex: 0 0 92vw;
+    width: 92vw;
+  }
+
+  .hfr-nav-title {
+    font-size: 1.25rem;
+  }
+}

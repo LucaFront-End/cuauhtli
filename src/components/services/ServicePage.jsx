@@ -8,7 +8,9 @@ import AlarmIsometricScene from './heroes/AlarmIsometricScene';
 import FenceIsometricScene from './heroes/FenceIsometricScene';
 import IntercomIsometricScene from './heroes/IntercomIsometricScene';
 import ServiceProcessTimeline from './ServiceProcessTimeline';
-import NosotrosSection from '../NosotrosSection';
+import AlliesMarquee from '../AlliesMarquee';
+import Testimonials from '../Testimonials';
+import ServiceGallery from './ServiceGallery';
 import { 
   ShieldCheck, 
   ArrowLeft, 
@@ -182,6 +184,9 @@ export default function ServicePage({ serviceId = 'cctv', onOpenQuote, onNavigat
         </div>
       </section>
 
+      {/* 2.5 FRANJA DE MARCAS HOMOLOGADAS (ALLIES MARQUEE) */}
+      <AlliesMarquee />
+
       {/* 3. CORE TECHNICAL ADVANTAGES */}
       <section className="svc-features-section">
         <div className="container">
@@ -318,8 +323,11 @@ export default function ServicePage({ serviceId = 'cctv', onOpenQuote, onNavigat
         </div>
       </section>
 
-      {/* 8. SOBRE NOSOTROS & RESPALDO TÉCNICO CUAUTHLI */}
-      <NosotrosSection onOpenQuote={() => onOpenQuote?.(service.name)} compact={true} />
+      {/* 8. GALERÍA DE PROYECTOS E INSTALACIONES EN SITIO */}
+      <ServiceGallery serviceId={service.id} />
+
+      {/* 9. TESTIMONIOS VERIFICADOS DE CLIENTES */}
+      <Testimonials />
 
       {/* 9. TECHNICAL FAQ ACCORDION */}
       <section className="svc-faq-section">

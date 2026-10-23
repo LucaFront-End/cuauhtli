@@ -8,7 +8,7 @@
   background-color: #FFFFFF;
   color: #1D1E1B;
   font-family: var(--font-sans);
-  overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
   min-height: 100vh;
   padding-top: 76px;
@@ -519,12 +519,24 @@
 }
 
 .reforma-section-title {
-  font-size: 2.15rem;
-  font-weight: 900;
-  color: #0F172A;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
+  font-size: clamp(2rem, 3.1vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  color: var(--text-main, #0F172A);
   margin-bottom: 14px;
+}
+
+.reforma-section-title em {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  padding-right: 0.06em;
+  background: linear-gradient(95deg, #0F172A 15%, #A6192E 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .reforma-section-subtitle {
@@ -664,66 +676,73 @@
 }
 
 /* --------------------------------------------------------------------------
-   INTERACTIVE SIMULATOR (LIGHT THEME)
+   INTERACTIVE SIMULATOR (MINIMALIST & GLASSMORPHISM)
    -------------------------------------------------------------------------- */
-.reforma-calc-card {
+.reforma-calc-card-minimal {
   background: #FFFFFF;
   border: 1px solid #E2E8F0;
-  border-radius: 20px;
-  padding: 36px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  border-radius: 28px;
+  padding: 44px 40px;
+  box-shadow: 0 24px 60px -15px rgba(15, 23, 42, 0.07);
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 40px;
-  align-items: center;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 44px;
+  align-items: stretch;
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
-.reforma-calc-controls {
+.reforma-calc-controls-min {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 28px;
+  justify-content: space-between;
 }
 
-.reforma-calc-group {
+.calc-group-min {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
-.reforma-calc-label-row {
+.calc-header-min {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.88rem;
+}
+
+.calc-label-min {
+  font-size: 0.9rem;
   font-weight: 700;
-  color: #334155;
+  color: #1E293B;
+  letter-spacing: -0.01em;
 }
 
-.reforma-calc-value-badge {
-  background: #F0F5F8;
-  border: 1px solid #C8DCE8;
-  color: #2B5672;
-  padding: 3px 10px;
-  border-radius: 6px;
-  font-family: var(--font-mono);
+.calc-badge-min {
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  color: #0F172A;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-family: var(--font-mono, monospace);
   font-weight: 800;
-  font-size: 0.85rem;
+  font-size: 0.84rem;
 }
 
-.reforma-slider {
+.reforma-slider-min {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: 8px;
+  height: 6px;
   background: #E2E8F0;
-  border-radius: 4px;
+  border-radius: 999px;
   outline: none;
   cursor: pointer;
+  margin: 6px 0;
 }
 
-.reforma-slider::-webkit-slider-thumb {
+.reforma-slider-min::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 22px;
@@ -731,22 +750,58 @@
   border-radius: 50%;
   background: #A6192E;
   border: 2px solid #FFFFFF;
-  box-shadow: 0 2px 6px rgba(166, 25, 46, 0.4);
+  box-shadow: 0 2px 8px rgba(166, 25, 46, 0.35);
   cursor: pointer;
+  transition: transform 0.15s ease;
 }
 
-.reforma-method-options {
+.reforma-slider-min::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.calc-presets-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.calc-preset-btn {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  color: #64748B;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  font-family: var(--font-mono, monospace);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.calc-preset-btn:hover {
+  background: #F1F5F9;
+  color: #0F172A;
+  border-color: #CBD5E1;
+}
+
+.calc-preset-btn.active {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-color: #0F172A;
+}
+
+.calc-methods-grid-min {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
-.reforma-method-btn {
+.calc-method-chip {
   background: #F8FAFC;
-  border: 1px solid #CBD5E1;
+  border: 1px solid #E2E8F0;
   color: #475569;
-  padding: 12px;
-  border-radius: 8px;
+  padding: 11px 14px;
+  border-radius: 12px;
   font-size: 0.8rem;
   font-weight: 700;
   text-align: left;
@@ -754,118 +809,227 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.reforma-method-btn:hover {
+.calc-method-chip.full-width {
+  grid-column: 1 / -1;
+}
+
+.calc-method-chip:hover {
   background: #F1F5F9;
   color: #0F172A;
-  border-color: #94A3B8;
+  border-color: #CBD5E1;
 }
 
-.reforma-method-btn.selected {
+.calc-method-chip.selected {
   background: #FFF1F2;
   border-color: #A6192E;
   color: #991B1B;
   box-shadow: 0 0 0 1px #A6192E;
 }
 
-.reforma-calc-results {
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-  border-radius: 16px;
-  padding: 26px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  position: relative;
+.calc-method-chip.selected-safe {
+  background: #ECFDF5;
+  border-color: #10B981;
+  color: #065F46;
+  box-shadow: 0 0 0 1px #10B981;
 }
 
-.reforma-results-header {
+.chip-icon.danger { color: #DC2626; }
+.chip-icon.warning { color: #F59E0B; }
+.chip-icon.blue { color: #0284C7; }
+.chip-icon.success { color: #10B981; }
+
+/* --------------------------------------------------------------------------
+   RESULTS PANEL (RIGHT COLUMN)
+   -------------------------------------------------------------------------- */
+.reforma-calc-results-min {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 30px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.reforma-calc-results-min.critico {
+  background: linear-gradient(180deg, #FFF1F2 0%, #FFFFFF 100%);
+  border-color: #FECDD3;
+}
+
+.reforma-calc-results-min.alto {
+  background: linear-gradient(180deg, #FEF3C7 0%, #FFFFFF 100%);
+  border-color: #FDE68A;
+}
+
+.reforma-calc-results-min.moderado {
+  background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%);
+  border-color: #BAE6FD;
+}
+
+.reforma-calc-results-min.seguro {
+  background: linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 100%);
+  border-color: #A7F3D0;
+}
+
+.calc-result-header-min {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #E2E8F0;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
   padding-bottom: 12px;
 }
 
-.reforma-risk-pill {
+.calc-result-title-min {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748B;
+  font-family: var(--font-mono, monospace);
+}
+
+.calc-risk-pill-min {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 12px;
+  padding: 4px 12px;
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 800;
-  font-family: var(--font-mono);
+  font-family: var(--font-mono, monospace);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
-.reforma-risk-pill.critico {
-  background: #FEE2E2;
-  color: #B91C1C;
-  border: 1px solid #FECACA;
+.calc-risk-pill-min.critico {
+  background: #FFF1F2;
+  color: #991B1B;
+  border: 1px solid #FECDD3;
 }
 
-.reforma-risk-pill.alto {
+.calc-risk-pill-min.alto {
   background: #FEF3C7;
   color: #B45309;
   border: 1px solid #FDE68A;
 }
 
-.reforma-risk-pill.moderado {
-  background: #E0F2FE;
+.calc-risk-pill-min.moderado {
+  background: #F0F9FF;
   color: #0369A1;
   border: 1px solid #BAE6FD;
 }
 
-.reforma-fine-box {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 12px;
-  padding: 18px;
-  border-left: 4px solid #EF4444;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+.calc-risk-pill-min.seguro {
+  background: #ECFDF5;
+  color: #047857;
+  border: 1px solid #A7F3D0;
 }
 
-.reforma-fine-uma {
+/* Fine Showcase */
+.calc-fine-showcase-min {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.calc-fine-label-min {
   font-size: 0.74rem;
-  color: #64748B;
-  text-transform: uppercase;
-  font-family: var(--font-mono);
   font-weight: 700;
+  text-transform: uppercase;
+  color: #64748B;
+  letter-spacing: 0.04em;
 }
 
-.reforma-fine-amount {
-  font-size: 1.85rem;
+.calc-fine-number-min {
+  font-size: clamp(1.8rem, 2.5vw, 2.4rem);
   font-weight: 900;
   color: #B91C1C;
-  font-family: var(--font-mono);
-  margin: 4px 0 2px;
+  font-family: var(--font-mono, monospace);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
 }
 
-.reforma-fine-note {
-  font-size: 0.75rem;
+.calc-fine-number-min small {
+  font-size: 0.95rem;
+  font-weight: 700;
   color: #64748B;
-  line-height: 1.45;
 }
 
-.reforma-results-breakdown {
+.text-safe-zero {
+  color: #10B981 !important;
+}
+
+.calc-fine-legal-note {
+  font-size: 0.76rem;
+  color: #64748B;
+  line-height: 1.4;
+}
+
+/* Breakdown Metrics */
+.calc-metrics-stack-min {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  font-size: 0.84rem;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 14px 16px;
 }
 
-.reforma-breakdown-row {
+.calc-metric-item-min {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  color: #475569;
+  font-size: 0.82rem;
 }
 
-.reforma-breakdown-row strong {
+.metric-name-min {
+  color: #64748B;
+  font-weight: 600;
+}
+
+.metric-val-min {
   color: #0F172A;
+  font-weight: 800;
+  font-family: var(--font-mono, monospace);
+}
+
+.calc-legal-desc-min {
+  font-size: 0.8rem;
+  color: #64748B;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* CTA Button */
+.calc-cta-btn-min {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #0F172A;
+  color: #FFFFFF;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 800;
+  padding: 14px 24px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+  width: 100%;
+}
+
+.calc-cta-btn-min:hover {
+  background: #A6192E;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(166, 25, 46, 0.28);
 }
 
 /* --------------------------------------------------------------------------
@@ -1031,403 +1195,240 @@
 }
 
 /* --------------------------------------------------------------------------
-   HARDWARE SHOWCASE (LIGHT THEME)
+   FINAL MINIMALIST CTA SECTION (AESTHETIC & EDITORIAL)
    -------------------------------------------------------------------------- */
-.reforma-hardware-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 34px;
-  flex-wrap: wrap;
+.reforma-final-cta-section {
+  padding: 80px 0 120px 0;
+  position: relative;
 }
 
-.reforma-tab-btn {
-  background: #F1F5F9;
-  border: 1px solid #E2E8F0;
-  color: #475569;
-  padding: 10px 20px;
-  border-radius: 999px;
-  font-size: 0.84rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.2s ease;
-}
-
-.reforma-tab-btn:hover {
-  color: #0F172A;
-  background: #E2E8F0;
-}
-
-.reforma-tab-btn.active {
-  background: #A6192E;
-  border-color: #8C1527;
-  color: #FFFFFF;
-  box-shadow: 0 4px 12px rgba(166, 25, 46, 0.25);
-}
-
-.reforma-hardware-display {
+.reforma-final-cta-card {
+  position: relative;
   background: #FFFFFF;
   border: 1px solid #E2E8F0;
-  border-radius: 20px;
-  padding: 38px;
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: 40px;
-  align-items: center;
-  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
-}
-
-.reforma-hw-preview-box {
-  background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
-  border: 1px solid #E2E8F0;
-  border-radius: 16px;
-  padding: 32px;
+  border-radius: 32px;
+  padding: 80px 48px;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 280px;
-  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 24px 60px -20px rgba(15, 23, 42, 0.07),
+    0 0 1px rgba(15, 23, 42, 0.08);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.reforma-hw-icon-huge {
-  color: #2B5672;
-  margin-bottom: 18px;
-}
-
-.reforma-hw-title {
-  font-size: 1.65rem;
-  font-weight: 900;
-  color: #0F172A;
-  margin-bottom: 10px;
-}
-
-.reforma-hw-tagline {
-  font-size: 0.94rem;
-  color: #A6192E;
-  font-weight: 800;
-  margin-bottom: 16px;
-  font-family: var(--font-mono);
-}
-
-.reforma-hw-desc {
-  font-size: 0.92rem;
-  color: #475569;
-  line-height: 1.65;
-  margin-bottom: 24px;
-}
-
-.reforma-hw-specs-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.reforma-hw-spec-item {
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
-  border-radius: 10px;
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.reforma-spec-icon {
-  color: #059669;
-  flex-shrink: 0;
-}
-
-.reforma-spec-text {
-  font-size: 0.82rem;
-  color: #475569;
-}
-
-.reforma-spec-text strong {
-  display: block;
-  color: #0F172A;
-  font-size: 0.85rem;
-}
-
-/* --------------------------------------------------------------------------
-   SECTORES IDEALES (LIGHT CARDS)
-   -------------------------------------------------------------------------- */
-.reforma-sectors-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-}
-
-.reforma-sector-card {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 14px;
-  padding: 24px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  transition: all 0.25s ease;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-}
-
-.reforma-sector-card:hover {
+.reforma-final-cta-card:hover {
   border-color: #CBD5E1;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  box-shadow: 
+    0 32px 75px -20px rgba(15, 23, 42, 0.1),
+    0 0 1px rgba(15, 23, 42, 0.1);
 }
 
-.reforma-sector-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  background: #F0F5F8;
-  border: 1px solid #C8DCE8;
-  color: #2B5672;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 14px;
+.reforma-final-cta-glow {
+  position: absolute;
+  top: -140px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 680px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(166, 25, 46, 0.07) 0%, rgba(43, 86, 114, 0.05) 45%, transparent 70%);
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(50px);
 }
 
-.reforma-sector-name {
-  font-size: 1rem;
-  font-weight: 800;
-  color: #0F172A;
-  margin-bottom: 6px;
-}
-
-.reforma-sector-desc {
-  font-size: 0.82rem;
-  color: #64748B;
-  line-height: 1.5;
-}
-
-/* --------------------------------------------------------------------------
-   PROCESO LLAVE EN MANO EN 7 PASOS (LIGHT CARDS)
-   -------------------------------------------------------------------------- */
-.reforma-steps-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-.reforma-turnkey-step {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 14px;
-  padding: 24px;
+.reforma-final-cta-content {
   position: relative;
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-  transition: all 0.2s ease;
-}
-
-.reforma-turnkey-step:hover {
-  border-color: #CBD5E1;
-  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.07);
-}
-
-.reforma-turnkey-number {
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: #A6192E;
-  font-family: var(--font-mono);
-  line-height: 1;
-  background: #FFF1F2;
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  border: 1px solid #FECDD3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.reforma-turnkey-content h4 {
-  font-size: 1.02rem;
-  font-weight: 800;
-  color: #0F172A;
-  margin-bottom: 6px;
-}
-
-.reforma-turnkey-content p {
-  font-size: 0.85rem;
-  color: #64748B;
-  line-height: 1.5;
-}
-
-/* --------------------------------------------------------------------------
-   FAQ SECTION (LIGHT ACORDEÓN)
-   -------------------------------------------------------------------------- */
-.reforma-faq-list {
-  max-width: 860px;
+  z-index: 2;
+  max-width: 840px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-}
-
-.reforma-faq-item {
-  background: #FFFFFF;
-  border: 1px solid #E2E8F0;
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
-}
-
-.reforma-faq-item.open {
-  border-color: #2B5672;
-  background: #F8FAFC;
-}
-
-.reforma-faq-btn {
-  width: 100%;
-  padding: 18px 22px;
-  background: none;
-  border: none;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  text-align: left;
-  color: #0F172A;
-  font-size: 0.96rem;
-  font-weight: 800;
-  cursor: pointer;
-  gap: 16px;
 }
 
-.reforma-faq-answer {
-  padding: 0 22px 20px;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: #475569;
-  border-top: 1px solid #E2E8F0;
-  padding-top: 14px;
-}
-
-.reforma-faq-answer strong {
-  color: #0F172A;
-}
-
-/* --------------------------------------------------------------------------
-   FINAL CONVERSION CTA BANNER
-   -------------------------------------------------------------------------- */
-.reforma-cta-banner {
-  background: linear-gradient(135deg, #A6192E 0%, #2B5672 100%);
-  border-radius: 24px;
-  padding: 50px 40px;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 40px;
+.reforma-final-cta-badge {
+  display: inline-flex;
   align-items: center;
-  box-shadow: 0 15px 40px rgba(166, 25, 46, 0.2);
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 40px;
-  color: #FFFFFF;
-}
-
-.reforma-cta-banner h2 {
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: #FFFFFF;
-  line-height: 1.2;
-  margin-bottom: 16px;
-}
-
-.reforma-cta-banner p {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.6;
+  gap: 8px;
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: #FFF1F2;
+  border: 1px solid #FECDD3;
+  color: #A6192E;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
   margin-bottom: 24px;
 }
 
-.reforma-cta-inline-form {
-  background: #FFFFFF;
-  border-radius: 18px;
-  padding: 30px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  border: 1px solid #E2E8F0;
-  color: #0F172A;
+.reforma-final-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+  display: inline-block;
+  animation: ctaPulse 2s infinite ease-in-out;
 }
 
-.reforma-form-title {
-  font-size: 1.2rem;
-  font-weight: 900;
-  color: #0F172A;
-  margin-bottom: 6px;
+@keyframes ctaPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.7; }
 }
 
-.reforma-form-sub {
-  font-size: 0.82rem;
-  color: #64748B;
+.reforma-final-cta-title {
+  font-size: clamp(2.2rem, 3.8vw, 3.3rem);
+  font-weight: 800;
+  color: #0F172A;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
   margin-bottom: 18px;
+  max-width: 780px;
 }
 
-.reforma-input-group {
+.reforma-final-cta-title em {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  padding-right: 0.05em;
+  background: linear-gradient(95deg, #0F172A 15%, #A6192E 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.reforma-final-cta-desc {
+  font-size: 1.05rem;
+  color: #64748B;
+  line-height: 1.65;
+  max-width: 680px;
+  margin: 0 auto 34px auto;
+}
+
+.reforma-final-cta-trust {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 38px;
 }
 
-.reforma-input-group label {
-  font-size: 0.76rem;
-  font-weight: 800;
-  color: #334155;
-  text-transform: uppercase;
-  font-family: var(--font-mono);
-}
-
-.reforma-input-group input,
-.reforma-input-group select {
+.reforma-final-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 999px;
   background: #F8FAFC;
-  border: 1px solid #CBD5E1;
-  color: #0F172A;
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-size: 0.88rem;
-  outline: none;
-  transition: all 0.2s;
+  border: 1px solid #E2E8F0;
+  color: #334155;
+  font-size: 0.84rem;
+  font-weight: 600;
 }
 
-.reforma-input-group input:focus,
-.reforma-input-group select:focus {
-  border-color: #A6192E;
-  background: #FFFFFF;
-  box-shadow: 0 0 0 2px rgba(166, 25, 46, 0.15);
+.reforma-final-trust-icon {
+  color: #A6192E;
+  flex-shrink: 0;
 }
 
-.reforma-form-submit {
-  width: 100%;
-  background: linear-gradient(135deg, #A6192E 0%, #8C1527 100%);
-  color: #FFFFFF;
-  border: none;
-  padding: 13px;
-  border-radius: 8px;
-  font-size: 0.94rem;
-  font-weight: 800;
-  cursor: pointer;
+.reforma-final-cta-actions {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  box-shadow: 0 6px 18px rgba(166, 25, 46, 0.3);
-  transition: all 0.25s ease;
-  margin-top: 8px;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 38px;
 }
 
-.reforma-form-submit:hover {
-  filter: brightness(1.08);
-  transform: translateY(-1px);
+.reforma-final-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 30px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #A6192E 0%, #8C1527 100%);
+  color: #FFFFFF;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 24px -4px rgba(166, 25, 46, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reforma-final-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -4px rgba(166, 25, 46, 0.45);
+  filter: brightness(1.06);
+}
+
+.reforma-final-btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  color: #0F172A;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.reforma-final-btn-whatsapp:hover {
+  border-color: #25D366;
+  color: #075E54;
+  background: #F0FDF4;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px rgba(37, 211, 102, 0.2);
+}
+
+.reforma-final-btn-whatsapp svg {
+  color: #25D366;
+}
+
+.reforma-final-cta-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 26px;
+  border-top: 1px solid #F1F5F9;
+  width: 100%;
+  font-size: 0.82rem;
+  color: #94A3B8;
+}
+
+.reforma-final-back-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #64748B;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+}
+
+.reforma-final-back-link:hover {
+  color: #A6192E;
+}
+
+.reforma-final-footer-dot {
+  color: #CBD5E1;
+}
+
+.reforma-final-guarantee {
+  color: #64748B;
 }
 
 /* --------------------------------------------------------------------------
@@ -1451,20 +1452,54 @@
     display: none;
   }
 
-  .reforma-calc-card {
+  .reforma-calc-card,
+  .reforma-calc-card-minimal {
     grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 32px 24px;
   }
 
-  .reforma-hardware-display {
-    grid-template-columns: 1fr;
+  .reforma-final-cta-card {
+    padding: 56px 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .reforma-final-cta-section {
+    padding: 50px 0 80px 0;
   }
 
-  .reforma-sectors-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .reforma-final-cta-card {
+    padding: 44px 20px;
+    border-radius: 24px;
   }
 
-  .reforma-cta-banner {
-    grid-template-columns: 1fr;
+  .reforma-final-cta-title {
+    font-size: 2rem;
+  }
+
+  .reforma-final-cta-desc {
+    font-size: 0.95rem;
+  }
+
+  .reforma-final-cta-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .reforma-final-btn-primary,
+  .reforma-final-btn-whatsapp {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .reforma-final-cta-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .reforma-final-footer-dot {
+    display: none;
   }
 }
 
@@ -1489,19 +1524,19 @@
     grid-template-columns: 1fr;
   }
 
-  .reforma-sectors-grid {
+  .reforma-method-options,
+  .calc-methods-grid-min {
     grid-template-columns: 1fr;
   }
 
-  .reforma-method-options {
-    grid-template-columns: 1fr;
+  .reforma-calc-card,
+  .reforma-calc-card-minimal {
+    padding: 24px 18px;
+    border-radius: 20px;
+    gap: 24px;
   }
 
-  .reforma-calc-card {
-    padding: 20px;
-  }
-
-  .reforma-cta-banner {
-    padding: 30px 20px;
+  .calc-fine-number-min {
+    font-size: 1.75rem;
   }
 }

@@ -135,11 +135,11 @@ export default function Footer({ onOpenQuote, onNavigateHome, onNavigateService 
               </li>
               <li>
                 <a 
-                  href="#trayectoria" 
+                  href="#industrias" 
                   onClick={handleHome}
                   style={{ color: '#C8DCE8', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}
                 >
-                  <span>Trayectoria & Evolución</span>
+                  <span>Sectores & Industrias</span>
                   <ArrowUpRight size={14} />
                 </a>
               </li>
@@ -153,11 +153,10 @@ export default function Footer({ onOpenQuote, onNavigateHome, onNavigateService 
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.88rem', color: '#94A3B8' }}>
               <li><a href="#soluciones" style={{ color: 'inherit', textDecoration: 'none' }}>Sistemas & Soluciones</a></li>
-              <li><a href="#testimonios" style={{ color: 'inherit', textDecoration: 'none' }}>Testimonios Verificados</a></li>
+              <li><a href="#industrias" style={{ color: 'inherit', textDecoration: 'none' }}>Sectores e Industrias (8 Giros)</a></li>
               <li><a href="#cobertura" style={{ color: 'inherit', textDecoration: 'none' }}>Presencia & Cobertura Nacional</a></li>
-              <li><a href="#trayectoria" style={{ color: 'inherit', textDecoration: 'none' }}>Nuestra Trayectoria (2014-2025)</a></li>
               <li><a href="#nosotros" onClick={handleHome} style={{ color: 'inherit', textDecoration: 'none' }}>Sobre Nosotros & Garantías</a></li>
-              <li><a href="#comunidad" onClick={handleHome} style={{ color: 'inherit', textDecoration: 'none' }}>Comunidad Cuauhtli</a></li>
+              <li><a href="#cotizador" style={{ color: 'inherit', textDecoration: 'none' }}>Diagnóstico & Cotizador</a></li>
               <li><a href="#contacto" style={{ color: 'inherit', textDecoration: 'none' }}>Contacto Directo</a></li>
             </ul>
           </div>

@@ -5,8 +5,8 @@ import AlliesMarquee from './components/AlliesMarquee';
 import FeaturesWithPanel from './components/ui/features-with-panel';
 import CoverageGrid from './components/CoverageGrid';
 import Testimonials from './components/Testimonials';
+import IndustriesSection from './components/IndustriesSection';
 import CoverageMapSection from './components/CoverageMapSection';
-import TimelineSection from './components/TimelineSection';
 import MultiStepQuoteForm from './components/MultiStepQuoteForm';
 import Footer from './components/Footer';
 import FloatingWhatsapp from './components/FloatingWhatsapp';
@@ -15,11 +15,12 @@ import ServicePage from './components/services/ServicePage';
 import NosotrosPage from './components/pages/NosotrosPage';
 import ComunidadPage from './components/pages/ComunidadPage';
 import ReformaLaboralPage from './components/pages/ReformaLaboralPage';
+import IndustryPage from './components/industries/IndustryPage';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
   const [preSelectedSolution, setPreSelectedSolution] = useState('');
-  const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'cctv' | 'control-acceso' | 'alarmas' | 'cercas-electrificadas' | 'videoporteros'
+  const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'servicio-[slug]' | 'industria-[slug]' | 'nosotros' | 'comunidad' | 'reforma-laboral-40-horas'
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -30,6 +31,9 @@ export default function App() {
       if (clean.startsWith('servicio-')) {
         const slug = clean.replace('servicio-', '');
         setCurrentRoute(slug);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (clean.startsWith('industria-')) {
+        setCurrentRoute(clean);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (clean === 'nosotros') {
         setCurrentRoute('nosotros');
@@ -52,7 +56,7 @@ export default function App() {
       } else if (clean === '' || clean === '#') {
         setCurrentRoute('home');
       } else {
-        // Section anchors on home like #cobertura, #trayectoria, #testimonios
+        // Section anchors on home like #cobertura, #industrias, #cotizador
         setCurrentRoute('home');
         setTimeout(() => {
           const el = document.getElementById(clean) || document.querySelector(rawHash);
@@ -87,6 +91,12 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleNavigateIndustry = (slug) => {
+    window.location.hash = `industria-${slug}`;
+    setCurrentRoute(`industria-${slug}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
@@ -95,11 +105,19 @@ export default function App() {
         onOpenQuote={() => handleOpenQuote()} 
         onNavigateHome={handleNavigateHome}
         onNavigateService={handleNavigateService}
+        onNavigateIndustry={handleNavigateIndustry}
       />
 
       {/* MAIN CONTENT */}
       <main style={{ flex: 1 }}>
-        {currentRoute === 'nosotros' ? (
+        {currentRoute.startsWith('industria-') ? (
+          <IndustryPage
+            industryId={currentRoute.replace('industria-', '')}
+            onOpenQuote={handleOpenQuote}
+            onNavigateHome={handleNavigateHome}
+            onSelectIndustry={handleNavigateIndustry}
+          />
+        ) : currentRoute === 'nosotros' ? (
           <NosotrosPage 
             onOpenQuote={handleOpenQuote}
             onNavigateHome={handleNavigateHome}
@@ -144,11 +162,14 @@ export default function App() {
             {/* VERIFIED CLIENT TESTIMONIALS (HIGHLIGHT TESTIMONIAL SECTION) */}
             <Testimonials />
 
+            {/* SECCIÓN INTERACTIVA DE INDUSTRIAS: TENEMOS LA SOLUCIÓN PERFECTA PARA TU GIRO */}
+            <IndustriesSection 
+              onOpenQuote={handleOpenQuote}
+              onSelectIndustry={handleNavigateIndustry}
+            />
+
             {/* INTERACTIVE MEXICO COVERAGE & PRESENCE MAP */}
             <CoverageMapSection onOpenQuote={handleOpenQuote} />
-
-            {/* TRAYECTORIA & TIMELINE DE EVOLUCIÓN TECNOLÓGICA */}
-            <TimelineSection onOpenQuote={handleOpenQuote} />
 
             {/* DIAGNÓSTICO & COTIZADOR MULTIPASOS DE 3 PASOS CON LOTTIES */}
             <MultiStepQuoteForm />

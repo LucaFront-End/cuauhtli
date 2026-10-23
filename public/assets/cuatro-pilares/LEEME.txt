@@ -1,0 +1,119 @@
+CUATRO PILARES — ANIMACIONES PARA WEB
+===================================
+
+Son CUATRO ANIMACIONES INDEPENDIENTES. Podés colocar una en cada sección de
+tu web; no forman una sola secuencia y no necesitan cargarse juntas.
+
+01-acceso-facial          Acceso mediante reconocimiento facial.
+02-jornada-horas-extra    Jornada configurada y distribución de horas extra.
+03-boveda-criptografica   Resguardo y trazabilidad de registros.
+04-red-multisede          Conexión y sincronización entre sedes.
+
+
+ARCHIVOS DE CADA ANIMACIÓN
+-------------------------
+Reemplazá {slug} por cualquiera de los cuatro nombres anteriores:
+
+{slug}.html                   Animación independiente e interactiva.
+{slug}.mp4                    Video con fondo negro.
+{slug}-transparente.webm      Video VP9 con canal alfa.
+{slug}-transparente.png       Imagen transparente, 1080 × 1080.
+{slug}-poster.png             Imagen con fondo negro, 1080 × 1080.
+{slug}-8k.png                 Imagen transparente, 8192 × 8192.
+
+Los videos duran 8 segundos, miden 1080 × 1080 y están exportados a 60 fps.
+El HTML usa requestAnimationFrame: su fluidez depende del dispositivo y del
+navegador. Las imágenes PNG son estáticas; sirven como portada o alternativa.
+
+
+INTEGRAR UN HTML EN UNA SECCIÓN
+------------------------------
+Subí el HTML a tu sitio y ajustá la ruta de este ejemplo:
+
+<iframe
+  src="01-acceso-facial.html?embed=1&amp;background=transparent"
+  title="Animación de acceso facial"
+  loading="lazy"
+  style="display:block;width:100%;aspect-ratio:1/1;border:0;background:transparent"
+></iframe>
+
+?embed=1 oculta los controles para integrarlo como ilustración.
+&background=transparent deja ver el fondo de tu sección.
+Si omitís background=transparent, se usa fondo negro.
+
+Cada HTML incluye su motor y recursos: no requiere CDN ni descargas externas.
+Al abrirlo directamente, los controles permiten pausar, reiniciar, cambiar el
+fondo y guardar un PNG. En escritorio aparecen al pasar el puntero o enfocar
+un control; en pantallas táctiles quedan visibles.
+
+El HTML respeta prefers-reduced-motion y arranca pausado cuando esa preferencia
+está activada. También incorpora una imagen de respaldo si no puede usar WebGL.
+
+
+INTEGRAR UN VIDEO CON FONDO NEGRO
+-------------------------------
+<video
+  autoplay muted loop playsinline
+  poster="01-acceso-facial-poster.png"
+  style="display:block;width:100%;aspect-ratio:1/1;object-fit:contain;background:#000"
+  aria-label="Animación de acceso facial"
+>
+  <source src="01-acceso-facial.mp4" type="video/mp4">
+</video>
+
+Para conservar transparencia, usá el archivo -transparente.webm con
+type="video/webm". Comprobá el canal alfa en los navegadores de tu sitio;
+el HTML transparente o el PNG transparente sirven como alternativas.
+El MP4 siempre conserva su fondo negro.
+
+El ejemplo de video usa reproducción automática. Si lo integrás así, agregá
+en tu sitio la pausa o sustitución por el poster para usuarios que prefieran
+movimiento reducido; esa lógica del HTML no se transfiere al archivo de video.
+
+Alternativa estática:
+
+<img
+  src="01-acceso-facial-transparente.png"
+  alt="Terminal de acceso facial isométrico"
+  width="1080" height="1080"
+  style="display:block;width:100%;height:auto"
+>
+
+
+EDICIÓN Y ACABADO
+-----------------
+Los archivos editables están en fuente/.
+
+- core.js: motor compartido, luces, materiales, controles y paleta.
+- pillar-01.js a pillar-04.js: objetos, etiquetas y animación de cada escena.
+- build.py y template.html: generación de los HTML independientes.
+
+Paleta principal:
+Grafito     #111923
+Cian        #3EE2FC
+Esmeralda   #10B981
+Ámbar       #FFB84A
+
+Cada escena define update(t), con un ciclo de 0 a 8 segundos. Conservá la
+coincidencia entre el inicio y el final al modificar movimientos. posterTime
+selecciona el instante usado para las imágenes. Después de editar las fuentes,
+regenerá los HTML con:
+
+python3 fuente/build.py
+
+Los videos y PNG requieren una nueva exportación.
+
+Tecnología: WebGL con Three.js, materiales PBR y renderizado rasterizado.
+No se utilizaron Unreal Engine, Octane ni ray tracing.
+
+
+SENTIDO DE LAS ETIQUETAS
+-----------------------
+“40 h” es un umbral configurado e ilustrativo, no una afirmación de un límite
+legal general. Los factores 2× y 3× son visuales; la animación no liquida salarios.
+Referencia de contexto para México y la transición hasta 2030:
+https://www.diputados.gob.mx/LeyesBiblio/ref/lft/LFT_ref52_01may26.pdf
+
+SHA, NTP y QR son elementos gráficos: no verifican datos ni generan pruebas
+reales. “SEDES SINCRONIZADAS” representa un estado ilustrado y no constituye
+un certificado oficial.

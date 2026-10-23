@@ -1,0 +1,1021 @@
+/* ==========================================================================
+   REFORMA MULTI-STEP CALCULATOR - SISTEMAS CUAUTHLI
+   Ultra-clean, modern, minimalist & frictionless multi-step risk calculator
+   ========================================================================== */
+
+.rmsc-container {
+  max-width: 820px;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Card Surface (Apple / Linear Minimalist) */
+.rmsc-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px -12px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   STEPPER HEADER & PROGRESS BAR
+   -------------------------------------------------------------------------- */
+.rmsc-stepper-header {
+  background: #FAFCFE;
+  border-bottom: 1px solid #E2E8F0;
+  position: relative;
+}
+
+.rmsc-steps-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+  gap: 12px;
+}
+
+.rmsc-step-badge-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  cursor: default;
+  transition: all 0.2s ease;
+  padding: 4px 6px;
+  border-radius: 999px;
+}
+
+.rmsc-step-badge-btn.completed {
+  cursor: pointer;
+}
+
+.rmsc-step-num-pill {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  font-family: var(--font-mono, monospace);
+  background: #F1F5F9;
+  color: #94A3B8;
+  border: 1px solid #E2E8F0;
+  transition: all 0.25s ease;
+}
+
+.rmsc-step-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #94A3B8;
+  transition: all 0.25s ease;
+}
+
+.rmsc-step-badge-btn.active .rmsc-step-num-pill {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-color: #0F172A;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.25);
+}
+
+.rmsc-step-badge-btn.active .rmsc-step-title {
+  color: #0F172A;
+  font-weight: 700;
+}
+
+.rmsc-step-badge-btn.completed .rmsc-step-num-pill {
+  background: #ECFDF5;
+  color: #059669;
+  border-color: #A7F3D0;
+}
+
+.rmsc-step-badge-btn.completed .rmsc-step-title {
+  color: #475569;
+}
+
+/* 2px Progress Fill Line */
+.rmsc-progress-bar-bg {
+  width: 100%;
+  height: 2.5px;
+  background: #E2E8F0;
+  position: relative;
+  overflow: hidden;
+}
+
+.rmsc-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #A6192E 0%, #2B5672 100%);
+  transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --------------------------------------------------------------------------
+   STEP BODY
+   -------------------------------------------------------------------------- */
+.rmsc-body {
+  padding: 38px 40px 42px;
+  box-sizing: border-box;
+}
+
+.rmsc-step-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.rmsc-step-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rmsc-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #A6192E;
+  font-family: var(--font-mono, monospace);
+}
+
+.rmsc-heading {
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  font-weight: 900;
+  color: #0F172A;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.rmsc-desc {
+  font-size: 0.9rem;
+  color: #64748B;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   STEP 1: PLANTILLA CONTROLS
+   -------------------------------------------------------------------------- */
+.rmsc-counter-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+  background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%);
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  gap: 4px;
+}
+
+.rmsc-big-number {
+  font-size: clamp(3.2rem, 5vw, 4.2rem);
+  font-weight: 900;
+  color: #0F172A;
+  font-family: var(--font-mono, monospace);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.rmsc-big-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.rmsc-slider-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rmsc-range-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #E2E8F0;
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+  margin: 8px 0;
+}
+
+.rmsc-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #A6192E;
+  border: 2.5px solid #FFFFFF;
+  box-shadow: 0 3px 10px rgba(166, 25, 46, 0.4);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.rmsc-range-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.rmsc-slider-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: #94A3B8;
+  font-weight: 700;
+  font-family: var(--font-mono, monospace);
+}
+
+.rmsc-presets-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.rmsc-presets-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748B;
+}
+
+.rmsc-presets-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rmsc-preset-pill {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  color: #475569;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: var(--font-mono, monospace);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rmsc-preset-pill:hover {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+  color: #0F172A;
+}
+
+.rmsc-preset-pill.active {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-color: #0F172A;
+}
+
+/* --------------------------------------------------------------------------
+   STEP 2: SEDES OPTIONS
+   -------------------------------------------------------------------------- */
+.rmsc-cards-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.rmsc-option-card {
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 20px 22px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rmsc-option-card:hover {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.05);
+}
+
+.rmsc-option-card.selected {
+  background: #FFFFFF;
+  border-color: #A6192E;
+  box-shadow: 0 0 0 1px #A6192E, 0 8px 20px rgba(166, 25, 46, 0.08);
+}
+
+.rmsc-opt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rmsc-opt-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.rmsc-opt-detail {
+  font-size: 0.8rem;
+  color: #64748B;
+  line-height: 1.4;
+}
+
+.rmsc-radio-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #CBD5E1;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.rmsc-option-card.selected .rmsc-radio-dot,
+.rmsc-method-row.selected .rmsc-radio-dot {
+  border-color: #A6192E;
+  background: #A6192E;
+  box-shadow: inset 0 0 0 3px #FFFFFF;
+}
+
+.rmsc-method-row.compliant-highlight.selected .rmsc-radio-dot {
+  border-color: #10B981;
+  background: #10B981;
+  box-shadow: inset 0 0 0 3px #FFFFFF;
+}
+
+.rmsc-fine-tune-box {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rmsc-fine-tune-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.84rem;
+  color: #64748B;
+}
+
+.rmsc-fine-tune-header strong {
+  color: #0F172A;
+  font-family: var(--font-mono, monospace);
+  font-weight: 800;
+}
+
+/* --------------------------------------------------------------------------
+   STEP 3: MÉTODO ACTUAL ROWS
+   -------------------------------------------------------------------------- */
+.rmsc-methods-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rmsc-method-row {
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 16px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.22s ease;
+}
+
+.rmsc-method-row:hover {
+  background: #FFFFFF;
+  border-color: #CBD5E1;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+}
+
+.rmsc-method-row.selected {
+  background: #FFFFFF;
+  border-color: #A6192E;
+  box-shadow: 0 0 0 1px #A6192E, 0 6px 18px rgba(166, 25, 46, 0.07);
+}
+
+.rmsc-method-row.compliant-highlight {
+  background: #F0FDF4;
+  border-color: #BBF7D0;
+}
+
+.rmsc-method-row.compliant-highlight.selected {
+  background: #FFFFFF;
+  border-color: #10B981;
+  box-shadow: 0 0 0 1px #10B981, 0 6px 18px rgba(16, 185, 129, 0.12);
+}
+
+.rmsc-method-icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+  flex-shrink: 0;
+}
+
+.rmsc-method-row.selected .rmsc-method-icon-wrap {
+  color: #A6192E;
+  border-color: #FECDD3;
+}
+
+.rmsc-method-row.compliant-highlight .rmsc-method-icon-wrap {
+  color: #059669;
+  border-color: #A7F3D0;
+}
+
+.rmsc-method-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.rmsc-method-head-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rmsc-method-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.rmsc-badge-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  font-family: var(--font-mono, monospace);
+  padding: 2px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.rmsc-badge-tag.critico {
+  background: #FFF1F2;
+  color: #991B1B;
+  border: 1px solid #FECDD3;
+}
+
+.rmsc-badge-tag.alto {
+  background: #FEF3C7;
+  color: #B45309;
+  border: 1px solid #FDE68A;
+}
+
+.rmsc-badge-tag.moderado {
+  background: #F0F9FF;
+  color: #0369A1;
+  border: 1px solid #BAE6FD;
+}
+
+.rmsc-badge-tag.seguro {
+  background: #ECFDF5;
+  color: #047857;
+  border: 1px solid #A7F3D0;
+}
+
+.rmsc-method-desc {
+  font-size: 0.78rem;
+  color: #64748B;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.rmsc-method-check {
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   STEP 4: DIAGNÓSTICO Y FORMULARIO
+   -------------------------------------------------------------------------- */
+.rmsc-diag-banner {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 18px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: all 0.3s ease;
+}
+
+.rmsc-diag-banner.critico {
+  background: linear-gradient(180deg, #FFF1F2 0%, #FFFFFF 100%);
+  border-color: #FECDD3;
+}
+
+.rmsc-diag-banner.alto {
+  background: linear-gradient(180deg, #FEF3C7 0%, #FFFFFF 100%);
+  border-color: #FDE68A;
+}
+
+.rmsc-diag-banner.moderado {
+  background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%);
+  border-color: #BAE6FD;
+}
+
+.rmsc-diag-banner.seguro {
+  background: linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 100%);
+  border-color: #A7F3D0;
+}
+
+.rmsc-diag-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.rmsc-diag-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  font-family: var(--font-mono, monospace);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #0F172A;
+}
+
+.rmsc-diag-banner.critico .rmsc-diag-status-pill {
+  color: #991B1B;
+  border-color: #FECDD3;
+}
+
+.rmsc-diag-banner.seguro .rmsc-diag-status-pill {
+  color: #047857;
+  border-color: #A7F3D0;
+}
+
+.rmsc-diag-edit-btn {
+  background: none;
+  border: none;
+  font-size: 0.78rem;
+  color: #64748B;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.rmsc-diag-edit-btn:hover {
+  color: #0F172A;
+}
+
+.rmsc-diag-fine-row {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 20px;
+  align-items: center;
+}
+
+.rmsc-diag-fine-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rmsc-fine-caption {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #64748B;
+  letter-spacing: 0.04em;
+}
+
+.rmsc-fine-amount {
+  font-size: clamp(1.8rem, 2.8vw, 2.3rem);
+  font-weight: 900;
+  color: #B91C1C;
+  font-family: var(--font-mono, monospace);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.rmsc-fine-amount.safe-zero {
+  color: #10B981;
+}
+
+.rmsc-fine-legal {
+  font-size: 0.74rem;
+  color: #64748B;
+  line-height: 1.4;
+}
+
+.rmsc-diag-metrics-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.rmsc-diag-metric-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+}
+
+.rmsc-m-title {
+  color: #64748B;
+  font-weight: 600;
+}
+
+.rmsc-m-val {
+  color: #0F172A;
+  font-weight: 800;
+  font-family: var(--font-mono, monospace);
+}
+
+/* LEAD SECTION */
+.rmsc-lead-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-top: 1px solid #E2E8F0;
+  padding-top: 26px;
+}
+
+.rmsc-lead-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rmsc-lead-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #2B5672;
+  font-family: var(--font-mono, monospace);
+  text-transform: uppercase;
+}
+
+.rmsc-lead-title {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #0F172A;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.rmsc-lead-desc {
+  font-size: 0.85rem;
+  color: #64748B;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.rmsc-lead-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.rmsc-form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.rmsc-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rmsc-input-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.rmsc-input-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 10px 14px;
+  transition: all 0.2s ease;
+}
+
+.rmsc-input-field:focus-within {
+  border-color: #A6192E;
+  box-shadow: 0 0 0 3px rgba(166, 25, 46, 0.1);
+}
+
+.rmsc-input-icon {
+  color: #94A3B8;
+  flex-shrink: 0;
+}
+
+.rmsc-input-field input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 0.88rem;
+  color: #0F172A;
+  font-family: inherit;
+}
+
+.rmsc-input-field input::placeholder {
+  color: #94A3B8;
+}
+
+.rmsc-err-msg {
+  font-size: 0.72rem;
+  color: #DC2626;
+  font-weight: 600;
+}
+
+.rmsc-form-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.rmsc-submit-cta-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #0F172A;
+  color: #FFFFFF;
+  border: none;
+  padding: 15px 24px;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
+}
+
+.rmsc-submit-cta-btn:hover:not(:disabled) {
+  background: #A6192E;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(166, 25, 46, 0.28);
+}
+
+.rmsc-submit-cta-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.rmsc-privacy-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  color: #64748B;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   SUCCESS SCREEN
+   -------------------------------------------------------------------------- */
+.rmsc-success-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 30px 20px;
+  gap: 14px;
+}
+
+.rmsc-success-icon-ring {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: #ECFDF5;
+  border: 2px solid #A7F3D0;
+  color: #059669;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.18);
+  animation: pulseSuccess 2s infinite ease-in-out;
+}
+
+@keyframes pulseSuccess {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+.rmsc-success-badge {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #047857;
+  background: #D1FAE5;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-family: var(--font-mono, monospace);
+  text-transform: uppercase;
+}
+
+.rmsc-success-title {
+  font-size: 1.55rem;
+  font-weight: 900;
+  color: #0F172A;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.rmsc-success-desc {
+  font-size: 0.92rem;
+  color: #475569;
+  line-height: 1.6;
+  max-width: 580px;
+  margin: 0;
+}
+
+.rmsc-success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  max-width: 440px;
+  margin-top: 10px;
+}
+
+.rmsc-wa-direct-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #25D366;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 14px 24px;
+  border-radius: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.28);
+}
+
+.rmsc-wa-direct-btn:hover {
+  background: #1EBE5D;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.38);
+}
+
+.rmsc-reset-btn {
+  background: transparent;
+  border: none;
+  color: #64748B;
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.rmsc-reset-btn:hover {
+  color: #0F172A;
+}
+
+/* --------------------------------------------------------------------------
+   ACTIONS BAR (BOTTOM NAVIGATION)
+   -------------------------------------------------------------------------- */
+.rmsc-actions-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.rmsc-actions-bar.single-right {
+  justify-content: flex-end;
+}
+
+.rmsc-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0F172A;
+  color: #FFFFFF;
+  border: none;
+  padding: 13px 24px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+}
+
+.rmsc-btn-primary:hover {
+  background: #A6192E;
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 18px rgba(166, 25, 46, 0.25);
+}
+
+.rmsc-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid #CBD5E1;
+  color: #475569;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rmsc-btn-ghost:hover {
+  background: #F1F5F9;
+  color: #0F172A;
+  border-color: #94A3B8;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE DESIGN (TABLET & MOBILE)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .rmsc-steps-nav {
+    padding: 14px 18px;
+  }
+
+  .rmsc-step-title {
+    display: none;
+  }
+
+  .rmsc-body {
+    padding: 26px 20px 30px;
+  }
+
+  .rmsc-cards-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .rmsc-diag-fine-row {
+    grid-template-columns: 1fr;
+  }
+
+  .rmsc-form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .rmsc-actions-bar {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .rmsc-btn-primary,
+  .rmsc-btn-ghost {
+    width: 100%;
+    justify-content: center;
+  }
+}

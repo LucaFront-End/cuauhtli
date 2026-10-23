@@ -16,9 +16,15 @@ import {
   Clock, 
   ArrowRight,
   Sparkles,
-  Zap,
   CheckCircle2,
-  Calendar
+  Calendar,
+  Landmark,
+  GraduationCap,
+  Warehouse,
+  Stethoscope,
+  Home,
+  HardHat,
+  ShoppingBag
 } from 'lucide-react';
 import {
   MotionNavigationMenu,
@@ -30,7 +36,7 @@ import {
 } from './ui/motion-navigation-menu';
 import './Navbar.css';
 
-export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService }) {
+export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService, onNavigateIndustry }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -46,6 +52,12 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService 
     e.preventDefault();
     window.location.hash = `servicio-${slug}`;
     onNavigateService?.(slug);
+  };
+
+  const handleIndustryClick = (e, slug) => {
+    e.preventDefault();
+    window.location.hash = `industria-${slug}`;
+    onNavigateIndustry?.(slug);
   };
 
   const handleHomeClick = (e) => {
@@ -254,46 +266,86 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService 
                 </MotionNavigationMenuContent>
               </MotionNavigationMenuItem>
 
-              {/* ITEM 3: TRAYECTORIA (MEGA-MENU) */}
-              <MotionNavigationMenuItem value="trayectoria">
+              {/* ITEM 3: INDUSTRIAS (MEGA-MENU) */}
+              <MotionNavigationMenuItem value="industrias">
                 <MotionNavigationMenuTrigger className="cuauhtli-nav-trigger">
-                  Trayectoria
+                  Industrias
                 </MotionNavigationMenuTrigger>
                 <MotionNavigationMenuContent>
-                  <div className="mega-timeline-box">
+                  <div className="mega-industries-box">
                     <div className="mega-box-header">
-                      <strong>Más de una década elevando el estándar</strong>
-                      <span>Evolución técnica documentada 2014 – 2025</span>
+                      <strong>Tenemos la solución perfecta para tu giro</strong>
+                      <span>Arquitecturas especializadas por sector y cumplimiento normativo</span>
                     </div>
 
-                    <div className="mega-timeline-list">
-                      <a href="#trayectoria" className="mega-tl-item">
-                        <span className="mega-tl-year">2014</span>
-                        <div className="mega-tl-content">
-                          <strong className="mega-tl-title">Fundación en CDMX</strong>
-                          <span className="mega-tl-desc">Pioneros en póliza de garantía vitalicia en mano de obra.</span>
+                    <div className="mega-industries-grid">
+                      <a href="#industria-bancos" onClick={(e) => handleIndustryClick(e, 'bancos')} className="mega-ind-item">
+                        <Landmark size={15} className="mega-ind-icon" />
+                        <div className="mega-ind-text">
+                          <strong>Bancos & Finanzas</strong>
+                          <span>Normativa CNBV, bóvedas y ATMs</span>
                         </div>
                       </a>
 
-                      <a href="#trayectoria" className="mega-tl-item">
-                        <span className="mega-tl-year">2019</span>
-                        <div className="mega-tl-content">
-                          <strong className="mega-tl-title">Expansión Nacional</strong>
-                          <span className="mega-tl-desc">Apertura de corredores en Bajío, Monterrey y Guadalajara.</span>
+                      <a href="#industria-escuelas" onClick={(e) => handleIndustryClick(e, 'escuelas')} className="mega-ind-item">
+                        <GraduationCap size={15} className="mega-ind-icon" />
+                        <div className="mega-ind-text">
+                          <strong>Escuelas & Universidades</strong>
+                          <span>Entrega segura y alerta sísmica</span>
                         </div>
                       </a>
 
-                      <a href="#trayectoria" className="mega-tl-item">
-                        <span className="mega-tl-year">2025</span>
-                        <div className="mega-tl-content">
-                          <strong className="mega-tl-title">Central C4 con IA</strong>
-                          <span className="mega-tl-desc">Analítica perimetral autónoma y SLA &lt; 1 hr en sitio.</span>
+                      <a href="#industria-almacenes" onClick={(e) => handleIndustryClick(e, 'almacenes')} className="mega-ind-item">
+                        <Warehouse size={15} className="mega-ind-icon" />
+                        <div className="mega-ind-text">
+                          <strong>Almacenes & Logística</strong>
+                          <span>CTPAT, LPR vehicular y cercas</span>
+                        </div>
+                      </a>
+
+                      <a href="#industria-oficinas" onClick={(e) => handleIndustryClick(e, 'oficinas')} className="mega-ind-item">
+                        <Building2 size={15} className="mega-ind-icon" />
+                        <div className="mega-ind-text">
+                          <strong>Oficinas & Corporativos</strong>
+                          <span>Torniquetes faciales y STPS</span>
+                        </div>
+                      </a>
+
+                      <a href="#industria-hospitales" onClick={(e) => handleIndustryClick(e, 'hospitales')} className="mega-ind-item">
+                        <Stethoscope size={15} className="mega-ind-icon" />
+                        <div className="mega-ind-text">
+                          <strong>Hospitales & Clínicas</strong>
+                          <span>COFEPRIS, bioseguridad y voceo</span>
+                        </div>
+                      </a>
+
+                      <a href="#industria-residencias" onClick={(e) => handleIndustryClick(e, 'residencias')} className="mega-ind-item">
+                        <Home size={15} className="mega-ind-icon" />
+                        <div className="mega-ind-text">
+                          <strong>Residencias & Privadas</strong>
+                          <span>Videoportero app y Tag RFID</span>
+                        </div>
+                      </a>
+
+                      <a href="#industria-constructoras" onClick={(e) => handleIndustryClick(e, 'constructoras')} className="mega-ind-item">
+                        <HardHat size={15} className="mega-ind-icon" />
+                        <div className="mega-ind-text">
+                          <strong>Constructoras & Obras</strong>
+                          <span>Torres solares 4G y STPS</span>
+                        </div>
+                      </a>
+
+                      <a href="#industria-plazas-comerciales" onClick={(e) => handleIndustryClick(e, 'plazas-comerciales')} className="mega-ind-item">
+                        <ShoppingBag size={15} className="mega-ind-icon" />
+                        <div className="mega-ind-text">
+                          <strong>Plazas Comerciales & Retail</strong>
+                          <span>Aforo, cobro parking y LED</span>
                         </div>
                       </a>
                     </div>
 
-                    <a href="#trayectoria" className="mega-dropdown-footer">
-                      <span>Ver línea de tiempo interactiva</span>
+                    <a href="#industrias" onClick={(e) => handleSectionNavigate(e, '#industrias')} className="mega-dropdown-footer">
+                      <span>Comparar todos los giros en el configurador interactivo</span>
                       <ArrowRight size={13} />
                     </a>
                   </div>
@@ -308,17 +360,6 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService 
                   onClick={(e) => handleSectionNavigate(e, '#nosotros')}
                 >
                   Nosotros
-                </MotionNavigationMenuLink>
-              </MotionNavigationMenuItem>
-
-              {/* ITEM 5: DIRECT LINK COMUNIDAD */}
-              <MotionNavigationMenuItem>
-                <MotionNavigationMenuLink 
-                  href="#comunidad" 
-                  className="cuauhtli-direct-link"
-                  onClick={(e) => handleSectionNavigate(e, '#comunidad')}
-                >
-                  Comunidad
                 </MotionNavigationMenuLink>
               </MotionNavigationMenuItem>
 
@@ -416,11 +457,11 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService 
               <ChevronRight size={15} />
             </a>
             <a
-              href="#trayectoria"
-              onClick={(e) => { setMobileMenuOpen(false); handleSectionNavigate(e, '#trayectoria'); }}
+              href="#industrias"
+              onClick={(e) => { setMobileMenuOpen(false); handleSectionNavigate(e, '#industrias'); }}
               className="cuauhtli-mob-link"
             >
-              <span>Trayectoria (2014 – 2025)</span>
+              <span>Sectores & Industrias (8 Giros)</span>
               <ChevronRight size={15} />
             </a>
             <a
@@ -429,14 +470,6 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService 
               className="cuauhtli-mob-link"
             >
               <span>Sobre Nosotros & Garantías</span>
-              <ChevronRight size={15} />
-            </a>
-            <a
-              href="#comunidad"
-              onClick={(e) => { setMobileMenuOpen(false); handleSectionNavigate(e, '#comunidad'); }}
-              className="cuauhtli-mob-link"
-            >
-              <span>Comunidad Cuauhtli</span>
               <ChevronRight size={15} />
             </a>
           </div>

@@ -6,6 +6,7 @@ import {
   CybersecurityHardeningAnimation,
   ClimaticBurnInAnimation
 } from '../ui/SecurityHudAnimations';
+import TimelineSection from '../TimelineSection';
 import { 
   Award, 
   ShieldCheck, 
@@ -682,6 +683,9 @@ export default function NosotrosPage({ onOpenQuote, onNavigateHome, onNavigateSe
 
         </div>
       </section>
+
+      {/* 7.5. LÍNEA DE TIEMPO / EVOLUCIÓN HISTÓRICA */}
+      <TimelineSection onOpenQuote={onOpenQuote} />
 
       {/* 8. BOTTOM CONVERSION BANNER */}
       <section className="nos-bottom-cta">

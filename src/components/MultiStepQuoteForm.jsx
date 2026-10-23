@@ -17,11 +17,16 @@ import {
   MapPin, 
   Phone, 
   Mail, 
-  Send,
-  CheckCircle2,
-  Calendar,
-  MessageSquare,
-  Copy
+  Send, 
+  CheckCircle2, 
+  Calendar, 
+  MessageSquare, 
+  Copy,
+  Navigation,
+  Monitor,
+  BellRing,
+  Plus,
+  X
 } from 'lucide-react';
 import './MultiStepQuoteForm.css';
 
@@ -224,39 +229,51 @@ function SuccessCelebrationAnimation() {
 const SOLUTIONS = [
   {
     id: 'cctv',
-    title: 'CCTV con IA & Térmicas',
-    desc: 'Detección perimetral humano/vehículo y 4K',
+    title: 'CCTV & Cámaras IA',
+    desc: 'Cobertura por áreas, analítica inteligente y visión 4K',
     icon: Camera,
   },
   {
     id: 'access',
-    title: 'Control de Acceso Facial',
-    desc: 'Torniquetes, esclusas y lectura biométrica',
+    title: 'Control de Acceso & Videoporteros',
+    desc: 'Biometría peatonal, vehicular y videoporteros IP',
     icon: KeyRound,
   },
   {
     id: 'perimeter',
-    title: 'Cercas & Sensores Perimetrales',
-    desc: 'Zonificación inteligente y barreras infrarrojas',
+    title: 'Cercas Eléctricas',
+    desc: 'Metros lineales disuasivos y energizador inteligente',
     icon: ShieldAlert,
+  },
+  {
+    id: 'cabling',
+    title: 'Cableado Estructurado',
+    desc: 'Site, racks certificados, perifoneo y voz/datos',
+    icon: Network,
+  },
+  {
+    id: 'mesh',
+    title: 'Red Mesh & Wi-Fi',
+    desc: 'Cobertura de alta densidad y roaming sin cortes',
+    icon: Radio,
+  },
+  {
+    id: 'gps',
+    title: 'GPS & Telemetría Vehicular',
+    desc: 'Rastreo satelital para camiones, trailers y autos',
+    icon: Navigation,
+  },
+  {
+    id: 'led',
+    title: 'Pantallas LED Publicitarias',
+    desc: 'Módulos LED de alto brillo interior y exterior',
+    icon: Monitor,
   },
   {
     id: 'alarms',
     title: 'Alarmas & Central C4 24/7',
     desc: 'Monitoreo ininterrumpido y respuesta en sitio',
-    icon: Radio,
-  },
-  {
-    id: 'network',
-    title: 'Fibra Óptica & Enlaces',
-    desc: 'Troncales de comunicación para naves y parques',
-    icon: Network,
-  },
-  {
-    id: 'integral',
-    title: 'Proyecto Llave en Mano',
-    desc: 'Diseño integral con póliza de mantenimiento',
-    icon: Building,
+    icon: BellRing,
   },
 ];
 
@@ -267,11 +284,17 @@ const SECTORS = [
   { id: 'retail', label: 'Comercio / Cadena Retail', icon: '🛍️' },
 ];
 
-const SCALE_OPTIONS = [
-  '1 a 8 puntos / cámaras',
-  '9 a 16 puntos',
-  '17 a 32 puntos',
-  '+32 puntos (Alta escala)',
+const CCTV_AREA_OPTIONS = [
+  'Almacén',
+  'Pasillo',
+  'Entrada',
+  'Escaleras',
+  'Exterior',
+  'Interior',
+  'Bodega',
+  'Lobby',
+  'Elevadores',
+  'Casa o Departamento'
 ];
 
 const URGENCIES = [
@@ -285,11 +308,55 @@ export default function MultiStepQuoteForm() {
   const [submitted, setSubmitted] = useState(false);
   const [folio, setFolio] = useState('');
   const [copied, setCopied] = useState(false);
+  const [whatsappMsg, setWhatsappMsg] = useState('');
 
-  // Form State
+  // Selected Solutions in Step 1
   const [selectedSolutions, setSelectedSolutions] = useState(['cctv']);
+
+  // Active solution tab in Step 2 if multiple selected
+  const [activeSubSection, setActiveSubSection] = useState('all');
+
+  // Subsección 1: Cámaras (CCTV) - Áreas a cubrir
+  const [cctvAreas, setCctvAreas] = useState(['Entrada', 'Exterior', 'Lobby']);
+
+  // Subsección 2: Cableado estructurado
+  const [cablingHasSite, setCablingHasSite] = useState('si'); // 'si' | 'no'
+  const [cablingSystems, setCablingSystems] = useState(['CCTV', 'Antenas de Internet']);
+  const [cablingShowOther, setCablingShowOther] = useState(false);
+  const [cablingOtherText, setCablingOtherText] = useState('');
+
+  // Subsección 3: Cercas eléctricas
+  const [fenceMeters, setFenceMeters] = useState(60);
+  const [fenceBase, setFenceBase] = useState('Muro');
+  const [fenceShowOther, setFenceShowOther] = useState(false);
+  const [fenceBaseOther, setFenceBaseOther] = useState('');
+
+  // Subsección 4: GPS Vehicular
+  const [gpsVehicleTypes, setGpsVehicleTypes] = useState(['Camión']);
+  const [gpsVehicleCount, setGpsVehicleCount] = useState('5 a 10');
+  const [gpsEnergyType, setGpsEnergyType] = useState('Combustible');
+
+  // Subsección 5: Red Mesh
+  const [meshDevicesCount, setMeshDevicesCount] = useState(25);
+  const [meshAreasCount, setMeshAreasCount] = useState('4 a 10');
+
+  // Subsección 6: Control de Acceso
+  const [intercomType, setIntercomType] = useState('Multiapartamental');
+  const [personalAccessMethods, setPersonalAccessMethods] = useState(['Biométricos', 'Sin tacto']);
+  const [vehicularAudience, setVehicularAudience] = useState('Ambos');
+  const [vehicularBarrier, setVehicularBarrier] = useState('Pluma');
+  const [vehicularSensor, setVehicularSensor] = useState('Identificación de placa');
+
+  // Subsección 7: Pantallas LED
+  const [ledEnvironment, setLedEnvironment] = useState('Exterior');
+  const [ledViewDistance, setLedViewDistance] = useState(25);
+
+  // Subsección 8: Alarmas C4
+  const [alarmZones, setAlarmZones] = useState('Ambos');
+  const [alarmMonitoring, setAlarmMonitoring] = useState('Monitoreo Cuauhtli C4 24/7');
+
+  // General parameters
   const [sector, setSector] = useState('industrial');
-  const [scale, setScale] = useState('9 a 16 puntos');
   const [urgency, setUrgency] = useState('⚡ Inmediata (< 1 semana)');
   const [location, setLocation] = useState('CDMX / Valle de México');
 
@@ -313,6 +380,31 @@ export default function MultiStepQuoteForm() {
       }
       return [...prev, id];
     });
+  };
+
+  // Toggle helpers for subsections
+  const toggleCctvArea = (area) => {
+    setCctvAreas((prev) => 
+      prev.includes(area) ? prev.filter((a) => a !== area) : [...prev, area]
+    );
+  };
+
+  const toggleCablingSystem = (sys) => {
+    setCablingSystems((prev) => 
+      prev.includes(sys) ? prev.filter((s) => s !== sys) : [...prev, sys]
+    );
+  };
+
+  const toggleGpsVehicleType = (vt) => {
+    setGpsVehicleTypes((prev) => 
+      prev.includes(vt) ? (prev.length > 1 ? prev.filter((v) => v !== vt) : prev) : [...prev, vt]
+    );
+  };
+
+  const togglePersonalAccess = (m) => {
+    setPersonalAccessMethods((prev) => 
+      prev.includes(m) ? (prev.length > 1 ? prev.filter((item) => item !== m) : prev) : [...prev, m]
+    );
   };
 
   const handleInputChange = (e) => {
@@ -349,11 +441,59 @@ export default function MultiStepQuoteForm() {
     setStep((prev) => Math.max(prev - 1, 1));
   };
 
+  const generateSummaryText = () => {
+    const lines = [];
+    const secName = SECTORS.find((s) => s.id === sector)?.label || sector;
+    lines.push(`🏢 Inmueble: ${secName}`);
+    lines.push(`📍 Ubicación: ${location} | ⏱️ Urgencia: ${urgency}`);
+    
+    if (selectedSolutions.includes('cctv')) {
+      lines.push(`📹 Cámaras (CCTV): Áreas: ${cctvAreas.join(', ') || 'Ninguna especificada'}`);
+    }
+    if (selectedSolutions.includes('cabling')) {
+      const otherPart = cablingShowOther && cablingOtherText ? `, Otra: ${cablingOtherText}` : '';
+      lines.push(`🔌 Cableado Estructurado: Site: ${cablingHasSite === 'si' ? 'Sí cuenta' : 'No cuenta'} | Sistemas: ${cablingSystems.join(', ')}${otherPart}`);
+    }
+    if (selectedSolutions.includes('perimeter')) {
+      const basePart = fenceBase === 'Otro' && fenceBaseOther ? `Base: ${fenceBaseOther}` : `Base: ${fenceBase}`;
+      lines.push(`⚡ Cercas Eléctricas: ${fenceMeters}m lineales sobre ${basePart}`);
+    }
+    if (selectedSolutions.includes('gps')) {
+      lines.push(`🛰️ GPS Vehicular: ${gpsVehicleTypes.join(', ')} (${gpsVehicleCount} vehículos, Energía: ${gpsEnergyType})`);
+    }
+    if (selectedSolutions.includes('mesh')) {
+      lines.push(`📶 Red Mesh: ${meshDevicesCount} equipos a conectar en ${meshAreasCount} áreas`);
+    }
+    if (selectedSolutions.includes('access')) {
+      lines.push(`🔑 Control de Acceso: Videoportero: ${intercomType} | Personal: ${personalAccessMethods.join(', ')} | Vehicular: Para ${vehicularAudience} (${vehicularBarrier}, Sensor: ${vehicularSensor})`);
+    }
+    if (selectedSolutions.includes('led')) {
+      lines.push(`📺 Pantallas LED: ${ledEnvironment} (Distancia visual: ${ledViewDistance}m)`);
+    }
+    if (selectedSolutions.includes('alarms')) {
+      lines.push(`🚨 Alarmas C4: Zonas: ${alarmZones} | Esquema: ${alarmMonitoring}`);
+    }
+    return lines.join('\n');
+  };
+
   const handleSubmit = () => {
     // Generate clean folio
     const randomNum = Math.floor(1000 + Math.random() * 9000);
     const newFolio = `CUAUHTLI-2025-${randomNum}`;
     setFolio(newFolio);
+
+    const summary = generateSummaryText();
+    const fullMsg = encodeURIComponent(
+      `Hola Sistemas Cuauhtli! 👋 Solicito propuesta técnica y levantamiento en sitio:\n` +
+      `📋 Folio: ${newFolio}\n\n` +
+      `${summary}\n\n` +
+      `👤 Contacto: ${formData.name}\n` +
+      `🏢 Empresa / Privada: ${formData.company || 'No especificada'}\n` +
+      `📞 Teléfono: ${formData.phone}\n` +
+      `📧 Correo: ${formData.email}\n` +
+      `📍 Levantamiento físico: ${formData.needsSiteSurvey ? 'Sí solicitado (Sin costo)' : 'No necesario'}`
+    );
+    setWhatsappMsg(fullMsg);
     setSubmitted(true);
 
     // Trigger celebration confetti
@@ -362,7 +502,7 @@ export default function MultiStepQuoteForm() {
         particleCount: 80,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#2563eb', '#38bdf8', '#10b981', '#ffffff'],
+        colors: ['#A6192E', '#2B5672', '#10B981', '#FFFFFF'],
       });
     } catch {
       // fallback
@@ -543,7 +683,7 @@ export default function MultiStepQuoteForm() {
                       </motion.div>
                     )}
 
-                    {/* STEP 2: DIMENSIONES & ALCANCE */}
+                    {/* STEP 2: DIMENSIONES & ALCANCE POR SOLUCIÓN */}
                     {step === 2 && (
                       <motion.div
                         key="step-2"
@@ -554,8 +694,8 @@ export default function MultiStepQuoteForm() {
                         className="msf-step-content"
                       >
                         <div className="msf-prompt">
-                          <h3>Alcance y características de la instalación</h3>
-                          <p>Ayúdanos a dimensionar el volumen de infraestructura técnica:</p>
+                          <h3>Alcance y configuración por solución</h3>
+                          <p>Define las especificaciones técnicas para cada área de tu proyecto:</p>
                         </div>
 
                         {/* Tipo de Inmueble */}
@@ -576,25 +716,549 @@ export default function MultiStepQuoteForm() {
                           </div>
                         </div>
 
-                        {/* Escala */}
-                        <div className="msf-field-group">
-                          <label className="msf-group-label">Volumen aproximado de puntos / cámaras:</label>
-                          <div className="msf-pills-row">
-                            {SCALE_OPTIONS.map((opt) => (
+                        {/* Soluciones Switcher (if multiple selected) */}
+                        {selectedSolutions.length > 1 && (
+                          <div className="msf-solutions-switcher">
+                            <span className="msf-switcher-label">Filtrar sección a configurar:</span>
+                            <div className="msf-switcher-pills">
                               <button
-                                key={opt}
                                 type="button"
-                                className={`msf-pill ${scale === opt ? 'is-active' : ''}`}
-                                onClick={() => setScale(opt)}
+                                className={`msf-sub-tab-btn ${activeSubSection === 'all' ? 'is-active' : ''}`}
+                                onClick={() => setActiveSubSection('all')}
                               >
-                                {opt}
+                                Ver Todas ({selectedSolutions.length})
                               </button>
-                            ))}
+                              {selectedSolutions.map((solId) => {
+                                const solObj = SOLUTIONS.find((s) => s.id === solId);
+                                if (!solObj) return null;
+                                const Icon = solObj.icon;
+                                return (
+                                  <button
+                                    key={solId}
+                                    type="button"
+                                    className={`msf-sub-tab-btn ${activeSubSection === solId ? 'is-active' : ''}`}
+                                    onClick={() => setActiveSubSection(solId)}
+                                  >
+                                    <Icon size={12} />
+                                    <span>{solObj.title.split('&')[0].trim()}</span>
+                                  </button>
+                                );
+                              })}
+                            </div>
                           </div>
-                        </div>
+                        )}
+
+                        {/* ---------------- 1. SUBSECCIÓN CÁMARAS (CCTV) ---------------- */}
+                        {(activeSubSection === 'all' || activeSubSection === 'cctv') && selectedSolutions.includes('cctv') && (
+                          <div className="msf-sub-panel">
+                            <div className="msf-sub-head">
+                              <div className="msf-sub-title-wrap">
+                                <Camera size={16} className="msf-sub-icon" />
+                                <h4>Cámaras & Circuito Cerrado (CCTV)</h4>
+                              </div>
+                              <span className="msf-sub-badge">{cctvAreas.length} áreas seleccionadas</span>
+                            </div>
+                            <p className="msf-sub-desc">
+                              Selecciona las áreas que requieres cubrir (haz clic para agregar o eliminar):
+                            </p>
+
+                            <div className="msf-chips-grid">
+                              {CCTV_AREA_OPTIONS.map((area) => {
+                                const isSelected = cctvAreas.includes(area);
+                                return (
+                                  <button
+                                    key={area}
+                                    type="button"
+                                    className={`msf-chip-btn ${isSelected ? 'is-selected' : ''}`}
+                                    onClick={() => toggleCctvArea(area)}
+                                    title={isSelected ? 'Clic para eliminar área' : 'Clic para agregar área'}
+                                  >
+                                    <span>{area}</span>
+                                    <span className="msf-chip-state">
+                                      {isSelected ? <X size={11} strokeWidth={2.5} /> : <Plus size={11} strokeWidth={2.5} />}
+                                    </span>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* ---------------- 2. SUBSECCIÓN CABLEADO ESTRUCTURADO ---------------- */}
+                        {(activeSubSection === 'all' || activeSubSection === 'cabling') && selectedSolutions.includes('cabling') && (
+                          <div className="msf-sub-panel">
+                            <div className="msf-sub-head">
+                              <div className="msf-sub-title-wrap">
+                                <Network size={16} className="msf-sub-icon" />
+                                <h4>Cableado Estructurado & Site</h4>
+                              </div>
+                            </div>
+
+                            <div className="msf-field-group">
+                              <label className="msf-group-label">¿Cuentan con site estructurado?</label>
+                              <div className="msf-pills-row">
+                                <button
+                                  type="button"
+                                  className={`msf-pill ${cablingHasSite === 'si' ? 'is-active' : ''}`}
+                                  onClick={() => setCablingHasSite('si')}
+                                >
+                                  ✅ Sí, contamos con Site estructurado
+                                </button>
+                                <button
+                                  type="button"
+                                  className={`msf-pill ${cablingHasSite === 'no' ? 'is-active' : ''}`}
+                                  onClick={() => setCablingHasSite('no')}
+                                >
+                                  ❌ No contamos con Site (requiere instalación)
+                                </button>
+                              </div>
+                            </div>
+
+                            <div className="msf-field-group" style={{ marginBottom: 0 }}>
+                              <label className="msf-group-label">¿Qué tipo de sistemas tienen o requieren enlazar?</label>
+                              <div className="msf-pills-row">
+                                {['CCTV', 'Antenas de Internet', 'Perifoneo', 'Contra incendios'].map((sys) => {
+                                  const isSelected = cablingSystems.includes(sys);
+                                  return (
+                                    <button
+                                      key={sys}
+                                      type="button"
+                                      className={`msf-pill ${isSelected ? 'is-active' : ''}`}
+                                      onClick={() => toggleCablingSystem(sys)}
+                                    >
+                                      {isSelected && <Check size={12} strokeWidth={3} />}
+                                      <span>{sys}</span>
+                                    </button>
+                                  );
+                                })}
+                                <button
+                                  type="button"
+                                  className={`msf-pill ${cablingShowOther ? 'is-active' : ''}`}
+                                  onClick={() => setCablingShowOther(!cablingShowOther)}
+                                >
+                                  <span>+ Otra</span>
+                                </button>
+                              </div>
+                              {cablingShowOther && (
+                                <div className="msf-other-input-wrap">
+                                  <input
+                                    type="text"
+                                    placeholder="Escribe el otro sistema (ej. Telefonía IP, Control de Acceso)..."
+                                    value={cablingOtherText}
+                                    onChange={(e) => setCablingOtherText(e.target.value)}
+                                    className="msf-inline-text-input"
+                                  />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* ---------------- 3. SUBSECCIÓN CERCAS ELÉCTRICAS ---------------- */}
+                        {(activeSubSection === 'all' || activeSubSection === 'perimeter') && selectedSolutions.includes('perimeter') && (
+                          <div className="msf-sub-panel">
+                            <div className="msf-sub-head">
+                              <div className="msf-sub-title-wrap">
+                                <ShieldAlert size={16} className="msf-sub-icon" />
+                                <h4>Cercas Eléctricas & Perímetro</h4>
+                              </div>
+                              <span className="msf-sub-badge">{fenceMeters} Metros Lineales</span>
+                            </div>
+
+                            <div className="msf-field-group">
+                              <div className="msf-slider-header">
+                                <label className="msf-group-label">Metros lineales a proteger (Interactivo):</label>
+                                <span className="msf-slider-val">{fenceMeters} m</span>
+                              </div>
+                              <input
+                                type="range"
+                                min={10}
+                                max={500}
+                                step={5}
+                                value={fenceMeters}
+                                onChange={(e) => setFenceMeters(Number(e.target.value))}
+                                className="msf-range-bar"
+                              />
+                              <div className="msf-slider-presets">
+                                {[25, 50, 100, 200, 350, 500].map((m) => (
+                                  <button
+                                    key={m}
+                                    type="button"
+                                    className={`msf-preset-btn ${fenceMeters === m ? 'is-active' : ''}`}
+                                    onClick={() => setFenceMeters(m)}
+                                  >
+                                    {m}m
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div className="msf-field-group" style={{ marginBottom: 0 }}>
+                              <label className="msf-group-label">Tipo de base en que quieres colocar:</label>
+                              <div className="msf-pills-row">
+                                {['Muro', 'Tejado', 'Cerco'].map((b) => (
+                                  <button
+                                    key={b}
+                                    type="button"
+                                    className={`msf-pill ${fenceBase === b ? 'is-active' : ''}`}
+                                    onClick={() => { setFenceBase(b); setFenceShowOther(false); }}
+                                  >
+                                    {b}
+                                  </button>
+                                ))}
+                                <button
+                                  type="button"
+                                  className={`msf-pill ${fenceBase === 'Otro' ? 'is-active' : ''}`}
+                                  onClick={() => { setFenceBase('Otro'); setFenceShowOther(true); }}
+                                >
+                                  + Otro
+                                </button>
+                              </div>
+                              {fenceShowOther && (
+                                <div className="msf-other-input-wrap">
+                                  <input
+                                    type="text"
+                                    placeholder="Especifique el tipo de base (ej. Barda perimetral tubular, reja de herrería)..."
+                                    value={fenceBaseOther}
+                                    onChange={(e) => setFenceBaseOther(e.target.value)}
+                                    className="msf-inline-text-input"
+                                  />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* ---------------- 4. SUBSECCIÓN GPS VEHICULAR ---------------- */}
+                        {(activeSubSection === 'all' || activeSubSection === 'gps') && selectedSolutions.includes('gps') && (
+                          <div className="msf-sub-panel">
+                            <div className="msf-sub-head">
+                              <div className="msf-sub-title-wrap">
+                                <Navigation size={16} className="msf-sub-icon" />
+                                <h4>GPS & Rastreo Satelital</h4>
+                              </div>
+                            </div>
+
+                            <div className="msf-field-group">
+                              <label className="msf-group-label">Tipo de vehículo:</label>
+                              <div className="msf-pills-row">
+                                {['Camión', 'Trailer', 'Camioneta', 'Auto'].map((vt) => {
+                                  const isSelected = gpsVehicleTypes.includes(vt);
+                                  return (
+                                    <button
+                                      key={vt}
+                                      type="button"
+                                      className={`msf-pill ${isSelected ? 'is-active' : ''}`}
+                                      onClick={() => toggleGpsVehicleType(vt)}
+                                    >
+                                      {isSelected && <Check size={12} strokeWidth={3} />}
+                                      <span>{vt}</span>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+
+                            <div className="msf-field-group">
+                              <label className="msf-group-label">¿Cuántos vehículos requieren equipar?</label>
+                              <div className="msf-pills-row">
+                                {['1 a 5', '5 a 10', '10 a 20', '+ de 20'].map((vc) => (
+                                  <button
+                                    key={vc}
+                                    type="button"
+                                    className={`msf-pill ${gpsVehicleCount === vc ? 'is-active' : ''}`}
+                                    onClick={() => setGpsVehicleCount(vc)}
+                                  >
+                                    {vc} vehículos
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div className="msf-field-group" style={{ marginBottom: 0 }}>
+                              <label className="msf-group-label">Tipo de energía / motorización:</label>
+                              <div className="msf-pills-row">
+                                {['Combustible', 'Eléctrico', 'Híbrido'].map((energy) => (
+                                  <button
+                                    key={energy}
+                                    type="button"
+                                    className={`msf-pill ${gpsEnergyType === energy ? 'is-active' : ''}`}
+                                    onClick={() => setGpsEnergyType(energy)}
+                                  >
+                                    {energy === 'Combustible' && '⛽ '}
+                                    {energy === 'Eléctrico' && '⚡ '}
+                                    {energy === 'Híbrido' && '🔋 '}
+                                    <span>{energy}</span>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* ---------------- 5. SUBSECCIÓN RED MESH ---------------- */}
+                        {(activeSubSection === 'all' || activeSubSection === 'mesh') && selectedSolutions.includes('mesh') && (
+                          <div className="msf-sub-panel">
+                            <div className="msf-sub-head">
+                              <div className="msf-sub-title-wrap">
+                                <Radio size={16} className="msf-sub-icon" />
+                                <h4>Red Mesh & Cobertura Wi-Fi</h4>
+                              </div>
+                              <span className="msf-sub-badge">{meshDevicesCount} equipos</span>
+                            </div>
+
+                            <div className="msf-field-group">
+                              <div className="msf-slider-header">
+                                <label className="msf-group-label">¿Cuántos equipos necesitas conectar? (Línea de tiempo):</label>
+                                <span className="msf-slider-val">{meshDevicesCount} dispositivos</span>
+                              </div>
+                              <input
+                                type="range"
+                                min={5}
+                                max={150}
+                                step={5}
+                                value={meshDevicesCount}
+                                onChange={(e) => setMeshDevicesCount(Number(e.target.value))}
+                                className="msf-range-bar"
+                              />
+                              <div className="msf-slider-presets">
+                                {[10, 25, 50, 100, 150].map((num) => (
+                                  <button
+                                    key={num}
+                                    type="button"
+                                    className={`msf-preset-btn ${meshDevicesCount === num ? 'is-active' : ''}`}
+                                    onClick={() => setMeshDevicesCount(num)}
+                                  >
+                                    {num} equipos
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div className="msf-field-group" style={{ marginBottom: 0 }}>
+                              <label className="msf-group-label">¿Cuántas áreas necesitas cubrir?</label>
+                              <div className="msf-pills-row">
+                                {['1 a 3', '4 a 10', '+ de 10'].map((a) => (
+                                  <button
+                                    key={a}
+                                    type="button"
+                                    className={`msf-pill ${meshAreasCount === a ? 'is-active' : ''}`}
+                                    onClick={() => setMeshAreasCount(a)}
+                                  >
+                                    {a} áreas
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* ---------------- 6. SUBSECCIÓN CONTROL DE ACCESO ---------------- */}
+                        {(activeSubSection === 'all' || activeSubSection === 'access') && selectedSolutions.includes('access') && (
+                          <div className="msf-sub-panel">
+                            <div className="msf-sub-head">
+                              <div className="msf-sub-title-wrap">
+                                <KeyRound size={16} className="msf-sub-icon" />
+                                <h4>Control de Acceso & Videoporteros</h4>
+                              </div>
+                            </div>
+
+                            {/* A: Videoporteros */}
+                            <div className="msf-field-group">
+                              <label className="msf-group-label">Videoporteros:</label>
+                              <div className="msf-pills-row">
+                                {['Multiapartamental', 'Un-apartamental', 'No requerido'].map((v) => (
+                                  <button
+                                    key={v}
+                                    type="button"
+                                    className={`msf-pill ${intercomType === v ? 'is-active' : ''}`}
+                                    onClick={() => setIntercomType(v)}
+                                  >
+                                    {v}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* B: Controles de acceso personal */}
+                            <div className="msf-field-group">
+                              <label className="msf-group-label">Controles de acceso personal:</label>
+                              <div className="msf-pills-row">
+                                {['Biométricos', 'Tarjeta', 'Código', 'Sin tacto'].map((m) => {
+                                  const isSelected = personalAccessMethods.includes(m);
+                                  return (
+                                    <button
+                                      key={m}
+                                      type="button"
+                                      className={`msf-pill ${isSelected ? 'is-active' : ''}`}
+                                      onClick={() => togglePersonalAccess(m)}
+                                    >
+                                      {isSelected && <Check size={12} strokeWidth={3} />}
+                                      <span>{m}</span>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+
+                            {/* C: Control de acceso vehicular */}
+                            <div className="msf-field-group msf-vehicular-group" style={{ marginBottom: 0 }}>
+                              <label className="msf-group-label" style={{ marginBottom: 4 }}>Control de acceso vehicular:</label>
+                              
+                              <div className="msf-subgroup-row">
+                                <span className="msf-sublabel">Destinado para:</span>
+                                <div className="msf-pills-row">
+                                  {['Visitantes', 'Residentes', 'Ambos'].map((dest) => (
+                                    <button
+                                      key={dest}
+                                      type="button"
+                                      className={`msf-pill ${vehicularAudience === dest ? 'is-active' : ''}`}
+                                      onClick={() => setVehicularAudience(dest)}
+                                    >
+                                      {dest}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+
+                              <div className="msf-subgroup-row">
+                                <span className="msf-sublabel">Mecanismo de barrera:</span>
+                                <div className="msf-pills-row">
+                                  {['Pluma', 'Cadena', 'Brazos'].map((mech) => (
+                                    <button
+                                      key={mech}
+                                      type="button"
+                                      className={`msf-pill ${vehicularBarrier === mech ? 'is-active' : ''}`}
+                                      onClick={() => setVehicularBarrier(mech)}
+                                    >
+                                      {mech}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+
+                              <div className="msf-subgroup-row">
+                                <span className="msf-sublabel">Sensor / Validación de paso:</span>
+                                <div className="msf-pills-row">
+                                  {['Sensor', 'Identificación de placa', 'Tarjeta', 'Boletos', 'Varias'].map((sens) => (
+                                    <button
+                                      key={sens}
+                                      type="button"
+                                      className={`msf-pill ${vehicularSensor === sens ? 'is-active' : ''}`}
+                                      onClick={() => setVehicularSensor(sens)}
+                                    >
+                                      {sens}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* ---------------- 7. SUBSECCIÓN PANTALLAS LED ---------------- */}
+                        {(activeSubSection === 'all' || activeSubSection === 'led') && selectedSolutions.includes('led') && (
+                          <div className="msf-sub-panel">
+                            <div className="msf-sub-head">
+                              <div className="msf-sub-title-wrap">
+                                <Monitor size={16} className="msf-sub-icon" />
+                                <h4>Pantallas LED Publicitarias & Video</h4>
+                              </div>
+                              <span className="msf-sub-badge">{ledViewDistance}m distancia</span>
+                            </div>
+
+                            <div className="msf-field-group">
+                              <label className="msf-group-label">Entorno de instalación:</label>
+                              <div className="msf-pills-row">
+                                {['Exterior', 'Interior'].map((env) => (
+                                  <button
+                                    key={env}
+                                    type="button"
+                                    className={`msf-pill ${ledEnvironment === env ? 'is-active' : ''}`}
+                                    onClick={() => setLedEnvironment(env)}
+                                  >
+                                    {env === 'Exterior' ? '☀️ Exterior (Outdoor)' : '🏢 Interior (Indoor)'}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div className="msf-field-group" style={{ marginBottom: 0 }}>
+                              <div className="msf-slider-header">
+                                <label className="msf-group-label">¿A cuánta distancia te interesa que se vea? (Barrita interactiva):</label>
+                                <span className="msf-slider-val">{ledViewDistance} metros</span>
+                              </div>
+                              <input
+                                type="range"
+                                min={2}
+                                max={100}
+                                step={2}
+                                value={ledViewDistance}
+                                onChange={(e) => setLedViewDistance(Number(e.target.value))}
+                                className="msf-range-bar"
+                              />
+                              <div className="msf-slider-presets">
+                                {[5, 15, 30, 50, 100].map((d) => (
+                                  <button
+                                    key={d}
+                                    type="button"
+                                    className={`msf-preset-btn ${ledViewDistance === d ? 'is-active' : ''}`}
+                                    onClick={() => setLedViewDistance(d)}
+                                  >
+                                    {d}m
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* ---------------- 8. SUBSECCIÓN ALARMAS C4 ---------------- */}
+                        {(activeSubSection === 'all' || activeSubSection === 'alarms') && selectedSolutions.includes('alarms') && (
+                          <div className="msf-sub-panel">
+                            <div className="msf-sub-head">
+                              <div className="msf-sub-title-wrap">
+                                <BellRing size={16} className="msf-sub-icon" />
+                                <h4>Alarmas & Central de Monitoreo C4</h4>
+                              </div>
+                            </div>
+
+                            <div className="msf-field-group">
+                              <label className="msf-group-label">Zonas a proteger:</label>
+                              <div className="msf-pills-row">
+                                {['Interior', 'Perimetral exterior', 'Ambos'].map((z) => (
+                                  <button
+                                    key={z}
+                                    type="button"
+                                    className={`msf-pill ${alarmZones === z ? 'is-active' : ''}`}
+                                    onClick={() => setAlarmZones(z)}
+                                  >
+                                    {z}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div className="msf-field-group" style={{ marginBottom: 0 }}>
+                              <label className="msf-group-label">Tipo de enlace y monitoreo:</label>
+                              <div className="msf-pills-row">
+                                {['Monitoreo Cuauhtli C4 24/7', 'Auto-monitoreo App Móvil'].map((mon) => (
+                                  <button
+                                    key={mon}
+                                    type="button"
+                                    className={`msf-pill ${alarmMonitoring === mon ? 'is-active' : ''}`}
+                                    onClick={() => setAlarmMonitoring(mon)}
+                                  >
+                                    {mon}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
 
                         {/* Urgencia y Zona */}
-                        <div className="msf-inline-fields">
+                        <div className="msf-inline-fields" style={{ marginTop: '16px' }}>
                           <div className="msf-field-group">
                             <label className="msf-group-label">Urgencia requerida:</label>
                             <select
@@ -771,7 +1435,7 @@ export default function MultiStepQuoteForm() {
 
               <div className="msf-success-actions">
                 <a
-                  href={`https://wa.me/525585262115?text=${encodeURIComponent(`Hola Cuauhtli, registré mi proyecto con folio ${folio}. Me gustaría atención inmediata.`)}`}
+                  href={`https://wa.me/525585262115?text=${whatsappMsg || encodeURIComponent(`Hola Cuauhtli, registré mi proyecto con folio ${folio}. Me gustaría atención inmediata.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="msf-whatsapp-btn"
