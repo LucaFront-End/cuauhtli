@@ -311,10 +311,40 @@ export default function ProyectosPage({
   // --- BENTO CATALOG & MODAL STATE ---
   const [activeCategory, setActiveCategory] = useState('all');
   const [modalProject, setModalProject] = useState(null);
+  const [modalMediaTab, setModalMediaTab] = useState('photo1');
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
+
+  useEffect(() => {
+    if (!modalProject) return undefined;
+    setModalMediaTab('photo1');
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setModalProject(null);
+      } else if (e.key === 'ArrowRight') {
+        const idx = PROJECTS_DATA.findIndex((p) => p.id === modalProject.id);
+        if (idx !== -1) {
+          setModalProject(PROJECTS_DATA[(idx + 1) % PROJECTS_DATA.length]);
+        }
+      } else if (e.key === 'ArrowLeft') {
+        const idx = PROJECTS_DATA.findIndex((p) => p.id === modalProject.id);
+        if (idx !== -1) {
+          setModalProject(PROJECTS_DATA[(idx - 1 + PROJECTS_DATA.length) % PROJECTS_DATA.length]);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [modalProject]);
 
   const filteredProjects =
     activeCategory === 'all'
@@ -874,115 +904,322 @@ export default function ProyectosPage({
       </section>
 
       {/* ====================================================================
-          6. INTERACTIVE PROJECT DOSSIER MODAL (LIGHT & PHOTOGRAPHIC)
+          6. ULTRA-MINIMALIST ARCHITECTURAL DOSSIER POP-UP (WOW MODAL)
           ==================================================================== */}
       <AnimatePresence>
-        {modalProject && (
-          <motion.div
-            className="prj-modal-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setModalProject(null)}
-          >
+        {modalProject && (() => {
+          const modalIdx = PROJECTS_DATA.findIndex((p) => p.id === modalProject.id);
+          const ModalIsoScene = modalProject.CustomIsoScene;
+          const stepPrev = () => {
+            const nextIdx = (modalIdx - 1 + PROJECTS_DATA.length) % PROJECTS_DATA.length;
+            setModalProject(PROJECTS_DATA[nextIdx]);
+          };
+          const stepNext = () => {
+            const nextIdx = (modalIdx + 1) % PROJECTS_DATA.length;
+            setModalProject(PROJECTS_DATA[nextIdx]);
+          };
+
+          return (
             <motion.div
-              className="prj-modal-card"
-              initial={{ opacity: 0, y: 24, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 16, scale: 0.97 }}
-              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-              onClick={(e) => e.stopPropagation()}
+              className="prj-modal-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.24 }}
+              onClick={() => setModalProject(null)}
             >
-              <div className="prj-modal-topbar">
-                <div className="prj-modal-meta">
-                  <span className="prj-glass-tag">{modalProject.folio}</span>
-                  <span className="prj-glass-tag is-emerald">{modalProject.compliance}</span>
-                  <span className="prj-modal-loc">
-                    <MapPin size={13} /> {modalProject.location}
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setModalProject(null)}
-                  className="prj-modal-close"
-                  aria-label="Cerrar expediente"
-                >
-                  <X size={18} />
-                </button>
-              </div>
-
-              <div className="prj-modal-grid">
-                {/* Left: Clean Real Site Photography Showcase */}
-                <div className="prj-modal-visuals">
-                  <div className="prj-modal-main-photo">
-                    <img src={modalProject.image} alt={modalProject.title} />
-                  </div>
-                  <div className="prj-modal-photo-strip">
-                    <img src={modalProject.image} alt={modalProject.title} />
-                    <img src={modalProject.secondaryImage} alt={modalProject.shortTitle} />
-                  </div>
-                </div>
-
-                {/* Right: Full Technical Dossier */}
-                <div className="prj-modal-info">
-                  <span className="prj-card-sector">{modalProject.categoryLabel}</span>
-                  <h3 className="prj-modal-title">{modalProject.title}</h3>
-                  <p className="prj-modal-client">
-                    <Building2 size={14} /> {modalProject.clientType} · Superficie:{' '}
-                    {modalProject.surface} · Entrega: {modalProject.duration}
-                  </p>
-
-                  <div className="prj-modal-block">
-                    <strong>El Desafío Operativo</strong>
-                    <p>{modalProject.challenge}</p>
+              <motion.div
+                className="prj-modal-card"
+                role="dialog"
+                aria-modal="true"
+                aria-label={`Expediente técnico ${modalProject.title}`}
+                initial={{ opacity: 0, y: 22, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 14, scale: 0.97 }}
+                transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* 1. Minimalist Floating Top Bar */}
+                <div className="prj-modal-topbar">
+                  <div className="prj-modal-meta">
+                    <span className="prj-modal-folio-pill">
+                      <span className="prj-live-dot" />
+                      {modalProject.folio}
+                    </span>
+                    <span className="prj-modal-compliance-pill">
+                      <ShieldCheck size={12} />
+                      {modalProject.compliance}
+                    </span>
+                    <span className="prj-modal-loc">
+                      <MapPin size={12} />
+                      {modalProject.location}
+                    </span>
                   </div>
 
-                  <div className="prj-modal-block is-accent">
-                    <strong>La Solución de Ingeniería Cuauhtli</strong>
-                    <p>{modalProject.solution}</p>
-                  </div>
+                  <div className="prj-modal-controls">
+                    <div className="prj-modal-stepper" aria-label="Navegar entre expedientes">
+                      <button
+                        type="button"
+                        onClick={stepPrev}
+                        className="prj-modal-step-btn"
+                        title="Expediente anterior (←)"
+                      >
+                        <ArrowLeft size={13} />
+                      </button>
+                      <span className="prj-modal-step-count">
+                        {pad(modalIdx + 1)} / {pad(PROJECTS_DATA.length)}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={stepNext}
+                        className="prj-modal-step-btn"
+                        title="Siguiente expediente (→)"
+                      >
+                        <ArrowRight size={13} />
+                      </button>
+                    </div>
 
-                  <div className="prj-modal-hw">
-                    <strong>Equipamiento Homologado Instalado</strong>
-                    <ul>
-                      {modalProject.hardware.map((hw, i) => (
-                        <li key={i}>
-                          <CheckCircle2 size={14} color="#10B981" />
-                          <span>{hw}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="prj-modal-roi">
-                    {modalProject.metrics.map((m, i) => (
-                      <div key={i} className="prj-modal-roi-item">
-                        <strong>{m.value}</strong>
-                        <span>{m.label}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="prj-modal-actions">
                     <button
                       type="button"
-                      onClick={() => {
-                        const title = modalProject.title;
-                        setModalProject(null);
-                        onOpenQuote?.(`Proyecto similar a ${title}`);
-                      }}
-                      className="btn btn-primary"
-                      style={{ width: '100%' }}
+                      onClick={() => setModalProject(null)}
+                      className="prj-modal-close"
+                      aria-label="Cerrar expediente"
+                      title="Cerrar (ESC)"
                     >
-                      <span>Cotizar un Proyecto como Este</span>
-                      <ArrowUpRight size={17} />
+                      <span className="prj-modal-esc">ESC</span>
+                      <X size={15} />
                     </button>
                   </div>
                 </div>
-              </div>
+
+                {/* 2. Two-Column Architectural Split */}
+                <div className="prj-modal-grid">
+                  {/* LEFT: Interactive Media Canvas + Thumbnail Switcher + Spec Ledger */}
+                  <div className="prj-modal-visuals">
+                    <div className="prj-modal-stage">
+                      <AnimatePresence mode="wait">
+                        {modalMediaTab === 'iso' && ModalIsoScene ? (
+                          <motion.div
+                            key={`iso-${modalProject.id}`}
+                            className="prj-modal-stage-layer"
+                            initial={{ opacity: 0, scale: 0.98 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.98 }}
+                            transition={{ duration: 0.24 }}
+                          >
+                            <ModalIsoScene />
+                          </motion.div>
+                        ) : (
+                          <motion.div
+                            key={`${modalMediaTab}-${modalProject.id}`}
+                            className="prj-modal-stage-layer"
+                            initial={{ opacity: 0, scale: 1.02 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.28 }}
+                          >
+                            <img
+                              src={
+                                modalMediaTab === 'photo2'
+                                  ? modalProject.secondaryImage
+                                  : modalProject.image
+                              }
+                              alt={modalProject.title}
+                              className="prj-modal-stage-img"
+                            />
+                            <div className="prj-modal-stage-scrim" />
+
+                            {/* Subtle AI Telemetry Bounding Boxes on Primary Photo */}
+                            {modalMediaTab === 'photo1' &&
+                              modalProject.detBoxes?.map((b, bIdx) => (
+                                <div
+                                  key={bIdx}
+                                  className={`prj-ai-det prj-ai-det--${b.tone || 'green'}`}
+                                  style={{
+                                    left: `${b.x}%`,
+                                    top: `${b.y}%`,
+                                    width: `${b.w}%`,
+                                    height: `${b.h}%`,
+                                  }}
+                                >
+                                  <i className="tl" />
+                                  <i className="tr" />
+                                  <i className="bl" />
+                                  <i className="br" />
+                                  <span className="prj-ai-det-label">{b.label}</span>
+                                </div>
+                              ))}
+
+                            {/* Bottom Floating Camera Caption */}
+                            <div className="prj-modal-stage-caption">
+                              <span className="prj-modal-cam-tag">
+                                {modalMediaTab === 'photo2'
+                                  ? 'DETALLE DE INGENIERÍA · AS-BUILT'
+                                  : 'EVIDENCIA EN SITIO · VERIFICADA'}
+                              </span>
+                              <span>{modalProject.clientType}</span>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+
+                    {/* Interactive Thumbnail & View Selector */}
+                    <div className="prj-modal-media-switcher">
+                      <button
+                        type="button"
+                        onClick={() => setModalMediaTab('photo1')}
+                        className={`prj-modal-media-btn ${
+                          modalMediaTab === 'photo1' ? 'is-active' : ''
+                        }`}
+                      >
+                        <img src={modalProject.image} alt="" />
+                        <div>
+                          <strong>Vista General</strong>
+                          <span>Obra entregada</span>
+                        </div>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setModalMediaTab('photo2')}
+                        className={`prj-modal-media-btn ${
+                          modalMediaTab === 'photo2' ? 'is-active' : ''
+                        }`}
+                      >
+                        <img src={modalProject.secondaryImage} alt="" />
+                        <div>
+                          <strong>Detalle Técnico</strong>
+                          <span>Equipamiento</span>
+                        </div>
+                      </button>
+
+                      {ModalIsoScene && (
+                        <button
+                          type="button"
+                          onClick={() => setModalMediaTab('iso')}
+                          className={`prj-modal-media-btn is-iso ${
+                            modalMediaTab === 'iso' ? 'is-active' : ''
+                          }`}
+                        >
+                          <div className="prj-modal-iso-icon">3D</div>
+                          <div>
+                            <strong>Gemelo Digital</strong>
+                            <span>Plano en vivo</span>
+                          </div>
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Architectural Spec Ledger */}
+                    <div className="prj-modal-spec-ledger">
+                      <div className="prj-modal-spec-cell">
+                        <span>SUPERFICIE</span>
+                        <strong>{modalProject.surface}</strong>
+                      </div>
+                      <div className="prj-modal-spec-cell">
+                        <span>EJECUCIÓN</span>
+                        <strong>{modalProject.duration}</strong>
+                      </div>
+                      <div className="prj-modal-spec-cell">
+                        <span>PÓLIZA</span>
+                        <strong>Garantía Vitalicia</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* RIGHT: Swiss Editorial Dossier */}
+                  <div className="prj-modal-info">
+                    <div className="prj-modal-header-group">
+                      <div className="prj-modal-eyebrow-row">
+                        <span className="prj-card-sector">{modalProject.categoryLabel}</span>
+                        <span className="prj-modal-client-chip">
+                          <Building2 size={12} />
+                          {modalProject.clientType}
+                        </span>
+                      </div>
+                      <h3 className="prj-modal-title">{modalProject.title}</h3>
+                    </div>
+
+                    {/* Prominent Audited Impact / ROI Strip */}
+                    <div className="prj-modal-roi">
+                      {modalProject.metrics.map((m, i) => (
+                        <div key={i} className="prj-modal-roi-item">
+                          <strong>{m.value}</strong>
+                          <span>{m.label}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Clean Two-Step Narrative Timeline (Challenge -> Engineering Solution) */}
+                    <div className="prj-modal-narrative">
+                      <div className="prj-modal-narrative-step">
+                        <span className="prj-modal-step-badge">01</span>
+                        <div>
+                          <strong>Diagnóstico &amp; Reto Operativo</strong>
+                          <p>{modalProject.challenge}</p>
+                        </div>
+                      </div>
+
+                      <div className="prj-modal-narrative-step is-solution">
+                        <span className="prj-modal-step-badge is-crimson">02</span>
+                        <div>
+                          <strong>Ingeniería Aplicada Cuauhtli</strong>
+                          <p>{modalProject.solution}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 2x2 Numbered Hardware Grid */}
+                    <div className="prj-modal-hw">
+                      <div className="prj-modal-hw-head">
+                        <strong>Arquitectura &amp; Hardware Homologado</strong>
+                        <span>100% Cuadrillas Propias</span>
+                      </div>
+                      <div className="prj-modal-hw-grid">
+                        {modalProject.hardware.map((hw, i) => (
+                          <div key={i} className="prj-modal-hw-card">
+                            <span className="prj-modal-hw-idx">{pad(i + 1)}</span>
+                            <span className="prj-modal-hw-text">{hw}</span>
+                            <CheckCircle2 size={13} className="prj-modal-hw-check" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Minimalist Action Footer */}
+                    <div className="prj-modal-actions">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const title = modalProject.title;
+                          setModalProject(null);
+                          onOpenQuote?.(`Proyecto similar a ${title}`);
+                        }}
+                        className="btn btn-primary prj-modal-cta-primary"
+                      >
+                        <span>Cotizar un Proyecto Similar</span>
+                        <ArrowUpRight size={17} />
+                      </button>
+
+                      <a
+                        href={`https://wa.me/525585262115?text=${encodeURIComponent(
+                          `Hola Sistemas Cuauhtli, me interesa cotizar un proyecto similar a "${modalProject.title}" (${modalProject.folio}).`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-secondary prj-modal-cta-wa"
+                      >
+                        <MessageSquare size={15} color="#10B981" />
+                        <span>Ingeniería vía WhatsApp</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
+          );
+        })()}
       </AnimatePresence>
     </div>
   );
