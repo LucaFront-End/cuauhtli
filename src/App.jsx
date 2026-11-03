@@ -15,12 +15,13 @@ import ServicePage from './components/services/ServicePage';
 import NosotrosPage from './components/pages/NosotrosPage';
 import ComunidadPage from './components/pages/ComunidadPage';
 import ReformaLaboralPage from './components/pages/ReformaLaboralPage';
+import ProyectosPage from './components/pages/ProyectosPage';
 import IndustryPage from './components/industries/IndustryPage';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
   const [preSelectedSolution, setPreSelectedSolution] = useState('');
-  const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'servicio-[slug]' | 'industria-[slug]' | 'nosotros' | 'comunidad' | 'reforma-laboral-40-horas'
+  const [currentRoute, setCurrentRoute] = useState('home'); // 'home' | 'servicio-[slug]' | 'industria-[slug]' | 'nosotros' | 'proyectos' | 'comunidad' | 'reforma-laboral-40-horas'
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -37,6 +38,14 @@ export default function App() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (clean === 'nosotros') {
         setCurrentRoute('nosotros');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (
+        clean === 'proyectos' ||
+        clean === 'proyecto' ||
+        clean === 'portafolio' ||
+        clean === 'casos-de-exito'
+      ) {
+        setCurrentRoute('proyectos');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (clean === 'comunidad') {
         setCurrentRoute('comunidad');
@@ -99,10 +108,10 @@ export default function App() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      
+
       {/* STICKY HEADER */}
-      <Navbar 
-        onOpenQuote={() => handleOpenQuote()} 
+      <Navbar
+        onOpenQuote={() => handleOpenQuote()}
         onNavigateHome={handleNavigateHome}
         onNavigateService={handleNavigateService}
         onNavigateIndustry={handleNavigateIndustry}
@@ -118,25 +127,32 @@ export default function App() {
             onSelectIndustry={handleNavigateIndustry}
           />
         ) : currentRoute === 'nosotros' ? (
-          <NosotrosPage 
+          <NosotrosPage
             onOpenQuote={handleOpenQuote}
             onNavigateHome={handleNavigateHome}
             onNavigateService={handleNavigateService}
           />
+        ) : currentRoute === 'proyectos' ? (
+          <ProyectosPage
+            onOpenQuote={handleOpenQuote}
+            onNavigateHome={handleNavigateHome}
+            onNavigateService={handleNavigateService}
+            onNavigateIndustry={handleNavigateIndustry}
+          />
         ) : currentRoute === 'comunidad' ? (
-          <ComunidadPage 
+          <ComunidadPage
             onOpenQuote={handleOpenQuote}
             onNavigateHome={handleNavigateHome}
             onNavigateService={handleNavigateService}
           />
         ) : currentRoute === 'reforma-laboral-40-horas' ? (
-          <ReformaLaboralPage 
+          <ReformaLaboralPage
             onOpenQuote={handleOpenQuote}
             onNavigateHome={handleNavigateHome}
             onNavigateService={handleNavigateService}
           />
         ) : currentRoute !== 'home' ? (
-          <ServicePage 
+          <ServicePage
             serviceId={currentRoute}
             onOpenQuote={handleOpenQuote}
             onNavigateHome={handleNavigateHome}
@@ -163,7 +179,7 @@ export default function App() {
             <Testimonials />
 
             {/* SECCIÓN INTERACTIVA DE INDUSTRIAS: TENEMOS LA SOLUCIÓN PERFECTA PARA TU GIRO */}
-            <IndustriesSection 
+            <IndustriesSection
               onOpenQuote={handleOpenQuote}
               onSelectIndustry={handleNavigateIndustry}
             />
@@ -178,8 +194,8 @@ export default function App() {
       </main>
 
       {/* FOOTER */}
-      <Footer 
-        onOpenQuote={() => handleOpenQuote()} 
+      <Footer
+        onOpenQuote={() => handleOpenQuote()}
         onNavigateHome={handleNavigateHome}
         onNavigateService={handleNavigateService}
       />
@@ -188,9 +204,9 @@ export default function App() {
       <FloatingWhatsapp />
 
       {/* POPUP MODAL */}
-      <QuickQuoteModal 
-        isOpen={quoteModalOpen} 
-        onClose={() => setQuoteModalOpen(false)} 
+      <QuickQuoteModal
+        isOpen={quoteModalOpen}
+        onClose={() => setQuoteModalOpen(false)}
         defaultSolution={preSelectedSolution}
       />
 

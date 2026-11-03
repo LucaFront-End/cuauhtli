@@ -153,9 +153,10 @@ export default function Footer({ onOpenQuote, onNavigateHome, onNavigateService 
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.88rem', color: '#94A3B8' }}>
               <li><a href="#soluciones" style={{ color: 'inherit', textDecoration: 'none' }}>Sistemas & Soluciones</a></li>
+              <li><a href="#proyectos" style={{ color: 'inherit', textDecoration: 'none' }}>Proyectos & Casos de Éxito</a></li>
               <li><a href="#industrias" style={{ color: 'inherit', textDecoration: 'none' }}>Sectores e Industrias (8 Giros)</a></li>
               <li><a href="#cobertura" style={{ color: 'inherit', textDecoration: 'none' }}>Presencia & Cobertura Nacional</a></li>
-              <li><a href="#nosotros" onClick={handleHome} style={{ color: 'inherit', textDecoration: 'none' }}>Sobre Nosotros & Garantías</a></li>
+              <li><a href="#nosotros" style={{ color: 'inherit', textDecoration: 'none' }}>Sobre Nosotros & Garantías</a></li>
               <li><a href="#cotizador" style={{ color: 'inherit', textDecoration: 'none' }}>Diagnóstico & Cotizador</a></li>
               <li><a href="#contacto" style={{ color: 'inherit', textDecoration: 'none' }}>Contacto Directo</a></li>
             </ul>

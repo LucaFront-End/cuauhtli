@@ -69,7 +69,7 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService,
   const handleSectionNavigate = (e, targetHash) => {
     if (e) e.preventDefault();
     window.location.hash = targetHash;
-    if (targetHash === '#nosotros' || targetHash === '#comunidad') {
+    if (targetHash === '#nosotros' || targetHash === '#comunidad' || targetHash === '#proyectos') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       setTimeout(() => {
@@ -352,7 +352,18 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService,
                 </MotionNavigationMenuContent>
               </MotionNavigationMenuItem>
 
-              {/* ITEM 4: DIRECT LINK NOSOTROS */}
+              {/* ITEM 4: DIRECT LINK PROYECTOS */}
+              <MotionNavigationMenuItem>
+                <MotionNavigationMenuLink 
+                  href="#proyectos" 
+                  className="cuauhtli-direct-link"
+                  onClick={(e) => handleSectionNavigate(e, '#proyectos')}
+                >
+                  Proyectos
+                </MotionNavigationMenuLink>
+              </MotionNavigationMenuItem>
+
+              {/* ITEM 5: DIRECT LINK NOSOTROS */}
               <MotionNavigationMenuItem>
                 <MotionNavigationMenuLink 
                   href="#nosotros" 
@@ -462,6 +473,14 @@ export default function Navbar({ onOpenQuote, onNavigateHome, onNavigateService,
               className="cuauhtli-mob-link"
             >
               <span>Sectores & Industrias (8 Giros)</span>
+              <ChevronRight size={15} />
+            </a>
+            <a
+              href="#proyectos"
+              onClick={(e) => { setMobileMenuOpen(false); handleSectionNavigate(e, '#proyectos'); }}
+              className="cuauhtli-mob-link"
+            >
+              <span>Proyectos & Casos de Éxito</span>
               <ChevronRight size={15} />
             </a>
             <a
