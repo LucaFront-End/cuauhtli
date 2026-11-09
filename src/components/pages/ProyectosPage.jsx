@@ -12,13 +12,10 @@ import {
   ArrowUpRight,
   ShieldCheck,
   MapPin,
-  CheckCircle2,
-  Building2,
   Award,
   MessageSquare,
   Lock,
   Activity,
-  X,
 } from 'lucide-react';
 import AlliesMarquee from '../AlliesMarquee';
 import {
@@ -47,7 +44,7 @@ function useIsDesktop() {
 
 const pad = (n) => String(n).padStart(2, '0');
 
-const PROJECTS_DATA = [
+export const PROJECTS_DATA = [
   {
     id: 'cedis-cuautitlan',
     folio: 'PRJ-2026-084',
@@ -55,28 +52,69 @@ const PROJECTS_DATA = [
     categoryLabel: 'Logística & CEDIS',
     shortTitle: 'Mega-CEDIS Logístico & Aduana CTPAT',
     title: 'Mega-CEDIS Logístico & Aduana Interior',
-    clientType: 'Operador Logístico 3PL Transnacional',
+    clientType: 'Operador Logístico 3PL',
     location: 'Cuautitlán Izcalli, Edo. Méx.',
     surface: '48,500 m²',
     duration: '6 Semanas',
     compliance: 'CTPAT Tier-3',
+    relatedService: 'cctv',
     CustomIsoScene: CedisLogisticsIsoScene,
     image: '/assets/features/warehouse.jpg',
     secondaryImage: '/assets/images/cctv_ptz.jpg',
-    challenge:
-      'Merma hormiga en 24 andenes simultáneos, puntos ciegos en racks de 14 metros y demoras de 18 minutos por tráiler en esclusa vehicular.',
-    solution:
-      'Trazabilidad total en patio de maniobras con lectura LPR de contenedores en retroceso, seguimiento de montacargas en pasillos de racks y domos PTZ 32x.',
+    tagline: '24 andenes blindados con lectura LPR y trazabilidad total de montacargas.',
     metrics: [
       { value: '0%', label: 'Merma en 24 meses' },
       { value: '1.4 s', label: 'Esclusa LPR IA' },
       { value: '100%', label: 'Andenes trazados' },
     ],
     hardware: [
-      '42 Cámaras Bullet 4K ColorVu IP67',
-      '8 Domos PTZ 32x con Seguimiento IA',
-      '4 Esclusas LPR + Barreras de Tráfico Pesado',
-      '1,800m Cerca Electrificada 14kV Homologada',
+      '42 Cámaras Bullet 4K',
+      '8 Domos PTZ 32x IA',
+      '4 Esclusas LPR Pesadas',
+      '1,800m Cerca 14kV',
+    ],
+    gallery: [
+      { src: '/assets/features/warehouse.jpg', tag: 'NAVE PRINCIPAL · 48,500 M²', span: 'wide' },
+      { src: '/assets/images/cctv_ptz.jpg', tag: 'DOMO PTZ 32X · PATIO', span: 'tall' },
+      { src: '/assets/industries/almacenes.jpg', tag: 'PASILLOS RACK · 14M', span: 'normal' },
+      { src: '/assets/features/parking.jpg', tag: 'ESCLUSA LPR · TRÁILERES', span: 'normal' },
+    ],
+    storySteps: [
+      {
+        id: 'iso',
+        badge: '01 · ARQUITECTURA 3D',
+        title: 'Gemelo Digital en Vivo',
+        caption: 'Simulación isométrica de esclusa LPR, acoplamiento en andén y pasillos.',
+        kpi: '24 Andenes',
+        type: 'iso',
+      },
+      {
+        id: 'site',
+        badge: '02 · COBERTURA EN SITIO',
+        title: 'Visión 4K sin Puntos Ciegos',
+        caption: 'Monitoreo simultáneo de maniobras y carga con analítica perimetral.',
+        kpi: '0% Merma',
+        type: 'photo',
+        src: '/assets/features/warehouse.jpg',
+      },
+      {
+        id: 'detail',
+        badge: '03 · HARDWARE GRADO IP67',
+        title: 'Seguimiento Óptico PTZ 32x',
+        caption: 'Lectura automática de sellos fiscales y placas en menos de 1.4 segundos.',
+        kpi: '1.4 s LPR',
+        type: 'photo',
+        src: '/assets/images/cctv_ptz.jpg',
+      },
+      {
+        id: 'ops',
+        badge: '04 · AUDITORÍA CTPAT',
+        title: 'Trazabilidad en Racks de 14m',
+        caption: 'Cada pallet escaneado queda vinculado en video a su guía de embarque.',
+        kpi: '90 Días RAID',
+        type: 'photo',
+        src: '/assets/industries/almacenes.jpg',
+      },
     ],
     detBoxes: [
       { x: 22, y: 36, w: 22, h: 32, label: 'Andén 02 · Sello OK', tone: 'blue' },
@@ -90,28 +128,69 @@ const PROJECTS_DATA = [
     categoryLabel: 'Corporativo & Banca',
     shortTitle: 'Torre Financiera & Bóveda Bancaria CNBV',
     title: 'Torre Financiera & Bóveda de Datos CNBV',
-    clientType: 'Institución Financiera Regulada',
+    clientType: 'Institución Financiera',
     location: 'Paseo de la Reforma, CDMX',
-    surface: '22 Niveles · 31,000 m²',
+    surface: '31,000 m² · 22 Niveles',
     duration: '5 Semanas',
-    compliance: 'Norma CNBV & ISO 27001',
+    compliance: 'CNBV & ISO 27001',
+    relatedService: 'control-de-acceso',
     CustomIsoScene: FinancialVaultIsoScene,
     image: '/assets/features/lobby.jpg',
     secondaryImage: '/assets/images/access_control.jpg',
-    challenge:
-      'Flujo diario de 3,400 empleados y visitantes con cuellos de botella en recepción y exigencia de auditoría biométrica en bóveda bancaria y centro de datos.',
-    solution:
-      'Carriles motorizados Flap Barrier con biometría facial 3D (<0.18 s), matriz láser en bóveda grado 10 y cuarto de servidores RAID-6 encriptado a 120 días.',
+    tagline: 'Acceso facial en 0.18 segundos para 3,400 ejecutivos y bóveda bancaria grado 10.',
     metrics: [
       { value: '0.18 s', label: 'Cruce facial 3D' },
       { value: '45/min', label: 'Flujo por carril' },
       { value: '120 d', label: 'Bóveda CNBV' },
     ],
     hardware: [
-      '12 Torniquetes Flap Barrier AISI 304',
-      '24 Terminales Faciales MinMoe Dual-IR',
-      'Sensores Sísmicos y Matriz Láser en Bóveda',
-      'Servidor VMS Redundante RAID-6 + TLS 1.3',
+      '12 Carriles Flap AISI 304',
+      '24 Terminales Faciales 3D',
+      'Matriz Láser en Bóveda',
+      'Cluster VMS AES-256',
+    ],
+    gallery: [
+      { src: '/assets/features/lobby.jpg', tag: 'LOBBY CORPORATIVO · REFORMA', span: 'wide' },
+      { src: '/assets/images/access_control.jpg', tag: 'BIOMETRÍA FACIAL · 0.18S', span: 'tall' },
+      { src: '/assets/industries/bancos.jpg', tag: 'BÓVEDA GRADO X · CNBV', span: 'normal' },
+      { src: '/assets/industries/oficinas.jpg', tag: 'ESCLUSAS EJECUTIVAS · PISO 22', span: 'normal' },
+    ],
+    storySteps: [
+      {
+        id: 'iso',
+        badge: '01 · ARQUITECTURA 3D',
+        title: 'Esclusas & Bóveda CNBV',
+        caption: 'Planta isométrica de carriles ópticos, bóveda blindada y cluster de datos.',
+        kpi: '0.18 s Cruce',
+        type: 'iso',
+      },
+      {
+        id: 'site',
+        badge: '02 · FLUJO EJECUTIVO',
+        title: 'Recepción sin Cuellos de Botella',
+        caption: '12 carriles motorizados en acero inoxidable con validación facial al caminar.',
+        kpi: '3,400 Usuarios',
+        type: 'photo',
+        src: '/assets/features/lobby.jpg',
+      },
+      {
+        id: 'detail',
+        badge: '03 · BIOMETRÍA ANTI-SPOOFING',
+        title: 'Lectura Dual-IR en Movimiento',
+        caption: 'Sincronización instantánea con Active Directory y pases QR para visitas.',
+        kpi: '99.98% Precisión',
+        type: 'photo',
+        src: '/assets/images/access_control.jpg',
+      },
+      {
+        id: 'ops',
+        badge: '04 · NORMATIVA BANCARIA',
+        title: 'Retención Cifrada 120 Días',
+        caption: 'Grabación redundante bajo estándar CNBV con firma criptográfica.',
+        kpi: 'AES-256',
+        type: 'photo',
+        src: '/assets/industries/bancos.jpg',
+      },
     ],
     detBoxes: [
       { x: 30, y: 38, w: 20, h: 36, label: 'ID Facial · 0.18s', tone: 'green' },
@@ -125,28 +204,69 @@ const PROJECTS_DATA = [
     categoryLabel: 'Manufactura & Planta',
     shortTitle: 'Planta Automotriz & Subestación Térmica',
     title: 'Complejo Automotriz Tier-1 & Control STPS',
-    clientType: 'Armadora de Autopartes de Exportación',
-    location: 'Parque Industrial Querétaro, Qro.',
+    clientType: 'Armadora Autopartes',
+    location: 'Parque Industrial Querétaro',
     surface: '62,000 m²',
     duration: '8 Semanas',
     compliance: 'STPS & T-MEC',
+    relatedService: 'cercas-electrificadas',
     CustomIsoScene: AutomotivePlantIsoScene,
     image: '/assets/images/perimeter_fence.jpg',
     secondaryImage: '/assets/features/face.jpg',
-    challenge:
-      'Riesgo de sobrecalentamiento en subestación eléctrica de alta tensión, monitoreo de línea de ensamble robotizada y control de asistencia en 3 turnos.',
-    solution:
-      'Cámaras termográficas bi-espectrales vigilando transformadores las 24 h, supervisión de línea de producción y esclusa biométrica STPS para 1,800 operadores.',
+    tagline: 'Termografía radiométrica en subestación de 115 kV y asistencia STPS en 3 turnos.',
     metrics: [
       { value: '-34%', label: 'Horas extra fantasma' },
       { value: '58.4°C', label: 'Monitoreo térmico' },
       { value: '99.99%', label: 'Uptime en planta' },
     ],
     hardware: [
-      '6 Cámaras Termográficas Bi-Espectrales',
-      '18 Terminales Biométricas de Asistencia STPS',
-      '56 Cámaras en Tubería Conduit Pared Gruesa',
-      '2.4 km de Canalización Galvanizada Certificada',
+      '6 Cámaras Termográficas',
+      '18 Terminales STPS',
+      '56 Cámaras en Conduit',
+      '2.4 km Cerca 14,000V',
+    ],
+    gallery: [
+      { src: '/assets/images/perimeter_fence.jpg', tag: 'BLINDAJE PERIMETRAL · 14KV', span: 'wide' },
+      { src: '/assets/features/face.jpg', tag: 'ASISTENCIA STPS · 1,800 OPS', span: 'tall' },
+      { src: '/assets/industries/constructoras.jpg', tag: 'NAVE DE ENSAMBLE · TIER-1', span: 'normal' },
+      { src: '/assets/images/reforma/paso-3-turnos.jpg', tag: 'CONTROL DE TURNOS · SAP', span: 'normal' },
+    ],
+    storySteps: [
+      {
+        id: 'iso',
+        badge: '01 · ARQUITECTURA 3D',
+        title: 'Línea Robotizada & Subestación',
+        caption: 'Monitoreo isométrico de nave automotriz, transformadores y acceso STPS.',
+        kpi: '115 kV Vigilados',
+        type: 'iso',
+      },
+      {
+        id: 'site',
+        badge: '02 · DEFENSA PERIMETRAL',
+        title: '2.4 km de Cerca Zonificada',
+        caption: 'Canalización galvanizada de pared gruesa y disuasión activa de 14,000V.',
+        kpi: '8 Sectores',
+        type: 'photo',
+        src: '/assets/images/perimeter_fence.jpg',
+      },
+      {
+        id: 'detail',
+        badge: '03 · CONTROL LABORAL',
+        title: '1,800 Operadores en 3 Turnos',
+        caption: 'Eliminación inmediata de horas extra fantasma con exportación a nómina.',
+        kpi: '-34% Sobrecosto',
+        type: 'photo',
+        src: '/assets/features/face.jpg',
+      },
+      {
+        id: 'ops',
+        badge: '04 · CONTINUIDAD OPERATIVA',
+        title: 'Alertas Térmicas Preventivas',
+        caption: 'Detección de puntos calientes antes de cualquier paro no programado.',
+        kpi: '99.99% Uptime',
+        type: 'photo',
+        src: '/assets/industries/constructoras.jpg',
+      },
     ],
     detBoxes: [
       { x: 25, y: 30, w: 26, h: 34, label: 'Termografía IA · OK', tone: 'green' },
@@ -160,28 +280,69 @@ const PROJECTS_DATA = [
     categoryLabel: 'Residencial Premium',
     shortTitle: 'Macro-Privada & Doble Esclusa UHF / QR',
     title: 'Macro-Privada Residencial & Esclusa Inteligente',
-    clientType: 'Comité de Colonos & Administración',
+    clientType: 'Comité de Colonos',
     location: 'Bosques de las Lomas, CDMX',
-    surface: '140 Residencias · 4 Accesos',
+    surface: '140 Residencias',
     duration: '4 Semanas',
     compliance: 'Blindaje Vecinal C4',
+    relatedService: 'interfon',
     CustomIsoScene: ResidentialBoulevardIsoScene,
     image: '/assets/features/entrance.jpg',
     secondaryImage: '/assets/images/videodoorbell.jpg',
-    challenge:
-      'Filas de 15 minutos en horas pico mezclando colonos y repartidores, e ingreso de visitas sin validación fotográfica de placa y rostro.',
-    solution:
-      'Bulevar de doble carril: acceso exprés sin detenerse con antena UHF a 12 metros para residentes (1.2 s) y carril exclusivo de visitas con QR por WhatsApp y SIP 2.0.',
+    tagline: 'Doble carril inteligente: lectura UHF a 12 metros para colonos y QR temporal para visitas.',
     metrics: [
       { value: '1.2 s', label: 'Apertura Tag UHF' },
       { value: '100%', label: 'Visitas con QR' },
       { value: '< 45m', label: 'SLA en sitio' },
     ],
     hardware: [
-      '4 Barreras Vehiculares Brushless Intensivas',
-      '4 Antenas UHF Largo Alcance (12m) + LPR',
-      'Frentes de Calle IP Antivandálicos IK10 SIP 2.0',
-      'Consola Maestra Touchscreen 10" en Caseta',
+      '4 Barreras Brushless',
+      '4 Antenas UHF 12m + LPR',
+      'Interfonos IP IK10 SIP',
+      'Consola Maestra C4',
+    ],
+    gallery: [
+      { src: '/assets/features/entrance.jpg', tag: 'PÓRTICO PRINCIPAL · DOBLE CARRIL', span: 'wide' },
+      { src: '/assets/images/videodoorbell.jpg', tag: 'TÓTEM QR · SIP 2.0 IK10', span: 'tall' },
+      { src: '/assets/industries/residencias.jpg', tag: 'VIALIDAD INTERIOR · 140 CASAS', span: 'normal' },
+      { src: '/assets/features/parking.jpg', tag: 'LECTURA LPR · PLACAS', span: 'normal' },
+    ],
+    storySteps: [
+      {
+        id: 'iso',
+        badge: '01 · ARQUITECTURA 3D',
+        title: 'Flujo Separado Colonos / Visitas',
+        caption: 'Apertura anticipada UHF en carril izquierdo y validación QR en carril derecho.',
+        kpi: '1.2 s Cruce',
+        type: 'iso',
+      },
+      {
+        id: 'site',
+        badge: '02 · PÓRTICO BLINDADO',
+        title: 'Cero Filas en Hora Pico',
+        caption: 'Barreras brushless de uso continuo sincronizadas con lectura de placa y tag.',
+        kpi: '420 Autos',
+        type: 'photo',
+        src: '/assets/features/entrance.jpg',
+      },
+      {
+        id: 'detail',
+        badge: '03 · VIDEO-INTERFONÍA',
+        title: 'Autorización Móvil con QR',
+        caption: 'El residente recibe video en vivo en su celular y genera pases por WhatsApp.',
+        kpi: 'SIP 2.0 HD',
+        type: 'photo',
+        src: '/assets/images/videodoorbell.jpg',
+      },
+      {
+        id: 'ops',
+        badge: '04 · TRANQUILIDAD VECINAL',
+        title: 'Monitoreo Perimetral 24/7',
+        caption: 'Bitácora fotográfica de cada vehículo, repartidor y proveedor que ingresa.',
+        kpi: '100% Trazado',
+        type: 'photo',
+        src: '/assets/industries/residencias.jpg',
+      },
     ],
     detBoxes: [
       { x: 34, y: 42, w: 24, h: 32, label: 'Tag UHF 12m · 1.2s', tone: 'green' },
@@ -195,28 +356,69 @@ const PROJECTS_DATA = [
     categoryLabel: 'Salud & Hospitales',
     shortTitle: 'Centro Hospitalario & Esclusa Zero-Touch',
     title: 'Centro Hospitalario & Esclusas COFEPRIS',
-    clientType: 'Grupo Hospitalario de Alta Especialidad',
+    clientType: 'Grupo Hospitalario',
     location: 'Zona de Hospitales, CDMX',
     surface: '24,000 m² · 9 Quirófanos',
     duration: '5 Semanas',
     compliance: 'Norma COFEPRIS',
+    relatedService: 'control-de-acceso',
     CustomIsoScene: HospitalBiosecurityIsoScene,
     image: '/assets/industries/hospitales.jpg',
     secondaryImage: '/assets/images/camera_hero_isolated.jpg',
-    challenge:
-      'Control de acceso a quirófanos y farmacia controlada sin contacto físico para preservar la asepsia, más monitoreo térmico de cadena de frío y bahía de ambulancias.',
-    solution:
-      'Puertas herméticas corredizas con lectura facial Zero-Touch compatible con cubrebocas y gorro quirúrgico, telemetría de crioconservación (-4.0°C) y esclusa LPR de urgencias.',
+    tagline: 'Esclusas quirúrgicas sin contacto físico, cadena de frío a -4.0°C y bahía de urgencias.',
     metrics: [
       { value: '100%', label: 'Acceso Zero-Touch' },
       { value: '99.9%', label: 'ID con cubrebocas' },
       { value: '-4.0°C', label: 'Cadena frío trazada' },
     ],
     hardware: [
-      '16 Lectores Faciales con Detección de Cubrebocas',
-      'Sensores de Apertura No-Touch para Quirófanos',
-      '52 Micro-Domos Antibacteriales de Bajo Perfil',
-      'Telemetría Continua en Farmacia COFEPRIS',
+      '16 Lectores Zero-Touch',
+      'Sensores Quirófano IR',
+      '52 Micro-Domos Clínicos',
+      'Telemetría COFEPRIS',
+    ],
+    gallery: [
+      { src: '/assets/industries/hospitales.jpg', tag: 'ÁREA QUIRÚRGICA · ZERO-TOUCH', span: 'wide' },
+      { src: '/assets/images/camera_hero_isolated.jpg', tag: 'DOMO CLÍNICO · ANTIBACTERIAL', span: 'tall' },
+      { src: '/assets/images/access_control.jpg', tag: 'LECTURA CON CUBREBOCAS · 99.9%', span: 'normal' },
+      { src: '/assets/images/alarm_center.jpg', tag: 'TELEMETRÍA CADENA FRÍO · -4°C', span: 'normal' },
+    ],
+    storySteps: [
+      {
+        id: 'iso',
+        badge: '01 · ARQUITECTURA 3D',
+        title: 'Esclusa Aséptica & Urgencias',
+        caption: 'Apertura hermética sin contacto para cirujanos y bahía prioritaria de ambulancias.',
+        kpi: 'Zero-Touch',
+        type: 'iso',
+      },
+      {
+        id: 'site',
+        badge: '02 · BIOSEGURIDAD CLÍNICA',
+        title: 'Asepsia Total en 9 Quirófanos',
+        caption: 'Reconocimiento periocular aún con gorro quirúrgico y cubrebocas N95.',
+        kpi: '99.9% ID',
+        type: 'photo',
+        src: '/assets/industries/hospitales.jpg',
+      },
+      {
+        id: 'detail',
+        badge: '03 · GRADO SANITARIO',
+        title: 'Óptica Antibacterial Silenciosa',
+        caption: 'Micro-domos sellados libres de polvo con cableado libre de halógenos.',
+        kpi: 'COFEPRIS OK',
+        type: 'photo',
+        src: '/assets/images/camera_hero_isolated.jpg',
+      },
+      {
+        id: 'ops',
+        badge: '04 · FARMACIA CONTROLADA',
+        title: 'Monitoreo Continuo a -4.0°C',
+        caption: 'Alertas instantáneas y bitácora auditable de cada apertura de crioconservación.',
+        kpi: '-4.0°C Fijos',
+        type: 'photo',
+        src: '/assets/images/alarm_center.jpg',
+      },
     ],
     detBoxes: [
       { x: 35, y: 36, w: 24, h: 34, label: 'Esclusa Quirófano OK', tone: 'green' },
@@ -235,23 +437,64 @@ const PROJECTS_DATA = [
     surface: '18,000 m² · 2,600 Alumnos',
     duration: '3 Semanas',
     compliance: 'Protección Civil & SEP',
+    relatedService: 'alarmas',
     CustomIsoScene: HospitalBiosecurityIsoScene,
     image: '/assets/industries/escuelas.jpg',
     secondaryImage: '/assets/images/alarm_center.jpg',
-    challenge:
-      'Garantizar que ningún menor sea entregado a personas no autorizadas, eliminar puntos ciegos en patios y automatizar la alerta sísmica.',
-    solution:
-      'Kioscos biométricos de tutores vinculados a pantallas en aulas, domos panorámicos 360° y sistema de voceo IP sincronizado con SASMEX y C4.',
+    tagline: 'Validación biométrica de tutores, cobertura 360° en patios y alerta sísmica SASMEX.',
     metrics: [
       { value: '2,600', label: 'Alumnos con ID' },
       { value: '0', label: 'Incidentes acceso' },
       { value: '60 s', label: 'Evacuación IP' },
     ],
     hardware: [
-      '8 Terminales Faciales para Tutores Autorizados',
-      '38 Cámaras Domo 4K con Analítica de Merodeo',
-      'Sistema de Voceo IP y Alerta Sísmica Automatizada',
-      'Botones de Pánico Inalámbricos con Enlace C4',
+      '8 Kioscos de Tutores',
+      '38 Domos 4K en Patios',
+      'Voceo IP + SASMEX',
+      'Botones Pánico C4',
+    ],
+    gallery: [
+      { src: '/assets/industries/escuelas.jpg', tag: 'CAMPUS CENTRAL · 18,000 M²', span: 'wide' },
+      { src: '/assets/images/alarm_center.jpg', tag: 'ALERTA SÍSMICA · SASMEX IP', span: 'tall' },
+      { src: '/assets/images/access_control.jpg', tag: 'ENTREGA VERIFICADA · TUTORES', span: 'normal' },
+      { src: '/assets/industries/plazas.jpg', tag: 'PATIOS & ÁREAS COMUNES · 360°', span: 'normal' },
+    ],
+    storySteps: [
+      {
+        id: 'iso',
+        badge: '01 · ARQUITECTURA 3D',
+        title: 'Esclusas Peatonales & Emergencia',
+        caption: 'Flujo controlado de comunidad escolar y liberación automática en evacuación.',
+        kpi: '2,600 Alumnos',
+        type: 'iso',
+      },
+      {
+        id: 'site',
+        badge: '02 · CAMPUS PROTEGIDO',
+        title: 'Cero Puntos Ciegos en Patios',
+        caption: 'Domos panorámicos 4K con analítica de merodeo en bardas perimetrales.',
+        kpi: '38 Domos 4K',
+        type: 'photo',
+        src: '/assets/industries/escuelas.jpg',
+      },
+      {
+        id: 'detail',
+        badge: '03 · PROTOCOLO SÍSMICO',
+        title: 'Automatización SASMEX en 60s',
+        caption: 'Apertura inmediata de torniquetes y voceo IP ante sismo confirmado.',
+        kpi: '60 s Evacuación',
+        type: 'photo',
+        src: '/assets/images/alarm_center.jpg',
+      },
+      {
+        id: 'ops',
+        badge: '04 · PADRES CONECTADOS',
+        title: 'Notificación Push al Instante',
+        caption: 'Confirmación en el celular de los padres en cada entrada y salida.',
+        kpi: '0 Incidentes',
+        type: 'photo',
+        src: '/assets/images/access_control.jpg',
+      },
     ],
     detBoxes: [
       { x: 28, y: 40, w: 22, h: 30, label: 'Tutor Verificado', tone: 'green' },
@@ -260,22 +503,31 @@ const PROJECTS_DATA = [
   },
 ];
 
-// Top 5 flagship projects for the Sticky-Scroll Isometric Showcase (each has its own unique Isometric World)
 const STICKY_PROJECTS = PROJECTS_DATA.slice(0, 5);
 
 const FILTER_CATEGORIES = [
-  { id: 'all', label: 'Todos (6)' },
-  { id: 'industrial', label: 'Logística & Planta' },
-  { id: 'corporativo', label: 'Corporativo & Banca' },
-  { id: 'institucional', label: 'Salud & Educación' },
-  { id: 'residencial', label: 'Residencial Premium' },
+  { id: 'all', label: 'Todos', count: 6 },
+  { id: 'industrial', label: 'Industrial & Logística', count: 2 },
+  { id: 'corporativo', label: 'Corporativo', count: 1 },
+  { id: 'institucional', label: 'Salud & Educación', count: 2 },
+  { id: 'residencial', label: 'Residencial', count: 1 },
 ];
 
 export default function ProyectosPage({
   onOpenQuote,
   onNavigateHome,
+  onSelectProject,
 }) {
   const isDesktop = useIsDesktop();
+
+  const openProjectPage = (projectId) => {
+    if (onSelectProject) {
+      onSelectProject(projectId);
+    } else {
+      window.location.hash = `proyecto/${projectId}`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   // --- STICKY SECTION: 5 BESPOKE ISOMETRIC CASE STUDIES ---
   const showcaseRef = useRef(null);
@@ -308,43 +560,12 @@ export default function ProyectosPage({
     });
   };
 
-  // --- BENTO CATALOG & MODAL STATE ---
+  // --- ARCHIVO DE OBRAS: FILTER ---
   const [activeCategory, setActiveCategory] = useState('all');
-  const [modalProject, setModalProject] = useState(null);
-  const [modalMediaTab, setModalMediaTab] = useState('photo1');
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
-
-  useEffect(() => {
-    if (!modalProject) return undefined;
-    setModalMediaTab('photo1');
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        setModalProject(null);
-      } else if (e.key === 'ArrowRight') {
-        const idx = PROJECTS_DATA.findIndex((p) => p.id === modalProject.id);
-        if (idx !== -1) {
-          setModalProject(PROJECTS_DATA[(idx + 1) % PROJECTS_DATA.length]);
-        }
-      } else if (e.key === 'ArrowLeft') {
-        const idx = PROJECTS_DATA.findIndex((p) => p.id === modalProject.id);
-        if (idx !== -1) {
-          setModalProject(PROJECTS_DATA[(idx - 1 + PROJECTS_DATA.length) % PROJECTS_DATA.length]);
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [modalProject]);
 
   const filteredProjects =
     activeCategory === 'all'
@@ -370,123 +591,130 @@ export default function ProyectosPage({
               <span>Inicio</span>
             </button>
             <span className="prj-crumb-sep">/</span>
-            <span className="prj-crumb-current">Proyectos &amp; Casos de Éxito</span>
+            <span className="prj-crumb-current">Proyectos</span>
           </div>
 
           <div className="prj-subnav-links">
             <a href="#casos-sticky" className="prj-subnav-anchor">
-              Casos Interactivos
+              Interactivo 3D
             </a>
             <a href="#catalogo-obras" className="prj-subnav-anchor">
-              Archivo de Obras
+              Galería de Obras
             </a>
             <div className="prj-live-pill">
               <span className="prj-live-dot" />
-              <span>+1,200 PROYECTOS ENTREGADOS</span>
+              <span>+1,200 OBRAS</span>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* 2. MINIMALIST LIGHT EDITORIAL HERO (CLEAN PHOTOGRAPHIC COMPOSITION, NO EXTRA ANIMATION) */}
+      {/* 2. MINIMALIST LIGHT EDITORIAL HERO */}
       <section className="prj-hero-section">
         <div className="prj-hero-dot-grid" />
         <div className="prj-hero-ambient-glow" />
 
         <div className="container prj-hero-grid">
-          {/* Left Editorial Column */}
           <div className="prj-hero-left">
             <div className="prj-eyebrow-pill">
               <span className="prj-eyebrow-dot" />
-              <span>PORTAFOLIO DE INGENIERÍA APLICADA</span>
+              <span>PORTAFOLIO DE INGENIERÍA</span>
             </div>
 
             <h1 className="prj-hero-h1">
-              Proyectos ejecutados con <em>precisión quirúrgica.</em>
+              Obras diseñadas con <em>precisión quirúrgica.</em>
             </h1>
 
             <p className="prj-hero-lead">
-              Explora nuestros despliegues reales en centros logísticos, corporativos bancarios,
-              plantas automotrices y complejos residenciales, respaldados por cuadrillas propias y{' '}
-              <strong>Garantía Vitalicia</strong> en mano de obra.
+              Despliegues reales en centros logísticos, banca, industria y residenciales con
+              cuadrillas propias y <strong>Garantía Vitalicia</strong>.
             </p>
 
-            {/* Minimalist Light KPI Strip */}
             <div className="prj-kpi-row">
               <div className="prj-kpi-item">
                 <strong>+1,200</strong>
-                <span>Obras entregadas</span>
+                <span>Obras</span>
               </div>
               <div className="prj-kpi-divider" />
               <div className="prj-kpi-item">
                 <strong>99.98%</strong>
-                <span>Disponibilidad C4</span>
+                <span>Uptime C4</span>
               </div>
               <div className="prj-kpi-divider" />
               <div className="prj-kpi-item">
                 <strong>0%</strong>
-                <span>Subcontratación</span>
+                <span>Subcontratos</span>
               </div>
               <div className="prj-kpi-divider" />
               <div className="prj-kpi-item">
                 <strong>Vitalicia</strong>
-                <span>Póliza de instalación</span>
+                <span>Garantía</span>
               </div>
             </div>
 
-            {/* Clean CTA Row */}
             <div className="prj-hero-cta-row">
               <button
                 type="button"
                 onClick={() => onOpenQuote?.('Proyecto Integral a Medida')}
                 className="btn btn-primary prj-btn-main"
               >
-                <span>Cotizar Proyecto a Medida</span>
+                <span>Cotizar Proyecto</span>
                 <ArrowUpRight size={18} />
               </button>
 
-              <a href="#casos-sticky" className="btn btn-secondary prj-btn-ghost">
-                <span>Explorar Casos Destacados</span>
+              <a href="#catalogo-obras" className="btn btn-secondary prj-btn-ghost">
+                <span>Ver Galería</span>
                 <ArrowRight size={16} />
               </a>
             </div>
           </div>
 
-          {/* Right Clean Architectural Photographic Bento Showcase */}
           <div className="prj-hero-right">
             <div className="prj-hero-photo-bento">
-              <div className="prj-hpb-main">
+              <div
+                className="prj-hpb-main"
+                onClick={() => openProjectPage('cedis-cuautitlan')}
+                style={{ cursor: 'pointer' }}
+              >
                 <img
                   src="/assets/features/warehouse.jpg"
-                  alt="Infraestructura Logística Blindada Sistemas Cuauhtli"
+                  alt="Infraestructura Logística Blindada"
                 />
                 <div className="prj-hpb-scrim" />
                 <div className="prj-hpb-badge-top">
                   <span className="prj-iso-live-dot" />
-                  <span>OBRA CERTIFICADA TIA-568-C.2</span>
+                  <span>PRJ-2026-084 · CTPAT</span>
                 </div>
                 <div className="prj-hpb-caption">
-                  <strong>Mega-CEDIS &amp; Parques Industriales</strong>
-                  <span>Cuautitlán · Querétaro · Monterrey · Guadalajara</span>
+                  <strong>Mega-CEDIS &amp; Aduana ↗</strong>
+                  <span>Cuautitlán Izcalli · 48,500 m²</span>
                 </div>
               </div>
 
               <div className="prj-hpb-subgrid">
-                <div className="prj-hpb-subcard">
+                <div
+                  className="prj-hpb-subcard"
+                  onClick={() => openProjectPage('torre-reforma')}
+                  style={{ cursor: 'pointer' }}
+                >
                   <img src="/assets/features/lobby.jpg" alt="Control Biométrico Corporativo" />
                   <div className="prj-hpb-scrim" />
                   <div className="prj-hpb-sublabel">
-                    <span>Corporativo &amp; Banca CNBV</span>
-                    <strong>0.18s Cruce Facial</strong>
+                    <span>Torre Reforma ↗</span>
+                    <strong>0.18s Facial</strong>
                   </div>
                 </div>
 
-                <div className="prj-hpb-subcard">
-                  <img src="/assets/images/perimeter_fence.jpg" alt="Blindaje Perimetral 14,000V" />
+                <div
+                  className="prj-hpb-subcard"
+                  onClick={() => openProjectPage('planta-bajio')}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img src="/assets/images/perimeter_fence.jpg" alt="Blindaje Perimetral" />
                   <div className="prj-hpb-scrim" />
                   <div className="prj-hpb-sublabel">
-                    <span>Ingeniería Perimetral</span>
-                    <strong>Garantía Vitalicia</strong>
+                    <span>Planta Bajío ↗</span>
+                    <strong>62,000 m²</strong>
                   </div>
                 </div>
               </div>
@@ -495,13 +723,10 @@ export default function ProyectosPage({
         </div>
       </section>
 
-      {/* 2.5 TECHNOLOGY ALLIES MARQUEE */}
       <AlliesMarquee />
 
       {/* ====================================================================
-          3. SECOND SECTION: THE STICKY-SCROLL ISOMETRIC SHOWCASE
-          Each of the 5 steps renders its own 100% distinct isometric world
-          custom-crafted for what that specific case study describes!
+          3. STICKY-SCROLL ISOMETRIC SHOWCASE (CONCISE & VISUAL)
           ==================================================================== */}
       <section
         id="casos-sticky"
@@ -515,12 +740,11 @@ export default function ProyectosPage({
       >
         <div className="prj-sticky-viewport">
           <div className="prj-sticky-grid">
-            {/* LEFT COLUMN: Minimalist Rail, Counter & Accordion */}
             <div className="prj-sticky-left">
               <div className="prj-sticky-top">
                 <span className="prj-eyebrow-pill">
                   <span className="prj-eyebrow-dot" />
-                  Casos de Éxito Auditados
+                  Arquitectura Interactiva
                 </span>
 
                 <span className="prj-sticky-counter">
@@ -542,12 +766,8 @@ export default function ProyectosPage({
               </div>
 
               <h2 className="prj-sticky-heading">
-                Ingeniería probada en <em>misión crítica.</em>
+                Ingeniería en <em>tiempo real.</em>
               </h2>
-              <p className="prj-sticky-sub">
-                Cada proyecto se diseña a la medida de la operación del cliente. Desplaza para ver
-                la arquitectura isométrica específica de cada caso.
-              </p>
 
               <ul className="prj-rail-list">
                 {STICKY_PROJECTS.map((item, index) => {
@@ -593,16 +813,8 @@ export default function ProyectosPage({
                             transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
                             style={{ overflow: 'hidden' }}
                           >
-                            <div className="prj-rail-loc">
-                              <MapPin size={12} />
-                              <span>
-                                {item.location} · {item.surface}
-                              </span>
-                            </div>
+                            <p className="prj-rail-desc">{item.tagline}</p>
 
-                            <p className="prj-rail-desc">{item.solution}</p>
-
-                            {/* 3 Clean Metric Chips */}
                             <div className="prj-rail-metrics">
                               {item.metrics.map((m, mIdx) => (
                                 <div key={mIdx} className="prj-rail-metric-chip">
@@ -618,22 +830,11 @@ export default function ProyectosPage({
                                 className="prj-rail-cta"
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  onOpenQuote?.(`Proyecto similar a ${item.title}`);
+                                  openProjectPage(item.id);
                                 }}
                               >
-                                <span>Cotizar similar</span>
-                                <ArrowRight size={13} />
-                              </button>
-
-                              <button
-                                type="button"
-                                className="prj-rail-cta is-secondary"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setModalProject(item);
-                                }}
-                              >
-                                <span>Ver fotografías y expediente →</span>
+                                <span>Ver caso completo</span>
+                                <ArrowUpRight size={14} />
                               </button>
                             </div>
 
@@ -651,7 +852,6 @@ export default function ProyectosPage({
               </ul>
             </div>
 
-            {/* RIGHT STICKY BESPOKE ISOMETRIC STAGE (Desktop) */}
             {isDesktop && (
               <div className="prj-sticky-panel">
                 <AnimatePresence mode="wait">
@@ -665,19 +865,18 @@ export default function ProyectosPage({
                   >
                     <ActiveIsoScene />
 
-                    {/* Floating Picture-in-Picture Real Site Photo Card */}
                     <div
                       className="prj-pip-card"
-                      onClick={() => setModalProject(currentCaseProject)}
-                      title="Ver fotografías reales y ficha técnica"
+                      onClick={() => openProjectPage(currentCaseProject.id)}
+                      title="Abrir proyecto"
                     >
                       <div className="prj-pip-thumb">
                         <img src={currentCaseProject.image} alt={currentCaseProject.title} />
-                        <span className="prj-pip-badge">FOTO REAL</span>
+                        <span className="prj-pip-badge">VER OBRA</span>
                       </div>
                       <div className="prj-pip-info">
-                        <strong>{currentCaseProject.location}</strong>
-                        <span>{currentCaseProject.surface} · Ver ficha →</span>
+                        <strong>{currentCaseProject.shortTitle}</strong>
+                        <span>{currentCaseProject.surface} · Explorar ↗</span>
                       </div>
                     </div>
                   </motion.div>
@@ -689,23 +888,23 @@ export default function ProyectosPage({
       </section>
 
       {/* ====================================================================
-          4. VISUAL BENTO GALLERY OF VERIFIED WORKS (CLEAN LIGHT AESTHETIC)
+          4. MINIMALIST ASYMMETRIC VISUAL LOOKBOOK (#catalogo-obras)
+          90% Visual Photography + Asymmetric 7/5 & 5/7 Rhythm + Zero Text Clutter
           ==================================================================== */}
-      <section id="catalogo-obras" className="prj-gallery-section">
+      <section id="catalogo-obras" className="prj-lookbook-sec">
         <div className="container">
-          <div className="prj-gallery-header">
+          <div className="prj-lookbook-header">
             <div>
               <span className="prj-eyebrow-pill">
                 <span className="prj-eyebrow-dot" />
-                Archivo Visual de Obras
+                GALERÍA SELECCIONADA
               </span>
               <h2 className="prj-section-h2">
-                Explora cada despliegue por <em>sector e industria.</em>
+                Archivo <em>visual de obras.</em>
               </h2>
             </div>
 
-            {/* Clean Light Filter Pills */}
-            <div className="prj-filter-pills" role="tablist" aria-label="Filtrar obras por sector">
+            <div className="prj-filter-pills" role="tablist" aria-label="Filtrar obras">
               {FILTER_CATEGORIES.map((cat) => (
                 <button
                   key={cat.id}
@@ -713,104 +912,113 @@ export default function ProyectosPage({
                   onClick={() => setActiveCategory(cat.id)}
                   className={`prj-filter-pill ${activeCategory === cat.id ? 'is-active' : ''}`}
                 >
-                  {cat.label}
+                  <span>{cat.label}</span>
+                  <span className="prj-filter-count">{pad(cat.count)}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Minimalist Visual Bento Grid */}
-          <motion.div layout className="prj-bento-grid">
+          {/* Asymmetric 12-Column Visual Lookbook Grid */}
+          <motion.div layout className="prj-lookbook-grid">
             <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project) => (
-                <motion.article
-                  layout
-                  key={project.id}
-                  initial={{ opacity: 0, y: 16, scale: 0.97 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.32 }}
-                  className="prj-bento-card"
-                  onClick={() => setModalProject(project)}
-                >
-                  {/* Visual Image Header with Subtle AI Detection Overlay */}
-                  <div className="prj-card-visual">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="prj-card-img"
-                      loading="lazy"
-                    />
-                    <div className="prj-card-scrim" />
+              {filteredProjects.map((project, idx) => {
+                // Alternating wide (7 cols) and narrow (5 cols) rhythm:
+                // Row 0: 7 + 5, Row 1: 5 + 7, Row 2: 7 + 5
+                const isWide = idx % 4 === 0 || idx % 4 === 3;
+                const globalNum = PROJECTS_DATA.findIndex((p) => p.id === project.id) + 1;
 
-                    {/* Top Glass Badges */}
-                    <div className="prj-card-top-row">
-                      <span className="prj-glass-tag">{project.folio}</span>
-                      <span className="prj-glass-tag is-emerald">
-                        <CheckCircle2 size={11} />
-                        {project.compliance}
-                      </span>
-                    </div>
+                return (
+                  <motion.article
+                    layout
+                    key={project.id}
+                    initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+                    className={`prj-lookbook-card ${isWide ? 'is-wide' : 'is-narrow'}`}
+                    onClick={() => openProjectPage(project.id)}
+                  >
+                    {/* Large Pure Visual Stage */}
+                    <div className="prj-lookbook-frame">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="prj-lookbook-img"
+                        loading="lazy"
+                      />
+                      <div className="prj-lookbook-scrim" />
 
-                    {/* Hover AI Detection Box Preview */}
-                    {project.detBoxes?.[0] && (
-                      <div
-                        className="prj-card-ai-box"
-                        style={{
-                          left: `${project.detBoxes[0].x}%`,
-                          top: `${project.detBoxes[0].y}%`,
-                          width: `${project.detBoxes[0].w}%`,
-                          height: `${project.detBoxes[0].h}%`,
-                        }}
-                      >
-                        <i className="tl" />
-                        <i className="tr" />
-                        <i className="bl" />
-                        <i className="br" />
-                        <span>{project.detBoxes[0].label}</span>
+                      {/* Top Minimalist Glass Tags */}
+                      <div className="prj-lookbook-top">
+                        <span className="prj-lookbook-idx-pill">
+                          <strong>{pad(globalNum)}</strong>
+                          <span>{project.folio}</span>
+                        </span>
+
+                        <span className="prj-lookbook-comp-pill">
+                          <ShieldCheck size={12} />
+                          {project.compliance}
+                        </span>
                       </div>
-                    )}
 
-                    {/* Bottom Location Pill */}
-                    <div className="prj-card-loc-bar">
-                      <span>
-                        <MapPin size={12} /> {project.location}
-                      </span>
-                      <span>{project.surface}</span>
-                    </div>
-                  </div>
-
-                  {/* Clean White Card Body */}
-                  <div className="prj-card-content">
-                    <div>
-                      <span className="prj-card-sector">{project.categoryLabel}</span>
-                      <h3 className="prj-card-h3">{project.title}</h3>
-                    </div>
-
-                    <p className="prj-card-desc">{project.solution}</p>
-
-                    {/* 3 Clean Metrics */}
-                    <div className="prj-card-stats">
-                      {project.metrics.map((m, idx) => (
-                        <div key={idx} className="prj-card-stat">
-                          <strong>{m.value}</strong>
-                          <span>{m.label}</span>
+                      {/* Subtle AI Telemetry Bounding Box on Hover */}
+                      {project.detBoxes?.[0] && (
+                        <div
+                          className="prj-card-ai-box"
+                          style={{
+                            left: `${project.detBoxes[0].x}%`,
+                            top: `${project.detBoxes[0].y}%`,
+                            width: `${project.detBoxes[0].w}%`,
+                            height: `${project.detBoxes[0].h}%`,
+                          }}
+                        >
+                          <i className="tl" />
+                          <i className="tr" />
+                          <i className="bl" />
+                          <i className="br" />
+                          <span>{project.detBoxes[0].label}</span>
                         </div>
-                      ))}
+                      )}
+
+                      {/* Floating Secondary Detail Thumbnail on Hover */}
+                      <div className="prj-lookbook-pip">
+                        <img src={project.secondaryImage} alt="" />
+                      </div>
+
+                      {/* Floating KPI Glass Pill inside Bottom-Left of Frame */}
+                      <div className="prj-lookbook-kpi-float">
+                        {project.metrics.slice(0, 2).map((m, mIdx) => (
+                          <div key={mIdx} className="prj-lookbook-kpi-chip">
+                            <strong>{m.value}</strong>
+                            <span>{m.label}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
-                    {/* Minimalist Card Footer */}
-                    <div className="prj-card-actions">
-                      <span className="prj-card-explore-link">
-                        <span>Ver ficha técnica y fotografías</span>
-                      </span>
-                      <span className="prj-card-arrow">
-                        <ArrowUpRight size={15} />
-                      </span>
+                    {/* Ultra-Clean Minimalist Caption Row below the Frame */}
+                    <div className="prj-lookbook-caption">
+                      <div className="prj-lookbook-caption-left">
+                        <div className="prj-lookbook-meta">
+                          <span className="prj-lookbook-sector">{project.categoryLabel}</span>
+                          <span className="prj-lookbook-dot">·</span>
+                          <span className="prj-lookbook-loc">
+                            <MapPin size={12} /> {project.location}
+                          </span>
+                          <span className="prj-lookbook-dot">·</span>
+                          <span className="prj-lookbook-surf">{project.surface}</span>
+                        </div>
+                        <h3 className="prj-lookbook-title">{project.title}</h3>
+                      </div>
+
+                      <div className="prj-lookbook-arrow">
+                        <ArrowUpRight size={18} />
+                      </div>
                     </div>
-                  </div>
-                </motion.article>
-              ))}
+                  </motion.article>
+                );
+              })}
             </AnimatePresence>
           </motion.div>
         </div>
@@ -827,16 +1035,15 @@ export default function ProyectosPage({
             <div className="prj-light-cta-left">
               <span className="prj-eyebrow-pill">
                 <span className="prj-eyebrow-dot" />
-                Levantamiento Técnico Sin Costo
+                Levantamiento Sin Costo
               </span>
 
               <h2 className="prj-light-cta-h2">
-                Proyectemos el blindaje de tu <em>próxima obra.</em>
+                Proyectemos tu <em>próxima obra.</em>
               </h2>
 
               <p className="prj-light-cta-p">
-                Un ingeniero especialista acudirá a tus instalaciones para evaluar puntos ciegos,
-                diseñar el sembrado CAD y entregarte una propuesta técnica llave en mano.
+                Sembrado CAD, ingeniería en sitio y propuesta llave en mano sin compromiso.
               </p>
 
               <div className="prj-hero-cta-row">
@@ -845,7 +1052,7 @@ export default function ProyectosPage({
                   onClick={() => onOpenQuote?.('Levantamiento y Anteproyecto en Sitio')}
                   className="btn btn-primary prj-btn-main"
                 >
-                  <span>Agendar Levantamiento en Sitio</span>
+                  <span>Agendar Levantamiento</span>
                   <ArrowUpRight size={18} />
                 </button>
 
@@ -856,7 +1063,7 @@ export default function ProyectosPage({
                   className="btn btn-secondary prj-btn-ghost"
                 >
                   <MessageSquare size={16} color="#10B981" />
-                  <span>Hablar con Ingeniería por WhatsApp</span>
+                  <span>WhatsApp Ingeniería</span>
                 </a>
               </div>
             </div>
@@ -867,10 +1074,8 @@ export default function ProyectosPage({
                   <Award size={18} color="#A6192E" />
                 </div>
                 <div>
-                  <strong>Garantía Vitalicia en Mano de Obra</strong>
-                  <span>
-                    Canalización conduit, conectores y peinado de rack garantizados de por vida.
-                  </span>
+                  <strong>Garantía Vitalicia en Obra</strong>
+                  <span>Canalización y montaje garantizados de por vida.</span>
                 </div>
               </div>
 
@@ -879,11 +1084,8 @@ export default function ProyectosPage({
                   <Activity size={18} color="#10B981" />
                 </div>
                 <div>
-                  <strong>SLA &lt; 60 Minutos en CDMX y Hubs</strong>
-                  <span>
-                    7 centros operativos con cuadrillas propias en Valle de México, Bajío, MTY y
-                    GDL.
-                  </span>
+                  <strong>SLA &lt; 60 Minutos</strong>
+                  <span>7 centros operativos con cuadrillas propias.</span>
                 </div>
               </div>
 
@@ -892,335 +1094,14 @@ export default function ProyectosPage({
                   <Lock size={18} color="#2563EB" />
                 </div>
                 <div>
-                  <strong>Arquitectura Abierta sin Ataduras</strong>
-                  <span>
-                    Equipos homologados ONVIF / OSDP donde tú conservas el 100% de las claves.
-                  </span>
+                  <strong>Arquitectura Abierta</strong>
+                  <span>Tú conservas el 100% de las claves y licencias.</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* ====================================================================
-          6. ULTRA-MINIMALIST ARCHITECTURAL DOSSIER POP-UP (WOW MODAL)
-          ==================================================================== */}
-      <AnimatePresence>
-        {modalProject && (() => {
-          const modalIdx = PROJECTS_DATA.findIndex((p) => p.id === modalProject.id);
-          const ModalIsoScene = modalProject.CustomIsoScene;
-          const stepPrev = () => {
-            const nextIdx = (modalIdx - 1 + PROJECTS_DATA.length) % PROJECTS_DATA.length;
-            setModalProject(PROJECTS_DATA[nextIdx]);
-          };
-          const stepNext = () => {
-            const nextIdx = (modalIdx + 1) % PROJECTS_DATA.length;
-            setModalProject(PROJECTS_DATA[nextIdx]);
-          };
-
-          return (
-            <motion.div
-              className="prj-modal-backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.24 }}
-              onClick={() => setModalProject(null)}
-            >
-              <motion.div
-                className="prj-modal-card"
-                role="dialog"
-                aria-modal="true"
-                aria-label={`Expediente técnico ${modalProject.title}`}
-                initial={{ opacity: 0, y: 22, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 14, scale: 0.97 }}
-                transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                {/* 1. Minimalist Floating Top Bar */}
-                <div className="prj-modal-topbar">
-                  <div className="prj-modal-meta">
-                    <span className="prj-modal-folio-pill">
-                      <span className="prj-live-dot" />
-                      {modalProject.folio}
-                    </span>
-                    <span className="prj-modal-compliance-pill">
-                      <ShieldCheck size={12} />
-                      {modalProject.compliance}
-                    </span>
-                    <span className="prj-modal-loc">
-                      <MapPin size={12} />
-                      {modalProject.location}
-                    </span>
-                  </div>
-
-                  <div className="prj-modal-controls">
-                    <div className="prj-modal-stepper" aria-label="Navegar entre expedientes">
-                      <button
-                        type="button"
-                        onClick={stepPrev}
-                        className="prj-modal-step-btn"
-                        title="Expediente anterior (←)"
-                      >
-                        <ArrowLeft size={13} />
-                      </button>
-                      <span className="prj-modal-step-count">
-                        {pad(modalIdx + 1)} / {pad(PROJECTS_DATA.length)}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={stepNext}
-                        className="prj-modal-step-btn"
-                        title="Siguiente expediente (→)"
-                      >
-                        <ArrowRight size={13} />
-                      </button>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => setModalProject(null)}
-                      className="prj-modal-close"
-                      aria-label="Cerrar expediente"
-                      title="Cerrar (ESC)"
-                    >
-                      <span className="prj-modal-esc">ESC</span>
-                      <X size={15} />
-                    </button>
-                  </div>
-                </div>
-
-                {/* 2. Two-Column Architectural Split */}
-                <div className="prj-modal-grid">
-                  {/* LEFT: Interactive Media Canvas + Thumbnail Switcher + Spec Ledger */}
-                  <div className="prj-modal-visuals">
-                    <div className="prj-modal-stage">
-                      <AnimatePresence mode="wait">
-                        {modalMediaTab === 'iso' && ModalIsoScene ? (
-                          <motion.div
-                            key={`iso-${modalProject.id}`}
-                            className="prj-modal-stage-layer"
-                            initial={{ opacity: 0, scale: 0.98 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.98 }}
-                            transition={{ duration: 0.24 }}
-                          >
-                            <ModalIsoScene />
-                          </motion.div>
-                        ) : (
-                          <motion.div
-                            key={`${modalMediaTab}-${modalProject.id}`}
-                            className="prj-modal-stage-layer"
-                            initial={{ opacity: 0, scale: 1.02 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.28 }}
-                          >
-                            <img
-                              src={
-                                modalMediaTab === 'photo2'
-                                  ? modalProject.secondaryImage
-                                  : modalProject.image
-                              }
-                              alt={modalProject.title}
-                              className="prj-modal-stage-img"
-                            />
-                            <div className="prj-modal-stage-scrim" />
-
-                            {/* Subtle AI Telemetry Bounding Boxes on Primary Photo */}
-                            {modalMediaTab === 'photo1' &&
-                              modalProject.detBoxes?.map((b, bIdx) => (
-                                <div
-                                  key={bIdx}
-                                  className={`prj-ai-det prj-ai-det--${b.tone || 'green'}`}
-                                  style={{
-                                    left: `${b.x}%`,
-                                    top: `${b.y}%`,
-                                    width: `${b.w}%`,
-                                    height: `${b.h}%`,
-                                  }}
-                                >
-                                  <i className="tl" />
-                                  <i className="tr" />
-                                  <i className="bl" />
-                                  <i className="br" />
-                                  <span className="prj-ai-det-label">{b.label}</span>
-                                </div>
-                              ))}
-
-                            {/* Bottom Floating Camera Caption */}
-                            <div className="prj-modal-stage-caption">
-                              <span className="prj-modal-cam-tag">
-                                {modalMediaTab === 'photo2'
-                                  ? 'DETALLE DE INGENIERÍA · AS-BUILT'
-                                  : 'EVIDENCIA EN SITIO · VERIFICADA'}
-                              </span>
-                              <span>{modalProject.clientType}</span>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-
-                    {/* Interactive Thumbnail & View Selector */}
-                    <div className="prj-modal-media-switcher">
-                      <button
-                        type="button"
-                        onClick={() => setModalMediaTab('photo1')}
-                        className={`prj-modal-media-btn ${
-                          modalMediaTab === 'photo1' ? 'is-active' : ''
-                        }`}
-                      >
-                        <img src={modalProject.image} alt="" />
-                        <div>
-                          <strong>Vista General</strong>
-                          <span>Obra entregada</span>
-                        </div>
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => setModalMediaTab('photo2')}
-                        className={`prj-modal-media-btn ${
-                          modalMediaTab === 'photo2' ? 'is-active' : ''
-                        }`}
-                      >
-                        <img src={modalProject.secondaryImage} alt="" />
-                        <div>
-                          <strong>Detalle Técnico</strong>
-                          <span>Equipamiento</span>
-                        </div>
-                      </button>
-
-                      {ModalIsoScene && (
-                        <button
-                          type="button"
-                          onClick={() => setModalMediaTab('iso')}
-                          className={`prj-modal-media-btn is-iso ${
-                            modalMediaTab === 'iso' ? 'is-active' : ''
-                          }`}
-                        >
-                          <div className="prj-modal-iso-icon">3D</div>
-                          <div>
-                            <strong>Gemelo Digital</strong>
-                            <span>Plano en vivo</span>
-                          </div>
-                        </button>
-                      )}
-                    </div>
-
-                    {/* Architectural Spec Ledger */}
-                    <div className="prj-modal-spec-ledger">
-                      <div className="prj-modal-spec-cell">
-                        <span>SUPERFICIE</span>
-                        <strong>{modalProject.surface}</strong>
-                      </div>
-                      <div className="prj-modal-spec-cell">
-                        <span>EJECUCIÓN</span>
-                        <strong>{modalProject.duration}</strong>
-                      </div>
-                      <div className="prj-modal-spec-cell">
-                        <span>PÓLIZA</span>
-                        <strong>Garantía Vitalicia</strong>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* RIGHT: Swiss Editorial Dossier */}
-                  <div className="prj-modal-info">
-                    <div className="prj-modal-header-group">
-                      <div className="prj-modal-eyebrow-row">
-                        <span className="prj-card-sector">{modalProject.categoryLabel}</span>
-                        <span className="prj-modal-client-chip">
-                          <Building2 size={12} />
-                          {modalProject.clientType}
-                        </span>
-                      </div>
-                      <h3 className="prj-modal-title">{modalProject.title}</h3>
-                    </div>
-
-                    {/* Prominent Audited Impact / ROI Strip */}
-                    <div className="prj-modal-roi">
-                      {modalProject.metrics.map((m, i) => (
-                        <div key={i} className="prj-modal-roi-item">
-                          <strong>{m.value}</strong>
-                          <span>{m.label}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Clean Two-Step Narrative Timeline (Challenge -> Engineering Solution) */}
-                    <div className="prj-modal-narrative">
-                      <div className="prj-modal-narrative-step">
-                        <span className="prj-modal-step-badge">01</span>
-                        <div>
-                          <strong>Diagnóstico &amp; Reto Operativo</strong>
-                          <p>{modalProject.challenge}</p>
-                        </div>
-                      </div>
-
-                      <div className="prj-modal-narrative-step is-solution">
-                        <span className="prj-modal-step-badge is-crimson">02</span>
-                        <div>
-                          <strong>Ingeniería Aplicada Cuauhtli</strong>
-                          <p>{modalProject.solution}</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* 2x2 Numbered Hardware Grid */}
-                    <div className="prj-modal-hw">
-                      <div className="prj-modal-hw-head">
-                        <strong>Arquitectura &amp; Hardware Homologado</strong>
-                        <span>100% Cuadrillas Propias</span>
-                      </div>
-                      <div className="prj-modal-hw-grid">
-                        {modalProject.hardware.map((hw, i) => (
-                          <div key={i} className="prj-modal-hw-card">
-                            <span className="prj-modal-hw-idx">{pad(i + 1)}</span>
-                            <span className="prj-modal-hw-text">{hw}</span>
-                            <CheckCircle2 size={13} className="prj-modal-hw-check" />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Minimalist Action Footer */}
-                    <div className="prj-modal-actions">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const title = modalProject.title;
-                          setModalProject(null);
-                          onOpenQuote?.(`Proyecto similar a ${title}`);
-                        }}
-                        className="btn btn-primary prj-modal-cta-primary"
-                      >
-                        <span>Cotizar un Proyecto Similar</span>
-                        <ArrowUpRight size={17} />
-                      </button>
-
-                      <a
-                        href={`https://wa.me/525585262115?text=${encodeURIComponent(
-                          `Hola Sistemas Cuauhtli, me interesa cotizar un proyecto similar a "${modalProject.title}" (${modalProject.folio}).`
-                        )}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-secondary prj-modal-cta-wa"
-                      >
-                        <MessageSquare size={15} color="#10B981" />
-                        <span>Ingeniería vía WhatsApp</span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          );
-        })()}
-      </AnimatePresence>
     </div>
   );
 }

@@ -16,6 +16,7 @@ import NosotrosPage from './components/pages/NosotrosPage';
 import ComunidadPage from './components/pages/ComunidadPage';
 import ReformaLaboralPage from './components/pages/ReformaLaboralPage';
 import ProyectosPage from './components/pages/ProyectosPage';
+import ProyectoDetallePage from './components/pages/ProyectoDetallePage';
 import IndustryPage from './components/industries/IndustryPage';
 
 export default function App() {
@@ -38,6 +39,10 @@ export default function App() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (clean === 'nosotros') {
         setCurrentRoute('nosotros');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (clean.startsWith('proyecto/') || clean.startsWith('proyecto-')) {
+        const slug = clean.replace(/^proyecto[/-]/, '');
+        setCurrentRoute(`proyecto-${slug}`);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (
         clean === 'proyectos' ||
@@ -106,6 +111,18 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleNavigateProjects = () => {
+    window.location.hash = 'proyectos';
+    setCurrentRoute('proyectos');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleNavigateProject = (projectId) => {
+    window.location.hash = `proyecto/${projectId}`;
+    setCurrentRoute(`proyecto-${projectId}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
 
@@ -126,6 +143,15 @@ export default function App() {
             onNavigateHome={handleNavigateHome}
             onSelectIndustry={handleNavigateIndustry}
           />
+        ) : currentRoute.startsWith('proyecto-') ? (
+          <ProyectoDetallePage
+            projectId={currentRoute.replace('proyecto-', '')}
+            onOpenQuote={handleOpenQuote}
+            onNavigateHome={handleNavigateHome}
+            onNavigateProjects={handleNavigateProjects}
+            onSelectProject={handleNavigateProject}
+            onNavigateService={handleNavigateService}
+          />
         ) : currentRoute === 'nosotros' ? (
           <NosotrosPage
             onOpenQuote={handleOpenQuote}
@@ -136,6 +162,7 @@ export default function App() {
           <ProyectosPage
             onOpenQuote={handleOpenQuote}
             onNavigateHome={handleNavigateHome}
+            onSelectProject={handleNavigateProject}
             onNavigateService={handleNavigateService}
             onNavigateIndustry={handleNavigateIndustry}
           />
